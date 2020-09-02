@@ -162,7 +162,7 @@ public class Dialogs {
 		button1.setLayoutX(0);
 		button1.setLayoutY(132);
 		
-		Text text3 = new Text("PF签名图生成工具 可以自动检查其更新版本。检查将在后台执行，并且只有在有新版本可用时才会通知您。");
+		Text text3 = new Text("PF签名图生成工具可以自动检查其更新版本。检查将在后台执行，并且只有在有新版本可用时才会通知您。");
 		text3.setFont(new Font("Microsoft YaHei", 14));
 		text3.setFill(Color.web("#323232"));
 		text3.setWrappingWidth(360);
@@ -323,7 +323,7 @@ public class Dialogs {
 	public static void showAboutDialog() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("关于");
-		alert.setHeaderText("关于 PF签名图生成工具");
+		alert.setHeaderText("关于PF签名图生成工具");
 		
 		Pane pane = new Pane();
 		pane.setPrefSize(400, 250);

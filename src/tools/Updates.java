@@ -42,7 +42,7 @@ public class Updates {
 					if (Variables.language.equals("English")) {
 						Dialogs.showMessageDialog("You are using the latest version of PF Signatures Generator.", "Check for Updates", true);
 					} else {
-						Dialogs.showMessageDialog("您正在使用最新版本的 PF签名图生成工具。", "检查更新", false);
+						Dialogs.showMessageDialog("您正在使用最新版本的PF签名图生成工具。", "检查更新", false);
 					}
 				}
 			} else {
@@ -51,7 +51,7 @@ public class Updates {
 				if (Variables.language.equals("English")) {
 					response = Dialogs.showConfirmDialog("PF Signatures Generator " + datas[0] + " is available (You are v2.0). Do you want to update now?\n\nRelease notes: " + datas[2], "Check for Updates", "An update of PF Signatures Generator is available!", true);
 				} else {
-					response = Dialogs.showConfirmDialog("PF签名图生成工具 " + datas[0] + " 现在可用（您是 v2.0）。您想要现在更新吗？\n\n更新说明：" + datas[1], "检查更新", "新版本 PF签名图生成工具 可用！", false);
+					response = Dialogs.showConfirmDialog("PF签名图生成工具 " + datas[0] + " 现在可用（您是 v2.0）。您想要现在更新吗？\n\n更新说明：" + datas[1], "检查更新", "新版本PF签名图生成工具可用！", false);
 				}
 				
 				if (response) {

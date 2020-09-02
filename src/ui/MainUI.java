@@ -151,12 +151,7 @@ public class MainUI extends Application {
 		
 		leftPane.getChildren().addAll(imageView, text2, text3, text4, label, text5);
 		
-		Pane pane = new Pane();
-		pane.setPrefSize(620, 518);
-		pane.setLayoutX(180);
-		pane.setLayoutY(40);
-		pane.setStyle("-fx-background-color: #FFF");
-		root.getChildren().add(pane);
+		root.getChildren().add(Panes.pane1());
 		
 		Pane splitPane = new Pane();
 		splitPane.setPrefSize(620, 2);
@@ -204,7 +199,20 @@ public class MainUI extends Application {
 			menuItem1.setText("Preferences");
 			menuItem2.setText("Check for Updates");
 			menuItem3.setText("About");
+			
+			backButton.setText("Back");
+			nextButton.setText("Next");
 		}
+		
+		backButton.setOnMouseEntered(e -> {
+			root.setCursor(Cursor.HAND);
+			backButton.setStyle("-fx-background-color: #414449");
+		});
+		
+		nextButton.setOnMouseEntered(e -> {
+			root.setCursor(Cursor.HAND);
+			nextButton.setStyle("-fx-background-color: #414449");
+		});
 		
 		backButton.setOnAction(e -> {
 			try {
@@ -245,6 +253,8 @@ public class MainUI extends Application {
 			root.setCursor(Cursor.DEFAULT);
 			iconView2.setFill(Color.web("#25292E"));
 			iconView3.setFill(Color.web("#25292E"));
+			backButton.setStyle("-fx-background-color: #25292E");
+			nextButton.setStyle("-fx-background-color: #25292E");
 		});
 		
 		barsButton.setOnMouseEntered(e -> {

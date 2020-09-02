@@ -371,7 +371,9 @@ class LoginThread implements Runnable {
 					
 					Variables.avatarFilePath = Variables.dataFolder + "/avatar.png";
 				} catch (Exception e) {
-					e.printStackTrace();
+					Platform.runLater(() -> {
+						Dialogs.showExceptionDialog(e);
+					});
 				}
 			}
 		}

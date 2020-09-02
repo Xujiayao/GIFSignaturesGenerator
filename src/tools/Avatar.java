@@ -95,9 +95,9 @@ public class Avatar {
 			Platform.runLater(() -> {
 				if (e.getMessage().contains("Connection timed out")) {
 					if (Variables.language.equals("English")) {
-						Dialogs.showErrorDialog("Unable to download your avatar, please try re-uploading your avatar again.", true);
+						Dialogs.showErrorDialog("Unable to download your avatar, please try re-uploading your avatar again. If you are in Mainland China, try again with a VPN.", true);
 					} else {
-						Dialogs.showErrorDialog("无法下载您的头像，请尝试重新上传一遍您的头像。", false);
+						Dialogs.showErrorDialog("无法下载您的头像，请尝试重新上传一遍您的头像。如果您是中国内地用户，使用 VPN 再试一次。", false);
 					}
 				} else {
 					Dialogs.showExceptionDialog(e);
