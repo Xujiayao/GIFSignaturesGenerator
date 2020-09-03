@@ -187,6 +187,8 @@ public class Variables {
 					dataFolder.delete();
 					
 					if (!dataFolder.exists()) {
+						System.gc();
+						
 						return true;
 					}
 				}
@@ -194,6 +196,8 @@ public class Variables {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 		}
+		
+		System.gc();
 		
 		return false;
 	}

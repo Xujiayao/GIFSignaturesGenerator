@@ -329,6 +329,8 @@ public class LoginUI extends Application {
 		});
 		
 		stage.show();
+		
+		System.gc();
 	}
 }
 
@@ -349,7 +351,7 @@ class LoginThread implements Runnable {
 				try {
 					Stage stage = (Stage)LoginUI.button.getScene().getWindow();
 				    stage.close();
-					
+				    
 					new MainUI().start(stage);
 				} catch (Exception e) {
 					Dialogs.showExceptionDialog(e);

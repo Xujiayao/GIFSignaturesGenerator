@@ -278,5 +278,7 @@ public class MainUI extends Application {
 		});
 		
 		stage.show();
+		
+		System.gc();
 	}
 }
