@@ -108,7 +108,7 @@ public class MainUI extends Application {
 		imageView.setLayoutX(20);
 		imageView.setLayoutY(20);
 		
-		Text text2 = new Text(ProjectFlyAPI.unicodeToString(Variables.LoginDatas[1]));
+		Text text2 = new Text(ProjectFlyAPI.unicodeToString(Variables.loginDatas[1]));
 		text2.setFont(new Font("Microsoft YaHei Bold", 18));
 		text2.setTextAlignment(TextAlignment.CENTER);
 		text2.setFill(Color.web("#FFF"));
@@ -116,7 +116,7 @@ public class MainUI extends Application {
 		text2.setLayoutX(15);
 		text2.setLayoutY(188);
 		
-		Text text3 = new Text("@" + Variables.LoginDatas[0]);
+		Text text3 = new Text("@" + Variables.loginDatas[0]);
 		text3.setFont(new Font("Microsoft YaHei", 14));
 		text3.setTextAlignment(TextAlignment.CENTER);
 		text3.setFill(Color.web("#5F5D5F"));
@@ -124,7 +124,7 @@ public class MainUI extends Application {
 		text3.setLayoutX(15);
 		text3.setLayoutY(217);
 		
-		Text text4 = new Text(Variables.LoginDatas[3] + " MEMBER");
+		Text text4 = new Text(Variables.loginDatas[3] + " MEMBER");
 		text4.setFont(new Font("Microsoft YaHei", 14));
 		text4.setTextAlignment(TextAlignment.CENTER);
 		text4.setFill(Color.web("#5F5D5F"));
@@ -132,10 +132,10 @@ public class MainUI extends Application {
 		text4.setLayoutX(15);
 		text4.setLayoutY(240);
 		
-		Label label = new Label(Variables.LoginDatas[4].toUpperCase());
+		Label label = new Label(Variables.loginDatas[4].toUpperCase());
 		label.setFont(new Font("Microsoft YaHei Bold", 16));
 		label.setTextFill(Color.web("#FFF"));
-		label.setStyle("-fx-background-color: " + Variables.LoginDatas[5] + "; -fx-border-width: 1 1 1 1; -fx-border-color: #FFF");
+		label.setStyle("-fx-background-color: " + Variables.loginDatas[5] + "; -fx-border-width: 1 1 1 1; -fx-border-color: #FFF");
 		label.setAlignment(Pos.CENTER);
 		label.setPrefSize(140, 26);
 		label.setLayoutX(20);
@@ -150,8 +150,6 @@ public class MainUI extends Application {
 		text5.setLayoutY(543);
 		
 		leftPane.getChildren().addAll(imageView, text2, text3, text4, label, text5);
-		
-		root.getChildren().add(Panes.pane1());
 		
 		Pane splitPane = new Pane();
 		splitPane.setPrefSize(620, 2);
@@ -171,15 +169,15 @@ public class MainUI extends Application {
 		backButton.setFont(new Font("Microsoft YaHei", 14));
 		backButton.setStyle("-fx-background-color: #25292E");
 		backButton.setTextFill(Color.web("#FFF"));
-		backButton.setPrefSize(70, 29);
-		backButton.setLayoutX(237);
+		backButton.setPrefSize(90, 29);
+		backButton.setLayoutX(217);
 		backButton.setLayoutY(5);
 		
 		Button nextButton = new Button("下一步");
 		nextButton.setFont(new Font("Microsoft YaHei", 14));
 		nextButton.setStyle("-fx-background-color: #25292E");
 		nextButton.setTextFill(Color.web("#FFF"));
-		nextButton.setPrefSize(70, 29);
+		nextButton.setPrefSize(90, 29);
 		nextButton.setLayoutX(313);
 		nextButton.setLayoutY(5);
 		
@@ -192,6 +190,8 @@ public class MainUI extends Application {
 		MenuItem menuItem3 = new MenuItem("关于");
 		
 		contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
+		
+		root.getChildren().add(Panes.pane1());
 		
 		if (Variables.language.equals("English")) {
 			stage.setTitle("PF Signatures Generator");
@@ -215,13 +215,23 @@ public class MainUI extends Application {
 		});
 		
 		backButton.setOnAction(e -> {
-			try {
-				stage.close();
-				
-				new LoginUI().start(stage);
-			} catch (Exception e1) {
-				Dialogs.showExceptionDialog(e1);
+			if (Panes.paneShowing == 1) {
+				try {
+					stage.close();
+					
+					new LoginUI().start(stage);
+				} catch (Exception e3) {
+					Dialogs.showExceptionDialog(e3);
+				}
+			} else if (Panes.paneShowing == 2) {
+				root.getChildren().remove(4);
+				root.getChildren().add(Panes.pane1());
 			}
+		});
+		
+		nextButton.setOnAction(e -> {
+			root.getChildren().remove(4);
+			root.getChildren().add(Panes.pane2());
 		});
 		
 		menuItem1.setOnAction(e -> {

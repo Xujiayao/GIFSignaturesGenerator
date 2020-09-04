@@ -139,7 +139,7 @@ public class LoginUI extends Application {
 		iconView6.setLayoutY(269);
 		
 		textField = new TextField(Variables.username);
-		textField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+		textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		textField.setPrefSize(200, 25);
 		textField.setFont(new Font("Microsoft YaHei", 12));
 		textField.setPromptText("用户名 / 邮箱地址");
@@ -148,7 +148,7 @@ public class LoginUI extends Application {
 		
 		passwordField = new PasswordField();
 		passwordField.setText(Variables.password);
-		passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+		passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		passwordField.setPrefSize(200, 25);
 		passwordField.setFont(new Font("Microsoft YaHei", 12));
 		passwordField.setPromptText("密码");
@@ -230,27 +230,27 @@ public class LoginUI extends Application {
 				}
 				
 				iconView5.setFill(Color.web("#25292E"));
-				textField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+				textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 				
 				iconView6.setFill(Color.web("#25292E"));
-				passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+				passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 				
 				new Thread(new LoginThread()).start();
 			} else {
 				if (textField.getText().equals("")) {
 					iconView5.setFill(Color.web("#FF0000"));
-					textField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
+					textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
 				} else {
 					iconView5.setFill(Color.web("#25292E"));
-					textField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+					textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 				}
 				
 				if (passwordField.getText().equals("")) {
 					iconView6.setFill(Color.web("#FF0000"));
-					passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
+					passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
 				} else {
 					iconView6.setFill(Color.web("#25292E"));
-					passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+					passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 				}
 			}
 		});
@@ -265,27 +265,27 @@ public class LoginUI extends Application {
 					}
 					
 					iconView5.setFill(Color.web("#25292E"));
-					textField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+					textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 					
 					iconView6.setFill(Color.web("#25292E"));
-					passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+					passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 					
 					new Thread(new LoginThread()).start();
 				} else {
 					if (textField.getText().equals("")) {
 						iconView5.setFill(Color.web("#FF0000"));
-						textField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
+						textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
 					} else {
 						iconView5.setFill(Color.web("#25292E"));
-						textField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+						textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 					}
 					
 					if (passwordField.getText().equals("")) {
 						iconView6.setFill(Color.web("#FF0000"));
-						passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
+						passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #25292E");
 					} else {
 						iconView6.setFill(Color.web("#25292E"));
-						passwordField.setStyle("-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+						passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 					}
 				}
 			}
@@ -363,7 +363,9 @@ class LoginThread implements Runnable {
 			if (success) {
 				Avatar.processAvatar();
 				
-				MainUI.imageView.setImage(new Image("file:" + Variables.avatarFilePath));
+				Platform.runLater(() -> {
+					MainUI.imageView.setImage(new Image("file:" + Variables.avatarFilePath));
+				});
 			} else {
 				try {
 					BufferedImage image = ImageIO.read(new File(Main.class.getResource("/images/no-profile-image.png").toURI()));

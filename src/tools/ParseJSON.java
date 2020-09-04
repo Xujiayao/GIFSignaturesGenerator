@@ -8,6 +8,8 @@ import ui.Dialogs;
  */
 public class ParseJSON {
 	
+	
+	
 	public static String[] parseLoginJSON(String data) {
 		try {
 			String[] datas = new String[7];
@@ -33,7 +35,7 @@ public class ParseJSON {
 			data = data.substring(data.indexOf("token\"") + 8);
 			datas[6] = data.substring(0, data.indexOf("\""));
 			
-			Variables.LoginDatas = datas;
+			Variables.loginDatas = datas;
 			
 			return datas;
 		} catch (Exception e) {

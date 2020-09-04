@@ -39,12 +39,21 @@ public class Variables {
 	public static String checkUpdates = "true";
 	public static String username = "";
 	public static String password = "";
-	
-	//解析过的LoginAPI返回的数据
-	public static String[] LoginDatas = new String[7];
-	
+
 	//存储头像的文件名
 	public static String avatarFilePath;
+	
+	//解析过的 LoginAPI 返回的数据
+	public static String[] loginDatas = new String[7];
+	
+	//解析过的 ProfileAPI 返回的数据
+	public static String[] profileDatas = new String[7];
+	
+	//解析过的 LogbookAPI 返回的数据
+	public static String[] logbookDatas = new String[7];
+	
+	//解析过的 PassportAPI 返回的数据
+	public static String[] passportDatas = new String[7];
 	
 	public static void init() {
 		try {
@@ -170,6 +179,8 @@ public class Variables {
 	
 	public static boolean clearCaches() {
 		try {
+			System.gc();
+			
 			if (!dataFolder.exists()) {
 				return true;
 			}
@@ -187,8 +198,6 @@ public class Variables {
 					dataFolder.delete();
 					
 					if (!dataFolder.exists()) {
-						System.gc();
-						
 						return true;
 					}
 				}
@@ -196,8 +205,6 @@ public class Variables {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 		}
-		
-		System.gc();
 		
 		return false;
 	}
