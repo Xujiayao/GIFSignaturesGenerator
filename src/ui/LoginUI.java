@@ -229,6 +229,10 @@ public class LoginUI extends Application {
 					button.setText("加载中...");
 				}
 				
+				button.setDisable(true);
+				
+				root.setCursor(Cursor.WAIT);
+				
 				iconView5.setFill(Color.web("#25292E"));
 				textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 				
@@ -256,6 +260,8 @@ public class LoginUI extends Application {
 		});
 		
 		root.setOnKeyReleased(e -> {
+			button.setDisable(true);
+			
 			if (e.getCode().equals(KeyCode.ENTER)) {
 				if (!textField.getText().equals("") && !passwordField.getText().equals("")) {
 					if (Variables.language.equals("English")) {
@@ -263,6 +269,10 @@ public class LoginUI extends Application {
 					} else {
 						button.setText("加载中...");
 					}
+					
+					button.setDisable(true);
+					
+					root.setCursor(Cursor.WAIT);
 					
 					iconView5.setFill(Color.web("#25292E"));
 					textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
@@ -297,14 +307,20 @@ public class LoginUI extends Application {
 		});
 		
 		root.setOnMouseMoved(e -> {
-			root.setCursor(Cursor.DEFAULT);
+			if (!(button.getText().equals("Loading...") || button.getText().equals("加载中..."))) {
+				root.setCursor(Cursor.DEFAULT);
+			}
+			
 			iconView2.setFill(Color.web("#25292E"));
 			iconView3.setFill(Color.web("#25292E"));
 			button.setStyle("-fx-background-color: #25292E");
 		});
 		
 		button.setOnMouseEntered(e -> {
-			root.setCursor(Cursor.HAND);
+			if (!(button.getText().equals("Loading...") || button.getText().equals("加载中..."))) {
+				root.setCursor(Cursor.HAND);
+			}
+			
 			button.setStyle("-fx-background-color: #414449");
 		});
 		

@@ -90,6 +90,8 @@ public class ProjectFlyAPI {
 			} else {
 				LoginUI.button.setText("登录");
 			}
+			
+			LoginUI.button.setDisable(false);
 		});
 		
 		return null;
