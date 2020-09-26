@@ -31,7 +31,7 @@ public class Updates {
 				data = Updates.downloadJSON("https://raw.githubusercontent.com/Xujiayao147/PFSignaturesGenerator/master/update/version.json");
 			}
 		} catch (Exception e) {
-			data = Updates.downloadJSON("https://raw.githubusercontent.com/Xujiayao147/PFSignaturesGenerator/master/update/version.json");
+			data = Updates.downloadJSON("https://cdn.jsdelivr.net/gh/Xujiayao147/PFSignaturesGenerator/update/version.json");
 		}
 		
 		String[] datas = parseData(data);
@@ -48,10 +48,13 @@ public class Updates {
 			} else {
 				boolean response;
 				
+				datas[1] = datas[1].replaceAll("\\\\n", "\n");
+				datas[2] = datas[2].replaceAll("\\\\n", "\n");
+				
 				if (Variables.language.equals("English")) {
-					response = Dialogs.showConfirmDialog("PF Signatures Generator " + datas[0] + " is available (You are v2.0). Do you want to update now?\n\nRelease notes: \n\n" + datas[2], "Check for Updates", "An update of PF Signatures Generator is available!", true);
+					response = Dialogs.showConfirmDialog("PF Signatures Generator " + datas[0] + " is available (You are v2.0). Do you want to update now?\n\nRelease notes: \n\n" + datas[2], "Check for Updates", "An update of is available!", true);
 				} else {
-					response = Dialogs.showConfirmDialog("PF签名图生成工具 " + datas[0] + " 现在可用（您是 v2.0）。您想要现在更新吗？\n\n更新说明：\n\n" + datas[1], "检查更新", "新版本PF签名图生成工具可用！", false);
+					response = Dialogs.showConfirmDialog("PF签名图生成工具 " + datas[0] + " 现在可用（您是 v2.0）。您想要现在更新吗？\n\n更新说明：\n\n" + datas[1], "检查更新", "有新版本可用！", false);
 				}
 				
 				if (response) {
