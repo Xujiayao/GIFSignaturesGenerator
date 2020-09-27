@@ -260,27 +260,27 @@ public class LoginUI extends Application {
 		});
 		
 		root.setOnKeyReleased(e -> {
-			button.setDisable(true);
-			
 			if (e.getCode().equals(KeyCode.ENTER)) {
 				if (!textField.getText().equals("") && !passwordField.getText().equals("")) {
-					if (Variables.language.equals("English")) {
-						button.setText("Loading...");
-					} else {
-						button.setText("加载中...");
+					if (!button.isDisable()) {
+						if (Variables.language.equals("English")) {
+							button.setText("Loading...");
+						} else {
+							button.setText("加载中...");
+						}
+						
+						button.setDisable(true);
+						
+						root.setCursor(Cursor.WAIT);
+						
+						iconView5.setFill(Color.web("#25292E"));
+						textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+						
+						iconView6.setFill(Color.web("#25292E"));
+						passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
+						
+						new Thread(new LoginThread()).start();
 					}
-					
-					button.setDisable(true);
-					
-					root.setCursor(Cursor.WAIT);
-					
-					iconView5.setFill(Color.web("#25292E"));
-					textField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
-					
-					iconView6.setFill(Color.web("#25292E"));
-					passwordField.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
-					
-					new Thread(new LoginThread()).start();
 				} else {
 					if (textField.getText().equals("")) {
 						iconView5.setFill(Color.web("#FF0000"));
@@ -354,6 +354,16 @@ class LoginThread implements Runnable {
 	@Override
 	public void run() {
 		String data = ProjectFlyAPI.login(LoginUI.textField.getText(), LoginUI.passwordField.getText());
+		
+		Platform.runLater(() -> {
+			if (Variables.language.equals("English")) {
+				LoginUI.button.setText("Login");
+			} else {
+				LoginUI.button.setText("登录");
+			}
+			
+			LoginUI.button.setDisable(false);
+		});
 		
 		if (data != null) {
 			ParseJSON.parseLoginJSON(data);

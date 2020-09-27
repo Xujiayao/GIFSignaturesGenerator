@@ -10,7 +10,6 @@ import java.nio.charset.StandardCharsets;
 
 import javafx.application.Platform;
 import ui.Dialogs;
-import ui.LoginUI;
 
 /**
  * @author Xujiayao
@@ -83,16 +82,6 @@ public class ProjectFlyAPI {
 				}
 			});
 		}
-		
-		Platform.runLater(() -> {
-			if (Variables.language.equals("English")) {
-				LoginUI.button.setText("Login");
-			} else {
-				LoginUI.button.setText("登录");
-			}
-			
-			LoginUI.button.setDisable(false);
-		});
 		
 		return null;
 	}
