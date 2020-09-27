@@ -196,6 +196,8 @@ public class MainUI extends Application {
 		if (Variables.language.equals("English")) {
 			stage.setTitle("PF Signatures Generator");
 			
+			text1.setText("PF Signatures Generator");
+			
 			menuItem1.setText("Preferences");
 			menuItem2.setText("Check for Updates");
 			menuItem3.setText("About");
