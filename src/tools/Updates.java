@@ -12,6 +12,8 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
 import javafx.application.Platform;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ui.Dialogs;
@@ -121,7 +123,7 @@ public class Updates {
 				Dialogs.bar.setProgress(1);
 				
 				if (Variables.language.equals("English")) {
-					Dialogs.text.setText("Downloaded (100.0%)");
+					Dialogs.text.setText("Finished (100.0%)");
 				} else {
 					Dialogs.text.setText("下载完成（100.0%）");
 				}
@@ -264,9 +266,8 @@ class DownloadThread implements Runnable {
 						Dialogs.showExceptionDialog(e);
 					}
 				} else {
-					Dialogs.showErrorDialog("A fatal error occurs, exiting now.", true);
-					
-					System.exit(1);
+					Dialogs.dialog.getDialogPane().getButtonTypes().add(new ButtonType("", ButtonBar.ButtonData.OK_DONE));
+					Dialogs.dialog.close();
 				}
 			});
 		} catch (Exception e) {

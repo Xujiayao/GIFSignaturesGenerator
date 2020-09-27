@@ -76,7 +76,6 @@ public class Panes {
 		rb1.setPrefHeight(19);
 		rb1.setLayoutX(10);
 		rb1.setLayoutY(236);
-		rb1.setSelected(true);
 		
 		Text text6 = new Text("只需几个简易的步骤即可生成 projectFLY 签名图。");
 		text6.setFont(new Font("Microsoft YaHei", 14));
@@ -92,6 +91,7 @@ public class Panes {
 		rb2.setPrefHeight(19);
 		rb2.setLayoutX(10);
 		rb2.setLayoutY(303);
+		rb2.setSelected(true);
 		
 		Text text7 = new Text("编辑签名图中的文本，选择签名图主题。推荐所有用户使用。");
 		text7.setFont(new Font("Microsoft YaHei", 14));
@@ -302,7 +302,7 @@ public class Panes {
 		if (Variables.language.equals("English")) {
 			title.setText("Parse Results");
 			
-			text0.setText("Please check your parse results. If there are any bugs, please let me know.");
+			text0.setText("Please check your parse results. If there are any errors, please let me know.");
 			
 			text1.setText("Display Name:");
 			text2.setText("Username:");
