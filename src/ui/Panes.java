@@ -68,36 +68,32 @@ public class Panes {
 		
 		ToggleGroup group = new ToggleGroup();
 		
-		RadioButton rb1 = new RadioButton("简易");
+		RadioButton rb1 = new RadioButton("自定义（推荐）");
 		rb1.setToggleGroup(group);
 		rb1.setStyle("-fx-text-fill: #000000");
 		rb1.setFont(new Font("Microsoft YaHei", 14));
-		rb1.setPrefWidth(600);
-		rb1.setPrefHeight(19);
 		rb1.setLayoutX(10);
 		rb1.setLayoutY(236);
+		rb1.setSelected(true);
 		
-		Text text6 = new Text("只需几个简易的步骤即可生成 projectFLY 签名图。");
+		Text text6 = new Text("编辑签名图中的文本，选择签名图主题。推荐所有用户使用。");
 		text6.setFont(new Font("Microsoft YaHei", 14));
 		text6.setWrappingWidth(575);
 		text6.setLayoutX(35);
 		text6.setLayoutY(279);
 		
-		RadioButton rb2 = new RadioButton("自定义（推荐）");
+		RadioButton rb2 = new RadioButton("简易");
 		rb2.setToggleGroup(group);
 		rb2.setStyle("-fx-text-fill: #000000");
 		rb2.setFont(new Font("Microsoft YaHei", 14));
-		rb2.setPrefWidth(600);
-		rb2.setPrefHeight(19);
 		rb2.setLayoutX(10);
-		rb2.setLayoutY(303);
-		rb2.setSelected(true);
+		rb2.setLayoutY(320);
 		
-		Text text7 = new Text("编辑签名图中的文本，选择签名图主题。推荐所有用户使用。");
+		Text text7 = new Text("只需几个简易的步骤即可生成 projectFLY 签名图。");
 		text7.setFont(new Font("Microsoft YaHei", 14));
 		text7.setWrappingWidth(575);
 		text7.setLayoutX(35);
-		text7.setLayoutY(346);
+		text7.setLayoutY(363);
 		
 		pane.getChildren().addAll(text1, text2, text3, text4, text5, rb1, text6, rb2, text7);
 		
@@ -111,13 +107,11 @@ public class Panes {
 			
 			text5.setText("Please choose the type of configuration that best suits your needs.");
 			
-			rb1.setText("Simple");
-			
-			text6.setText("Generate projectFLY signatures in a few simple steps.");
+			rb1.setText("Custom (Recommended)");
+			text6.setText("Edit the texts in the signature, choose among different themes. Recommended for all users.");
 
-			rb2.setText("Custom (Recommended)");
-			
-			text7.setText("Edit the texts in the signature, choose among different themes. Recommended for all users.");
+			rb2.setText("Simple");
+			text7.setText("Generate projectFLY signatures in a few simple steps.");
 		}
 		
 		return pane;
@@ -136,13 +130,13 @@ public class Panes {
 		title.setFont(new Font("Microsoft YaHei Bold", 18));
 		title.setWrappingWidth(600);
 		title.setLayoutX(10);
-		title.setLayoutY(29);
+		title.setLayoutY(28);
 		
 		Text text0 = new Text("请检查您的解析结果。如果有任何错误，请告诉我。");
 		text0.setFont(new Font("Microsoft YaHei", 14));
 		text0.setWrappingWidth(600);
 		text0.setLayoutX(10);
-		text0.setLayoutY(69);
+		text0.setLayoutY(67);
 		
 		Text text1 = new Text("显示名称：");
 		text1.setFont(new Font("Microsoft YaHei", 14));
