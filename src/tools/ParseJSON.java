@@ -35,7 +35,7 @@ public class ParseJSON {
 			data = data.substring(data.indexOf("token\"") + 8);
 			datas[6] = data.substring(0, data.indexOf("\""));
 			
-			Variables.loginDatas = datas;
+			Variables.loginData = datas;
 			
 			return datas;
 		} catch (Exception e) {

@@ -62,7 +62,7 @@ public class Avatar {
 		try {
 			byte[] buff = new byte[8192];
 			
-			URL url = new URL(Variables.loginDatas[2].replace("\\/", "/"));
+			URL url = new URL(Variables.loginData[2].replace("\\/", "/"));
 			
 			URLConnection conn = url.openConnection();
 			
@@ -70,7 +70,7 @@ public class Avatar {
 			
 			is = conn.getInputStream();
 			
-			Variables.avatarFilePath = Variables.dataFolder + "/avatar" + Variables.loginDatas[2].substring(Variables.loginDatas[2].lastIndexOf("."));
+			Variables.avatarFilePath = Variables.dataFolder + "/avatar" + Variables.loginData[2].substring(Variables.loginData[2].lastIndexOf("."));
 			
             File file = new File(Variables.avatarFilePath);
             

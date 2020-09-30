@@ -37,6 +37,45 @@ public class ProjectFlyAPI {
 		return buffer.toString();
 	}
 	
+	public static String getProfiles(int linkNum) {
+		try {
+			String[] links = {"https://api.projectfly.co.uk/api/v3/community/user/" + Variables.loginData[0] + "/profile", 
+					"https://api.projectfly.co.uk/api/v3/bookings/logbook/" + Variables.loginData[0] + "?page=0", 
+					"https://api.projectfly.co.uk/api/v3/community/user/" + Variables.loginData[0] + "/passport"};
+			
+			URL url = new URL(links[linkNum]);
+			
+			URLConnection conn = url.openConnection();
+			
+			conn.addRequestProperty("Authorization", "Bearer " + Variables.loginData[6]);
+			conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
+			
+			conn.connect();
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+			
+			String data = reader.readLine();
+			
+			reader.close();
+			
+			return data;
+		} catch (Exception e) {
+			Platform.runLater(() -> {
+				if (e.getMessage().contains("HTTP response code: 401")) {
+					if (Variables.language.equals("English")) {
+						Dialogs.showErrorDialog("The token has expired, please go back and re-login.", true);
+					} else {
+						Dialogs.showErrorDialog("令牌已过期，请返回上一步重新登录。", false);
+					}
+				} else {
+					Dialogs.showExceptionDialog(e);
+				}
+			});
+		}
+		
+		return null;
+	}
+	
 	public static String login(String username, String password) {
 		try {
 			URL url = new URL("https://api.projectfly.co.uk/api/v3/login");

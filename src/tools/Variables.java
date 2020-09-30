@@ -44,16 +44,16 @@ public class Variables {
 	public static String avatarFilePath;
 	
 	//解析过的 LoginAPI 返回的数据
-	public static String[] loginDatas = new String[7];
+	public static String[] loginData = new String[7];
 	
 	//解析过的 ProfileAPI 返回的数据
-	public static String[] profileDatas = new String[7];
+	public static String[] profileData = new String[7];
 	
 	//解析过的 LogbookAPI 返回的数据
-	public static String[] logbookDatas = new String[7];
+	public static String[] logbookData = new String[7];
 	
 	//解析过的 PassportAPI 返回的数据
-	public static String[] passportDatas = new String[7];
+	public static String[] passportData = new String[7];
 	
 	public static void init() {
 		try {

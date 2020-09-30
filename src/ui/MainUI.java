@@ -108,7 +108,7 @@ public class MainUI extends Application {
 		imageView.setLayoutX(20);
 		imageView.setLayoutY(20);
 		
-		Text text2 = new Text(ProjectFlyAPI.unicodeToString(Variables.loginDatas[1]));
+		Text text2 = new Text(ProjectFlyAPI.unicodeToString(Variables.loginData[1]));
 		text2.setFont(new Font("Microsoft YaHei Bold", 18));
 		text2.setTextAlignment(TextAlignment.CENTER);
 		text2.setFill(Color.web("#FFF"));
@@ -116,7 +116,7 @@ public class MainUI extends Application {
 		text2.setLayoutX(15);
 		text2.setLayoutY(188);
 		
-		Text text3 = new Text("@" + Variables.loginDatas[0]);
+		Text text3 = new Text("@" + Variables.loginData[0]);
 		text3.setFont(new Font("Microsoft YaHei", 14));
 		text3.setTextAlignment(TextAlignment.CENTER);
 		text3.setFill(Color.web("#5F5D5F"));
@@ -124,7 +124,7 @@ public class MainUI extends Application {
 		text3.setLayoutX(15);
 		text3.setLayoutY(217);
 		
-		Text text4 = new Text(Variables.loginDatas[3] + " MEMBER");
+		Text text4 = new Text(Variables.loginData[3] + " MEMBER");
 		text4.setFont(new Font("Microsoft YaHei", 14));
 		text4.setTextAlignment(TextAlignment.CENTER);
 		text4.setFill(Color.web("#5F5D5F"));
@@ -132,10 +132,10 @@ public class MainUI extends Application {
 		text4.setLayoutX(15);
 		text4.setLayoutY(240);
 		
-		Label label = new Label(Variables.loginDatas[4].toUpperCase());
+		Label label = new Label(Variables.loginData[4].toUpperCase());
 		label.setFont(new Font("Microsoft YaHei Bold", 16));
 		label.setTextFill(Color.web("#FFF"));
-		label.setStyle("-fx-background-color: " + Variables.loginDatas[5] + "; -fx-border-width: 1 1 1 1; -fx-border-color: #FFF");
+		label.setStyle("-fx-background-color: " + Variables.loginData[5] + "; -fx-border-width: 1 1 1 1; -fx-border-color: #FFF");
 		label.setAlignment(Pos.CENTER);
 		label.setPrefSize(140, 26);
 		label.setLayoutX(20);
@@ -232,8 +232,10 @@ public class MainUI extends Application {
 		});
 		
 		nextButton.setOnAction(e -> {
-			root.getChildren().remove(4);
-			root.getChildren().add(Panes.pane2());
+			if (Panes.paneShowing == 1) {
+				root.getChildren().remove(4);
+				root.getChildren().add(Panes.pane2());
+			}
 		});
 		
 		menuItem1.setOnAction(e -> {

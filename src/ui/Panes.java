@@ -144,7 +144,7 @@ public class Panes {
 		text1.setLayoutX(10);
 		text1.setLayoutY(107);
 		
-		TextField field1 = new TextField(Variables.loginDatas[1]);
+		TextField field1 = new TextField(Variables.loginData[1]);
 		field1.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field1.setPrefSize(420, 25);
 		field1.setFont(new Font("Microsoft YaHei", 12));
@@ -158,7 +158,7 @@ public class Panes {
 		text2.setLayoutX(10);
 		text2.setLayoutY(142);
 		
-		TextField field2 = new TextField(Variables.loginDatas[0]);
+		TextField field2 = new TextField(Variables.loginData[0]);
 		field2.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field2.setPrefSize(420, 25);
 		field2.setFont(new Font("Microsoft YaHei", 12));
