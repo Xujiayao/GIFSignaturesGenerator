@@ -3,6 +3,7 @@ package ui;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Cursor;
@@ -20,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tools.Avatar;
+import tools.ParseJSON;
 import tools.ProjectFlyAPI;
 import tools.Updates;
 import tools.Variables;
@@ -33,6 +36,8 @@ public class MainUI extends Application {
 	private double yOffset;
 	
 	public static ImageView imageView;
+	
+	public static Button nextButton;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -173,7 +178,7 @@ public class MainUI extends Application {
 		backButton.setLayoutX(217);
 		backButton.setLayoutY(5);
 		
-		Button nextButton = new Button("下一步");
+		nextButton = new Button("下一步");
 		nextButton.setFont(new Font("Microsoft YaHei", 14));
 		nextButton.setStyle("-fx-background-color: #25292E");
 		nextButton.setTextFill(Color.web("#FFF"));
@@ -212,7 +217,10 @@ public class MainUI extends Application {
 		});
 		
 		nextButton.setOnMouseEntered(e -> {
-			root.setCursor(Cursor.HAND);
+			if (!(nextButton.getText().equals("Loading...") || nextButton.getText().equals("加载中..."))) {
+				root.setCursor(Cursor.HAND);
+			}
+			
 			nextButton.setStyle("-fx-background-color: #414449");
 		});
 		
@@ -233,8 +241,19 @@ public class MainUI extends Application {
 		
 		nextButton.setOnAction(e -> {
 			if (Panes.paneShowing == 1) {
-				root.getChildren().remove(4);
-				root.getChildren().add(Panes.pane2());
+				if (Variables.language.equals("English")) {
+					nextButton.setText("Loading...");
+				} else {
+					nextButton.setText("加载中...");
+				}
+				
+				nextButton.setDisable(true);
+				
+				root.setCursor(Cursor.WAIT);
+				
+				new Thread(new ProfilesThread()).start();
+			} else if (Panes.paneShowing == 2) {
+				
 			}
 		});
 		
@@ -264,7 +283,12 @@ public class MainUI extends Application {
 		});
 		
 		root.setOnMouseMoved(e -> {
-			root.setCursor(Cursor.DEFAULT);
+			if (!(nextButton.getText().equals("Loading...") || nextButton.getText().equals("加载中..."))) {
+				root.setCursor(Cursor.DEFAULT);
+			} else {
+				root.setCursor(Cursor.WAIT);
+			}
+			
 			iconView2.setFill(Color.web("#25292E"));
 			iconView3.setFill(Color.web("#25292E"));
 			backButton.setStyle("-fx-background-color: #25292E");
@@ -294,5 +318,42 @@ public class MainUI extends Application {
 		stage.show();
 		
 		System.gc();
+	}
+}
+
+class ProfilesThread implements Runnable {
+	@Override
+	public void run() {
+		if (!Avatar.success) {
+			Platform.runLater(() -> {
+				if (Variables.language.equals("English")) {
+					Dialogs.showErrorDialog("Please wait for the avatar to be successfully processed before proceeding to the next step.", true);
+					MainUI.nextButton.setText("Next");
+				} else {
+					Dialogs.showErrorDialog("请在继续下一步之前先等头像处理成功。", false);
+					MainUI.nextButton.setText("下一步");
+				}
+				
+				MainUI.nextButton.setDisable(false);
+			});
+		} else {
+			String data = ProjectFlyAPI.getProfiles(0);
+			
+			if (data != null) {
+				boolean success = ParseJSON.parseProfileJSON(data);
+				
+				if (success) {
+					data = ProjectFlyAPI.getProfiles(1);
+					
+					if (data != null) {
+						success = ParseJSON.parseProfileJSON(data);
+						
+						if (success) {
+							
+						}
+					}
+				}
+			}
+		}
 	}
 }

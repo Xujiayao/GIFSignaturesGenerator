@@ -1,10 +1,5 @@
 package ui;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
@@ -26,7 +21,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.Main;
 import tools.Avatar;
 import tools.ParseJSON;
 import tools.ProjectFlyAPI;
@@ -309,6 +303,8 @@ public class LoginUI extends Application {
 		root.setOnMouseMoved(e -> {
 			if (!(button.getText().equals("Loading...") || button.getText().equals("加载中..."))) {
 				root.setCursor(Cursor.DEFAULT);
+			} else {
+				root.setCursor(Cursor.WAIT);
 			}
 			
 			iconView2.setFill(Color.web("#25292E"));
@@ -366,46 +362,36 @@ class LoginThread implements Runnable {
 		});
 		
 		if (data != null) {
-			ParseJSON.parseLoginJSON(data);
-			
-			Variables.username = LoginUI.textField.getText();
-			Variables.password = LoginUI.passwordField.getText();			
-			
-			Variables.saveAccount(LoginUI.textField.getText(), LoginUI.passwordField.getText());
-			
-			Platform.runLater(() -> {
-				try {
-					Stage stage = (Stage)LoginUI.button.getScene().getWindow();
-				    stage.close();
-				    
-					new MainUI().start(stage);
-				} catch (Exception e) {
-					Dialogs.showExceptionDialog(e);
-				}
-			});
-			
-			boolean success = Avatar.downloadAvatar();
+			boolean success = ParseJSON.parseLoginJSON(data);
 			
 			if (success) {
-				Avatar.processAvatar();
+				Variables.username = LoginUI.textField.getText();
+				Variables.password = LoginUI.passwordField.getText();			
+				
+				Variables.saveVariables();
 				
 				Platform.runLater(() -> {
-					MainUI.imageView.setImage(new Image("file:" + Variables.avatarFilePath));
-				});
-			} else {
-				try {
-					BufferedImage image = ImageIO.read(new File(Main.class.getResource("/images/no-profile-image.png").toURI()));
-					
-					File file = new File(Variables.dataFolder + "/avatar.png");
-					ImageIO.write(image, "png", file);
-					
-					Variables.avatarFilePath = Variables.dataFolder + "/avatar.png";
-				} catch (Exception e) {
-					Platform.runLater(() -> {
+					try {
+						Stage stage = (Stage)LoginUI.button.getScene().getWindow();
+					    stage.close();
+					    
+						new MainUI().start(stage);
+					} catch (Exception e) {
 						Dialogs.showExceptionDialog(e);
-					});
-				}
+					}
+				});
 			}
+		}
+
+		boolean success = Avatar.downloadAvatar();
+		
+		if (success) {
+			Avatar.processAvatar();
+			
+			Platform.runLater(() -> {
+				MainUI.imageView.setImage(new Image("file:" + Variables.avatarFilePath));
+				Avatar.success = true;
+			});
 		}
 	}
 }

@@ -23,6 +23,8 @@ import ui.Dialogs;
  */
 public class Avatar {
 	
+	public static boolean success = false;
+	
 	public static void processAvatar() {
 		try {
 			BufferedImage image = ImageIO.read(new File(Variables.avatarFilePath));

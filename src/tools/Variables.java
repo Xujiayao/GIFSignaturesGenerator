@@ -1,12 +1,14 @@
 package tools;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+
+import org.dtools.ini.BasicIniFile;
+import org.dtools.ini.BasicIniSection;
+import org.dtools.ini.IniFile;
+import org.dtools.ini.IniFileReader;
+import org.dtools.ini.IniFileWriter;
+import org.dtools.ini.IniItem;
+import org.dtools.ini.IniSection;
 
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -28,17 +30,21 @@ public class Variables {
 	public static double screenWidth;
 	public static double screenHeight;
 	
-	//保存的变量文件夹
-	public static File languageFile;
-	public static File checkUpdatesFile;
-	public static File usernameFile;
-	public static File passwordFile;
+	//保存配置的 File
+	public static File configFile;
+	
+	//保存配置的 IniFile
+	public static IniFile ini;
 	
 	//应用程序配置变量
 	public static String language = "中文";
 	public static String checkUpdates = "true";
 	public static String username = "";
 	public static String password = "";
+	
+	//首选项保存后尚未应用的变量
+	public static String saveLanguage = "中文";
+	public static String saveCheckUpdates = "true";
 
 	//存储头像的文件名
 	public static String avatarFilePath;
@@ -96,81 +102,70 @@ public class Variables {
 		}
 		
 		try {
-			languageFile = new File(dataFolder.toString() + "/language.txt");
-			checkUpdatesFile = new File(dataFolder.toString() + "/checkUpdates.txt");
-			usernameFile = new File(dataFolder.toString() + "/username.txt");
-			passwordFile = new File(dataFolder.toString() + "/password.txt");
+			configFile = new File(dataFolder.toString() + "/config.ini");
 			
-			//应用程序语言
-			if (languageFile.exists() && languageFile.isFile()) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(languageFile), StandardCharsets.UTF_8));
-				
+			initIniFile();
+			
+			if (configFile.exists() && configFile.isFile()) {
 				try {
-					if (bufferedReader.readLine().equals("English")) {
-						language = "English";
+					IniFileReader reader = new IniFileReader(ini, configFile);
+					
+					reader.read();
+					
+					for (int i = 0; i < ini.getNumberOfSections(); i++) {
+						for (IniItem item : ini.getSection(i).getItems()) {
+							switch (item.getName()) {
+							case "CheckUpdates":
+								if (item.getValue().equals("false"))
+									checkUpdates = "false";
+								break;
+							case "Language":
+								if (item.getValue().equals("English"))
+									language = "English";
+								break;
+							case "Username":
+								username = item.getValue();
+								break;
+							case "Password":
+								password = item.getValue();
+								break;
+							}
+						}
 					}
 				} catch (Exception e) {
-					OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(languageFile), StandardCharsets.UTF_8);
-					osw.write("中文");
-					osw.flush();
-					osw.close();
+					Dialogs.showExceptionDialog(e);
 				}
-				
-				bufferedReader.close();
 			} else {
-				languageFile.createNewFile();
-				
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(languageFile), StandardCharsets.UTF_8);
-				osw.write("中文");
-				osw.flush();
-				osw.close();
-			}
-			
-			//是否在每次启动时检查更新
-			if (checkUpdatesFile.exists() && checkUpdatesFile.isFile()) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(checkUpdatesFile), StandardCharsets.UTF_8));
-				
 				try {
-					if (bufferedReader.readLine().equals("false")) {
-						checkUpdates = "false";
-					}
+					IniSection preferences = new BasicIniSection("Preferences");
+					ini.addSection(preferences);
+					
+					IniItem checkUpdates = new IniItem("CheckUpdates");
+					checkUpdates.setValue(true);
+					preferences.addItem(checkUpdates);
+
+					IniItem language = new IniItem("Language");
+					language.setValue("中文");
+					preferences.addItem(language);
+
+					IniSection variables = new BasicIniSection("Variables");
+					ini.addSection(variables);
+					
+					IniItem username = new IniItem("Username");
+					username.setValue("");
+					variables.addItem(username);
+					
+					IniItem password = new IniItem("Password");
+					password.setValue("");
+					variables.addItem(password);
+					
+					IniFileWriter writer = new IniFileWriter(ini, configFile);
+					writer.setIncludeSpaces(true);
+
+					writer.write();
 				} catch (Exception e) {
-					OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(checkUpdatesFile), StandardCharsets.UTF_8);
-					osw.write("true");
-					osw.flush();
-					osw.close();
+					Dialogs.showExceptionDialog(e);
 				}
-				
-				bufferedReader.close();
-			} else {
-				checkUpdatesFile.createNewFile();
-				
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(checkUpdatesFile), StandardCharsets.UTF_8);
-				osw.write("true");
-				osw.flush();
-				osw.close();
-			}
-			
-			//用户名
-			if (usernameFile.exists() && usernameFile.isFile()) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(usernameFile), StandardCharsets.UTF_8));
-				
-				username = bufferedReader.readLine();
-				
-				bufferedReader.close();
-			} else {
-				usernameFile.createNewFile();
-			}
-			
-			//密码
-			if (passwordFile.exists() && passwordFile.isFile()) {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(passwordFile), StandardCharsets.UTF_8));
-				
-				password = bufferedReader.readLine();
-				
-				bufferedReader.close();
-			} else {
-				passwordFile.createNewFile();
 			}
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
@@ -229,7 +224,7 @@ public class Variables {
 		}
 	}
 	
-	public static void savePreferences(String language, String checkUpdates) {
+	public static void saveVariables() {
 		try {
 			File dataFolder1 = new File(System.getProperty("user.home") + "/AppData/Roaming/Java Projects");
 			
@@ -242,86 +237,57 @@ public class Variables {
 				dataFolder.mkdir();
 			}
 			
-			//应用程序语言
-			if (languageFile.exists() && languageFile.isFile()) {
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(languageFile), StandardCharsets.UTF_8);
-				osw.write(language);
-				osw.flush();
-				osw.close();
-			} else {
-				languageFile.createNewFile();
+			try {
+				configFile = new File(dataFolder.toString() + "/config.ini");
 				
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(languageFile), StandardCharsets.UTF_8);
-				osw.write(language);
-				osw.flush();
-				osw.close();
-			}
-			
-			//是否在每次启动时检查更新
-			if (checkUpdatesFile.exists() && checkUpdatesFile.isFile()) {
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(checkUpdatesFile), StandardCharsets.UTF_8);
-				osw.write(checkUpdates);
-				osw.flush();
-				osw.close();
-			} else {
-				checkUpdatesFile.createNewFile();
+				initIniFile();
 				
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(checkUpdatesFile), StandardCharsets.UTF_8);
-				osw.write(checkUpdates);
-				osw.flush();
-				osw.close();
-			}
-		} catch (Exception e) {
-			Dialogs.showExceptionDialog(e);
-		}
-	}
-	
-	public static void saveAccount(String username, String password) {
-		try {
-			File dataFolder1 = new File(System.getProperty("user.home") + "/AppData/Roaming/Java Projects");
-			
-			//分析文件夹是否存在
-			if (!dataFolder1.exists() || !dataFolder1.isDirectory()) {
-				dataFolder1.mkdir();
-			}
-			
-			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
-				dataFolder.mkdir();
-			}
-			
-			//用户名
-			if (usernameFile.exists() && usernameFile.isFile()) {
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(usernameFile), StandardCharsets.UTF_8);
-				osw.write(username);
-				osw.flush();
-				osw.close();
-			} else {
-				usernameFile.createNewFile();
-				
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(usernameFile), StandardCharsets.UTF_8);
-				osw.write(username);
-				osw.flush();
-				osw.close();
-			}
-			
-			//密码
-			if (passwordFile.exists() && passwordFile.isFile()) {
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(passwordFile), StandardCharsets.UTF_8);
-				osw.write(password);
-				osw.flush();
-				osw.close();
-			} else {
-				passwordFile.createNewFile();
-				
-				OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(passwordFile), StandardCharsets.UTF_8);
-				osw.write(password);
-				osw.flush();
-				osw.close();
+				try {
+					IniSection preferences = new BasicIniSection("Preferences");
+					ini.addSection(preferences);
+					
+					IniItem checkUpdates = new IniItem("CheckUpdates");
+					checkUpdates.setValue(Variables.saveCheckUpdates);
+					preferences.addItem(checkUpdates);
+
+					IniItem language = new IniItem("Language");
+					language.setValue(Variables.saveLanguage);
+					preferences.addItem(language);
+
+					IniSection variables = new BasicIniSection("Variables");
+					ini.addSection(variables);
+					
+					IniItem username = new IniItem("Username");
+					username.setValue(Variables.username);
+					variables.addItem(username);
+					
+					IniItem password = new IniItem("Password");
+					password.setValue(Variables.password);
+					variables.addItem(password);
+					
+					IniFileWriter writer = new IniFileWriter(ini, configFile);
+					writer.setIncludeSpaces(true);
+
+					writer.write();
+				} catch (Exception e) {
+					Platform.runLater(() -> {
+						Dialogs.showExceptionDialog(e);
+					});
+				}
+			} catch (Exception e) {
+				Platform.runLater(() -> {
+					Dialogs.showExceptionDialog(e);
+				});
 			}
 		} catch (Exception e) {
 			Platform.runLater(() -> {
 				Dialogs.showExceptionDialog(e);
 			});
 		}
+	}
+	
+	public static void initIniFile() {
+		ini = null;
+		ini = new BasicIniFile(false);
 	}
 }

@@ -267,21 +267,22 @@ public class Dialogs {
 		result.ifPresent(usernamePassword -> {
 			if (result.get().getButtonData() == ButtonData.OK_DONE) {
 				String language;
-		    	String checkUpdates;
 		    	
 		    	if (rb1.isSelected()) {
+		    		Variables.saveLanguage = "中文";
 					language = "中文";
 				} else {
+					Variables.saveLanguage = "English";
 					language = "English";
 				}
 		    	
 		    	if (choiceBox.getValue().equals("从不") || choiceBox.getValue().equals("Never")) {
-					checkUpdates = "false";
+		    		Variables.saveCheckUpdates = "false";
 				} else {
-					checkUpdates = "true";
+					Variables.saveCheckUpdates = "true";
 				}
 		    	
-		    	Variables.savePreferences(language, checkUpdates);
+		    	Variables.saveVariables();
 		    	
 		    	File file = null;
 		    	
