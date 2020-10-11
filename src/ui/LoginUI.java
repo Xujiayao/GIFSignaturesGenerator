@@ -381,17 +381,17 @@ class LoginThread implements Runnable {
 					}
 				});
 			}
-		}
 
-		boolean success = Avatar.downloadAvatar();
-		
-		if (success) {
-			Avatar.processAvatar();
+			success = Avatar.downloadAvatar();
 			
-			Platform.runLater(() -> {
-				MainUI.imageView.setImage(new Image("file:" + Variables.avatarFilePath));
-				Avatar.success = true;
-			});
+			if (success) {
+				Avatar.processAvatar();
+				
+				Platform.runLater(() -> {
+					MainUI.imageView.setImage(new Image("file:" + Variables.avatarFilePath));
+					Avatar.success = true;
+				});
+			}
 		}
 	}
 }
