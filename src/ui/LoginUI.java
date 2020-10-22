@@ -1,5 +1,7 @@
 package ui;
 
+import java.awt.TrayIcon;
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
@@ -24,6 +26,7 @@ import javafx.stage.StageStyle;
 import tools.Avatar;
 import tools.ParseJSON;
 import tools.ProjectFlyAPI;
+import tools.SystemTray;
 import tools.Updates;
 import tools.Variables;
 
@@ -369,6 +372,12 @@ class LoginThread implements Runnable {
 				Variables.password = LoginUI.passwordField.getText();			
 				
 				Variables.saveVariables();
+				
+				if (Variables.language.equals("English")) {
+					SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Login successful", TrayIcon.MessageType.NONE);
+				} else {
+					SystemTray.trayIcon.displayMessage("PF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
+				}
 				
 				Platform.runLater(() -> {
 					try {

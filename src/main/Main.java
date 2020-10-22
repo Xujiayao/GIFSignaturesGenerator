@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.SystemTray;
 import java.util.List;
 
 import javafx.application.Application;
@@ -25,6 +26,10 @@ public class Main extends Application {
 		
 		if (Variables.checkUpdates.equals("true")) {
 			new Thread(new UpdateThread()).start();
+		}
+		
+		if (SystemTray.isSupported()) {
+			tools.SystemTray.displayTray();
 		}
 	}
 	

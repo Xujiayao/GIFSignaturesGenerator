@@ -1,5 +1,7 @@
 package ui;
 
+import java.awt.TrayIcon;
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
@@ -24,6 +26,7 @@ import javafx.stage.StageStyle;
 import tools.Avatar;
 import tools.ParseJSON;
 import tools.ProjectFlyAPI;
+import tools.SystemTray;
 import tools.Updates;
 import tools.Variables;
 
@@ -242,16 +245,22 @@ public class MainUI extends Application {
 		nextButton.setOnAction(e -> {
 			if (Panes.paneShowing == 1) {
 				if (Variables.language.equals("English")) {
-					nextButton.setText("Loading...");
+					SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Do not click me! This part is not finished yet (￣▽￣)\"", TrayIcon.MessageType.NONE);
 				} else {
-					nextButton.setText("加载中...");
+					SystemTray.trayIcon.displayMessage("PF签名图生成工具", "别点我！这部分还没做完呢(￣▽￣)\"", TrayIcon.MessageType.NONE);
 				}
 				
-				nextButton.setDisable(true);
-				
-				root.setCursor(Cursor.WAIT);
-				
-				new Thread(new ProfilesThread()).start();
+//				if (Variables.language.equals("English")) {
+//					nextButton.setText("Loading...");
+//				} else {
+//					nextButton.setText("加载中...");
+//				}
+//				
+//				nextButton.setDisable(true);
+//				
+//				root.setCursor(Cursor.WAIT);
+//				
+//				new Thread(new ProfilesThread()).start();
 			} else if (Panes.paneShowing == 2) {
 				
 			}
