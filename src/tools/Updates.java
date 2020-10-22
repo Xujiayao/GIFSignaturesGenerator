@@ -81,10 +81,10 @@ public class Updates {
 			
 			if (Variables.language.equals("中文")) {
 				fileChooser.setTitle("保存新版本");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JAR 文件", "*.jar"));
+	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("应用程序", "*.exe"));
 			} else if (Variables.language.equals("English")) {
 				fileChooser.setTitle("Save new version");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Java Archive", "*.jar"));
+	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Application", "*.exe"));
 			}
 			
 			File file = fileChooser.showSaveDialog(new Stage());
