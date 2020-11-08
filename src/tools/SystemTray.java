@@ -25,6 +25,13 @@ public class SystemTray {
 	public static TrayIcon trayIcon;
 
 	public static void displayTray() {
+		new Thread(new DisplayTrayThread()).start();
+	}
+}
+
+class DisplayTrayThread implements Runnable {
+	@Override
+	public void run() {
 		try {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -34,7 +41,7 @@ public class SystemTray {
 				});
 			}
 			
-			tray = java.awt.SystemTray.getSystemTray();
+			SystemTray.tray = java.awt.SystemTray.getSystemTray();
 
 			List<BufferedImage> image = null;
 			try {
@@ -59,10 +66,10 @@ public class SystemTray {
 			JMenuItem item4 = new JMenuItem("退出程序");
 			menu.add(item4);
 
-			trayIcon = new TrayIcon(image.get(image.size() - 1), "PF签名图生成工具");
-			tray.add(trayIcon);
+			SystemTray.trayIcon = new TrayIcon(image.get(image.size() - 1), "PF签名图生成工具");
+			SystemTray.tray.add(SystemTray.trayIcon);
 
-			trayIcon.addMouseListener(new MouseAdapter() {
+			SystemTray.trayIcon.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					if (e.getButton() == 3) {
@@ -108,9 +115,9 @@ public class SystemTray {
 			});
 			
 			if (Variables.language.equals("English")) {
-				trayIcon.displayMessage("PF Signatures Generator", "PF Signatures Generator is running", TrayIcon.MessageType.NONE);
+				SystemTray.trayIcon.displayMessage("PF Signatures Generator", "PF Signatures Generator is running", TrayIcon.MessageType.NONE);
 			} else {
-				trayIcon.displayMessage("PF签名图生成工具", "PF签名图生成工具正在运行", TrayIcon.MessageType.NONE);
+				SystemTray.trayIcon.displayMessage("PF签名图生成工具", "PF签名图生成工具正在运行", TrayIcon.MessageType.NONE);
 			}
 		} catch (Exception e) {
 			Platform.runLater(() -> {
