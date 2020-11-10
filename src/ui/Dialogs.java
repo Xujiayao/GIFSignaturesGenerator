@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import tools.Updates;
+import tools.Update;
 import tools.Variables;
 
 /**
@@ -53,7 +53,7 @@ public class Dialogs {
 		pane.setPrefWidth(400);
 		pane.setPrefHeight(55);
 		
-		text = new Text("连接中（" + Updates.downloadProgress + "%）");
+		text = new Text("连接中 (0%)");
 		text.setFont(new Font("Microsoft YaHei", 14));
 		text.setFill(Color.web("#323232"));
 		text.setLayoutX(10);
@@ -69,9 +69,9 @@ public class Dialogs {
 		pane.getChildren().addAll(text, bar);
 		
 		if (Variables.language.equals("English")) {
-			dialog.setTitle("Download Updates");
+			dialog.setTitle("Download Update");
 			
-			text.setText("Connecting (" + Updates.downloadProgress + "%)");
+			text.setText("Connecting (0%)");
 		}
 		
 		dialog.getDialogPane().setContent(pane);
@@ -258,7 +258,7 @@ public class Dialogs {
 		button2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Updates.start(false);
+				Update.start(false);
 			}
 		});
 		

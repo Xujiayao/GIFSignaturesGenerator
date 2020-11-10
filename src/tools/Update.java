@@ -21,22 +21,24 @@ import ui.Dialogs;
 /**
  * @author Xujiayao
  */
-public class Updates {
+public class Update {
 	
-	public static double downloadProgress = 0.0;
+	public static double downloadProgress = 0;
+	
+	public static String[] datas;
 	
 	public static void start(boolean auto) {
-		String data = Updates.downloadJSON("https://cdn.jsdelivr.net/gh/Xujiayao147/PFSignaturesGenerator/update/version.json");
+		String data = Update.downloadJSON("https://cdn.jsdelivr.net/gh/Xujiayao147/PFSignaturesGenerator/update/version.json");
 		
 		try {
 			if (data == null) {
-				data = Updates.downloadJSON("https://raw.githubusercontent.com/Xujiayao147/PFSignaturesGenerator/master/update/version.json");
+				data = Update.downloadJSON("https://raw.githubusercontent.com/Xujiayao147/PFSignaturesGenerator/master/update/version.json");
 			}
 		} catch (Exception e) {
-			data = Updates.downloadJSON("https://cdn.jsdelivr.net/gh/Xujiayao147/PFSignaturesGenerator/update/version.json");
+			data = Update.downloadJSON("https://cdn.jsdelivr.net/gh/Xujiayao147/PFSignaturesGenerator/update/version.json");
 		}
 		
-		String[] datas = parseData(data);
+		datas = parseData(data);
 		
 		Platform.runLater(() -> {
 			if (datas[0].equals(Variables.version)) {
@@ -62,7 +64,7 @@ public class Updates {
 				if (response) {
 					Dialogs.showDownloadingDialog();
 					
-					new Thread(new DownloadThread(datas[3], datas[4])).start();
+					new Thread(new DownloadThread(datas[4], datas[5])).start();
 				}
 			}
 		});
@@ -81,10 +83,10 @@ public class Updates {
 			
 			if (Variables.language.equals("中文")) {
 				fileChooser.setTitle("保存新版本");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JAR 文件", "*.jar"));
+	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("应用程序", "*.exe"));
 			} else if (Variables.language.equals("English")) {
 				fileChooser.setTitle("Save new version");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Java Archive", "*.jar"));
+	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Application", "*.exe"));
 			}
 			
 			File file = fileChooser.showSaveDialog(new Stage());
@@ -105,7 +107,9 @@ public class Updates {
 		return null;
 	}
 	
-	static byte[] downloadUpdates(String link) {
+	static byte[] downloadUpdate(String link) {
+		downloadProgress = 0;
+		
 		byte[] data = null;
 		
 		try {
@@ -123,9 +127,9 @@ public class Updates {
 				Dialogs.bar.setProgress(1);
 				
 				if (Variables.language.equals("English")) {
-					Dialogs.text.setText("Finished (100.0%)");
+					Dialogs.text.setText("Finished (100%)");
 				} else {
-					Dialogs.text.setText("下载完成（100.0%）");
+					Dialogs.text.setText("完成 (100%)");
 				}
 			});
 		} catch (Exception e) {
@@ -142,31 +146,30 @@ public class Updates {
 			byte[] buffer = new byte[1];
 			int len = 0;
 			
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			double temp1 = 0;
 			
-			double i = length / 100;
-			int a = 1;
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			
 			while ((len = inputStream.read(buffer)) != -1) {
 				bos.write(buffer, 0, len);
 				
-				if (a - i >= 0) {
-					a = 1;
-					
-					downloadProgress++;
-					
+				downloadProgress = downloadProgress + (100 / Double.parseDouble(datas[3]));
+				
+				double temp2 = Double.parseDouble(String.format("%.1f", downloadProgress));
+				
+				if (temp1 != temp2) {
 					Platform.runLater(() -> {
 						Dialogs.bar.setProgress(downloadProgress / 100);
 						
 						if (Variables.language.equals("English")) {
-							Dialogs.text.setText("Downloading (" + downloadProgress + "%)");
+							Dialogs.text.setText("Downloading (" + temp2 + "%)");
 						} else {
-							Dialogs.text.setText("下载中（" + downloadProgress + "%）");
+							Dialogs.text.setText("下载中 (" + temp2 + "%)");
 						}
 					});
 				}
 				
-				a++;
+				temp1 = temp2;
 			}
 			
 			bos.close();
@@ -181,7 +184,7 @@ public class Updates {
 	}
 	
 	static String[] parseData(String data) {
-		String[] datas = new String[5];
+		String[] datas = new String[6];
 		
 		try {
 			data = data.substring(12);
@@ -193,11 +196,14 @@ public class Updates {
 			data = data.substring(data.indexOf("\"")).substring(12);
 			datas[2] = data.substring(0, data.indexOf("\""));
 			
-			data = data.substring(data.indexOf("\"")).substring(11);
+			data = data.substring(data.indexOf("\"")).substring(14);
 			datas[3] = data.substring(0, data.indexOf("\""));
 			
 			data = data.substring(data.indexOf("\"")).substring(11);
 			datas[4] = data.substring(0, data.indexOf("\""));
+			
+			data = data.substring(data.indexOf("\"")).substring(11);
+			datas[5] = data.substring(0, data.indexOf("\""));
 		} catch (Exception e) {
 			Platform.runLater(() -> {
 				Dialogs.showExceptionDialog(e);
@@ -242,20 +248,20 @@ class DownloadThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			byte[] datas = Updates.downloadUpdates(link);
+			byte[] datas = Update.downloadUpdate(link);
 			
 			byte[] data[] = {datas};
 			
 			try {
 				if (data[0] == null) {
-					data[0] = Updates.downloadUpdates(altLink);
+					data[0] = Update.downloadUpdate(altLink);
 				}
 			} catch (Exception e) {
-				data[0] = Updates.downloadUpdates(altLink);
+				data[0] = Update.downloadUpdate(altLink);
 			}
 			
 			Platform.runLater(() -> {
-				File file = Updates.saveFile(data[0]);
+				File file = Update.saveFile(data[0]);
 				
 				if (file != null) {
 					try {

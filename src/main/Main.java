@@ -6,7 +6,7 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import tools.Updates;
+import tools.Update;
 import tools.Variables;
 import ui.Dialogs;
 import ui.LoginUI;
@@ -57,6 +57,6 @@ public class Main extends Application {
 class UpdateThread implements Runnable {
 	@Override
 	public void run() {
-		Updates.start(true);
+		Update.start(true);
 	}
 }

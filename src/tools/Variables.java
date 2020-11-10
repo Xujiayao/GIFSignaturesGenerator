@@ -1,6 +1,8 @@
 package tools;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 import org.dtools.ini.BasicIniFile;
 import org.dtools.ini.BasicIniSection;
@@ -13,6 +15,7 @@ import org.dtools.ini.IniSection;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
+import net.sf.image4j.codec.ico.ICODecoder;
 import ui.Dialogs;
 
 /**
@@ -60,6 +63,9 @@ public class Variables {
 	
 	//解析过的 PassportAPI 返回的数据
 	public static String[] passportData = new String[7];
+	
+	//软件图标
+	public static List<BufferedImage> icon = null;
 	
 	public static void init() {
 		try {
@@ -167,6 +173,12 @@ public class Variables {
 					Dialogs.showExceptionDialog(e);
 				}
 			}
+		} catch (Exception e) {
+			Dialogs.showExceptionDialog(e);
+		}
+		
+		try {
+			icon = ICODecoder.read(Variables.class.getResourceAsStream("/images/icon.ico"));
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 		}

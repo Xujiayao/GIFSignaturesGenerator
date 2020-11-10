@@ -27,7 +27,7 @@ import tools.Avatar;
 import tools.ParseJSON;
 import tools.ProjectFlyAPI;
 import tools.SystemTray;
-import tools.Updates;
+import tools.Update;
 import tools.Variables;
 
 /**
@@ -271,7 +271,7 @@ public class MainUI extends Application {
 		});
 		
 		menuItem2.setOnAction(e -> {
-			Updates.start(false);
+			Update.start(false);
 		});
 		
 		menuItem3.setOnAction(e -> {

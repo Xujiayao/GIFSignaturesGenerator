@@ -5,15 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.util.List;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.UIManager;
 
 import javafx.application.Platform;
-import net.sf.image4j.codec.ico.ICODecoder;
 import ui.Dialogs;
 
 /**
@@ -42,16 +39,7 @@ class DisplayTrayThread implements Runnable {
 			}
 			
 			SystemTray.tray = java.awt.SystemTray.getSystemTray();
-
-			List<BufferedImage> image = null;
-			try {
-				image = ICODecoder.read(SystemTray.class.getResourceAsStream("/images/icon.ico"));
-			} catch (Exception e) {
-				Platform.runLater(() -> {
-					Dialogs.showExceptionDialog(e);
-				});
-			}
-
+			
 			JPopupMenu menu = new JPopupMenu();
 
 			JMenuItem item1 = new JMenuItem("首选项");
@@ -66,7 +54,7 @@ class DisplayTrayThread implements Runnable {
 			JMenuItem item4 = new JMenuItem("退出程序");
 			menu.add(item4);
 
-			SystemTray.trayIcon = new TrayIcon(image.get(image.size() - 1), "PF签名图生成工具");
+			SystemTray.trayIcon = new TrayIcon(Variables.icon.get(Variables.icon.size() - 1), "PF签名图生成工具");
 			SystemTray.tray.add(SystemTray.trayIcon);
 
 			SystemTray.trayIcon.addMouseListener(new MouseAdapter() {
@@ -94,7 +82,7 @@ class DisplayTrayThread implements Runnable {
 			item2.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Updates.start(false);
+					Update.start(false);
 				}
 			});
 
