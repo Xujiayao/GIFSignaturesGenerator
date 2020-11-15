@@ -51,10 +51,20 @@ class DisplayTrayThread implements Runnable {
 			JMenuItem item3 = new JMenuItem("关于");
 			menu.add(item3);
 
-			JMenuItem item4 = new JMenuItem("退出程序");
+			JMenuItem item4 = new JMenuItem("退出");
 			menu.add(item4);
-
-			SystemTray.trayIcon = new TrayIcon(Variables.icon.get(Variables.icon.size() - 1), "PF签名图生成工具");
+			
+			if (Variables.language.equals("English")) {
+				item1.setText("Preferences");
+				item2.setText("Check for Updates");
+				item3.setText("About");
+				item4.setText("Quit");
+				
+				SystemTray.trayIcon = new TrayIcon(Variables.icon.get(Variables.icon.size() - 1), "PF Signatures Generator");
+			} else {
+				SystemTray.trayIcon = new TrayIcon(Variables.icon.get(Variables.icon.size() - 1), "PF签名图生成工具");
+			}
+			
 			SystemTray.tray.add(SystemTray.trayIcon);
 
 			SystemTray.trayIcon.addMouseListener(new MouseAdapter() {
