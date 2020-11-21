@@ -81,6 +81,8 @@ public class Update {
 				fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
 			}
 			
+			fileChooser.setInitialFileName("Update_PFSignaturesGenerator.exe");
+			
 			if (Variables.language.equals("中文")) {
 				fileChooser.setTitle("保存新版本");
 	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("应用程序", "*.exe"));
