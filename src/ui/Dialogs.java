@@ -215,13 +215,13 @@ public class Dialogs {
 			choiceBox.getItems().addAll("On every start", "Never");
 			choiceBox.setValue("On every start");
 			
-			if (Variables.checkUpdates.equals("false")) {
+			if (Variables.checkUpdates == false) {
 				choiceBox.setValue("Never");
 			}
 			
 			button2.setText("Check now");
 		} else {
-			if (Variables.checkUpdates.equals("false")) {
+			if (Variables.checkUpdates == false) {
 				choiceBox.setValue("从不");
 			}
 		}
@@ -277,9 +277,9 @@ public class Dialogs {
 				}
 		    	
 		    	if (choiceBox.getValue().equals("从不") || choiceBox.getValue().equals("Never")) {
-		    		Variables.saveCheckUpdates = "false";
+		    		Variables.saveCheckUpdates = false;
 				} else {
-					Variables.saveCheckUpdates = "true";
+					Variables.saveCheckUpdates = true;
 				}
 		    	
 		    	Variables.saveVariables();

@@ -18,22 +18,34 @@ public class ProjectFlyAPI {
 	
 	public static String unicodeToString(String unicode) {
 		StringBuffer buffer = new StringBuffer();
-		int maxLoop = unicode.length();  
-		for (int i = 0; i < maxLoop; i++) {  
-			if (unicode.charAt(i) == '\\') {  
-				if ((i < maxLoop - 5) && ((unicode.charAt(i + 1) == 'u') || (unicode.charAt(i + 1) == 'U'))) {
-					try {  
-						buffer.append((char) Integer.parseInt(  
-								unicode.substring(i + 2, i + 6), 16));  
-						i += 5;  
-					} catch (NumberFormatException e) {  
-						buffer.append(unicode.charAt(i));  
+		
+		try {
+			int maxLoop = unicode.length();  
+			
+			for (int i = 0; i < maxLoop; i++) {
+				if (unicode.substring(i).startsWith("\\n")) {
+					i++;
+					continue;
+				} else if (unicode.charAt(i) == '\\') {  
+					if ((i < maxLoop - 5) && ((unicode.charAt(i + 1) == 'u') || (unicode.charAt(i + 1) == 'U'))) {
+						try {  
+							buffer.append((char) Integer.parseInt(  
+									unicode.substring(i + 2, i + 6), 16));  
+							i += 5;  
+						} catch (NumberFormatException e) {  
+							buffer.append(unicode.charAt(i));  
+						}
 					}
-				}
-			} else {  
-				buffer.append(unicode.charAt(i));  
-			}  
-		}  
+				} else {  
+					buffer.append(unicode.charAt(i));  
+				}  
+			}
+		} catch (Exception e) {
+			Platform.runLater(() -> {
+				Dialogs.showExceptionDialog(e);
+			});
+		}
+		
 		return buffer.toString();
 	}
 	

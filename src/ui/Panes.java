@@ -4,6 +4,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import tools.Variables;
@@ -70,7 +71,7 @@ public class Panes {
 		text3.setLayoutX(10);
 		text3.setLayoutY(178);
 		
-		TextField field3 = new TextField("70:18:26");
+		TextField field3 = new TextField(Variables.profileData[3]);
 		field3.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field3.setPrefSize(420, 25);
 		field3.setFont(new Font("Microsoft YaHei", 12));
@@ -84,7 +85,7 @@ public class Panes {
 		text4.setLayoutX(10);
 		text4.setLayoutY(213);
 		
-		TextField field4 = new TextField("33");
+		TextField field4 = new TextField(Variables.profileData[2]);
 		field4.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field4.setPrefSize(420, 25);
 		field4.setFont(new Font("Microsoft YaHei", 12));
@@ -98,7 +99,7 @@ public class Panes {
 		text5.setLayoutX(10);
 		text5.setLayoutY(248);
 		
-		TextField field5 = new TextField("没有个性，如何签名？");
+		TextField field5 = new TextField(Variables.profileData[0]);
 		field5.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field5.setPrefSize(420, 25);
 		field5.setFont(new Font("Microsoft YaHei", 12));
@@ -111,7 +112,7 @@ public class Panes {
 		text6.setLayoutX(10);
 		text6.setLayoutY(282);
 		
-		TextField field6 = new TextField("B739 / B-2514");
+		TextField field6 = new TextField(Variables.profileData[5] + " / " +  Variables.profileData[4]);
 		field6.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field6.setPrefSize(420, 25);
 		field6.setFont(new Font("Microsoft YaHei", 12));
@@ -125,7 +126,7 @@ public class Panes {
 		text7.setLayoutX(10);
 		text7.setLayoutY(318);
 		
-		TextField field7 = new TextField("ZGGG/CAN");
+		TextField field7 = new TextField("HAVE NOT DONE YET");
 		field7.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field7.setPrefSize(420, 25);
 		field7.setFont(new Font("Microsoft YaHei", 12));
@@ -139,7 +140,7 @@ public class Panes {
 		text8.setLayoutX(10);
 		text8.setLayoutY(353);
 		
-		TextField field8 = new TextField("ZGGG/CAN - ZGSZ/SZX");
+		TextField field8 = new TextField("HAVE NOT DONE YET");
 		field8.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field8.setPrefSize(420, 25);
 		field8.setFont(new Font("Microsoft YaHei", 12));
@@ -153,7 +154,7 @@ public class Panes {
 		text9.setLayoutX(10);
 		text9.setLayoutY(388);
 		
-		TextField field9 = new TextField("1%");
+		TextField field9 = new TextField("HAVE NOT DONE YET");
 		field9.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field9.setPrefSize(420, 25);
 		field9.setFont(new Font("Microsoft YaHei", 12));
@@ -167,7 +168,7 @@ public class Panes {
 		text10.setLayoutX(10);
 		text10.setLayoutY(423);
 		
-		TextField field10 = new TextField("-157 fpm");
+		TextField field10 = new TextField(Variables.profileData[6] + " fpm");
 		field10.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field10.setPrefSize(420, 25);
 		field10.setFont(new Font("Microsoft YaHei", 12));
@@ -181,7 +182,7 @@ public class Panes {
 		text11.setLayoutX(10);
 		text11.setLayoutY(458);
 		
-		TextField field11 = new TextField("5 / 20");
+		TextField field11 = new TextField(Variables.profileData[1]);
 		field11.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field11.setPrefSize(420, 25);
 		field11.setFont(new Font("Microsoft YaHei", 12));
@@ -267,18 +268,20 @@ public class Panes {
 		text6.setLayoutX(35);
 		text6.setLayoutY(279);
 		
-		RadioButton rb2 = new RadioButton("简易");
+		RadioButton rb2 = new RadioButton("简易（将在新版本上线）");
 		rb2.setToggleGroup(group);
 		rb2.setStyle("-fx-text-fill: #000000");
 		rb2.setFont(new Font("Microsoft YaHei", 14));
 		rb2.setLayoutX(10);
 		rb2.setLayoutY(320);
+		rb2.setDisable(true);
 		
 		Text text7 = new Text("只需几个简易的步骤即可生成 projectFLY 签名图。");
 		text7.setFont(new Font("Microsoft YaHei", 14));
 		text7.setWrappingWidth(575);
 		text7.setLayoutX(35);
 		text7.setLayoutY(363);
+		text7.setFill(Color.web("#999999"));
 		
 		pane.getChildren().addAll(text1, text2, text3, text4, text5, rb1, text6, rb2, text7);
 		
@@ -295,7 +298,7 @@ public class Panes {
 			rb1.setText("Custom (Recommended)");
 			text6.setText("Edit the texts in the signature, choose among different themes. Recommended for all users.");
 
-			rb2.setText("Simple");
+			rb2.setText("Simple (Will be available in the new version)");
 			text7.setText("Generate projectFLY signatures in a few simple steps.");
 		}
 		

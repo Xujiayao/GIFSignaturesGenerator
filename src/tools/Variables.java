@@ -41,13 +41,13 @@ public class Variables {
 	
 	//应用程序配置变量
 	public static String language = "中文";
-	public static String checkUpdates = "true";
+	public static boolean checkUpdates = true;
 	public static String username = "";
 	public static String password = "";
 	
 	//首选项保存后尚未应用的变量
 	public static String saveLanguage = "中文";
-	public static String saveCheckUpdates = "true";
+	public static boolean saveCheckUpdates = true;
 
 	//存储头像的文件名
 	public static String avatarFilePath;
@@ -122,12 +122,16 @@ public class Variables {
 						for (IniItem item : ini.getSection(i).getItems()) {
 							switch (item.getName()) {
 							case "CheckUpdates":
-								if (item.getValue().equals("false"))
-									checkUpdates = "false";
+								if (item.getValue().equals("false")) {
+									checkUpdates = false;
+									saveCheckUpdates = false;
+								}
 								break;
 							case "Language":
-								if (item.getValue().equals("English"))
+								if (item.getValue().equals("English")) {
 									language = "English";
+									saveLanguage = "English";
+								}
 								break;
 							case "Username":
 								username = item.getValue();

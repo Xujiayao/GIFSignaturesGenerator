@@ -24,7 +24,7 @@ public class Main extends Application {
 		
 		new LoginUI().start(stage);
 		
-		if (Variables.checkUpdates.equals("true")) {
+		if (Variables.checkUpdates == true) {
 			new Thread(new UpdateThread()).start();
 		}
 		

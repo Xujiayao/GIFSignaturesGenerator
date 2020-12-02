@@ -42,9 +42,11 @@ public class MainUI extends Application {
 	
 	public static Button nextButton;
 	
+	public static Pane root;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
-		Pane root = new Pane();
+		root = new Pane();
 		root.setPrefSize(800, 600);
 		root.setStyle("-fx-background-color: #FFF");
 		
@@ -245,22 +247,16 @@ public class MainUI extends Application {
 		nextButton.setOnAction(e -> {
 			if (Panes.paneShowing == 1) {
 				if (Variables.language.equals("English")) {
-					SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Do not click me! This part is not finished yet (￣▽￣)\"", TrayIcon.MessageType.NONE);
+					nextButton.setText("Loading...");
 				} else {
-					SystemTray.trayIcon.displayMessage("PF签名图生成工具", "别点我！这部分还没做完呢(￣▽￣)\"", TrayIcon.MessageType.NONE);
+					nextButton.setText("加载中...");
 				}
 				
-//				if (Variables.language.equals("English")) {
-//					nextButton.setText("Loading...");
-//				} else {
-//					nextButton.setText("加载中...");
-//				}
-//				
-//				nextButton.setDisable(true);
-//				
-//				root.setCursor(Cursor.WAIT);
-//				
-//				new Thread(new ProfilesThread()).start();
+				nextButton.setDisable(true);
+				
+				root.setCursor(Cursor.WAIT);
+				
+				new Thread(new ProfilesThread()).start();
 			} else if (Panes.paneShowing == 2) {
 				
 			}
@@ -352,15 +348,35 @@ class ProfilesThread implements Runnable {
 				boolean success = ParseJSON.parseProfileJSON(data);
 				
 				if (success) {
-					data = ProjectFlyAPI.getProfiles(1);
-					
-					if (data != null) {
-						success = ParseJSON.parseProfileJSON(data);
-						
-						if (success) {
-							
-						}
+					if (Variables.language.equals("English")) {
+						SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Parse successfully", TrayIcon.MessageType.NONE);
+					} else {
+						SystemTray.trayIcon.displayMessage("PF签名图生成工具", "解析成功", TrayIcon.MessageType.NONE);
 					}
+					
+					Platform.runLater(() -> {
+						if (Variables.language.equals("English")) {
+							MainUI.nextButton.setText("Next");
+						} else {
+							MainUI.nextButton.setText("下一步");
+						}
+						
+						MainUI.nextButton.setDisable(false);
+						
+						MainUI.root.setCursor(Cursor.DEFAULT);
+						
+						MainUI.root.getChildren().remove(4);
+						MainUI.root.getChildren().add(Panes.pane2());
+					});
+				//	data = ProjectFlyAPI.getProfiles(1);
+					
+				//	if (data != null) {
+				//		success = ParseJSON.parseProfileJSON(data);
+						
+				//		if (success) {
+							
+				//		}
+				//	}
 				}
 			}
 		}
