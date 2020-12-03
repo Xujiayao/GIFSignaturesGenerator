@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -259,6 +260,26 @@ public class MainUI extends Application {
 				new Thread(new ProfilesThread()).start();
 			} else if (Panes.paneShowing == 2) {
 				
+			}
+		});
+		
+		root.setOnKeyReleased(e -> {
+			if (e.getCode().equals(KeyCode.ENTER)) {
+				if (Panes.paneShowing == 1) {
+					if (Variables.language.equals("English")) {
+						nextButton.setText("Loading...");
+					} else {
+						nextButton.setText("加载中...");
+					}
+					
+					nextButton.setDisable(true);
+					
+					root.setCursor(Cursor.WAIT);
+					
+					new Thread(new ProfilesThread()).start();
+				} else if (Panes.paneShowing == 2) {
+					
+				}
 			}
 		});
 		
