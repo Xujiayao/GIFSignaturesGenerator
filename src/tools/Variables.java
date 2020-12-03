@@ -62,7 +62,7 @@ public class Variables {
 	public static String[] logbookData = new String[7];
 	
 	//解析过的 PassportAPI 返回的数据
-	public static String[] passportData = new String[7];
+	public static String passportData;
 	
 	//软件图标
 	public static List<BufferedImage> icon = null;

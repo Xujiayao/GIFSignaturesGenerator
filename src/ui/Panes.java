@@ -154,7 +154,7 @@ public class Panes {
 		text9.setLayoutX(10);
 		text9.setLayoutY(388);
 		
-		TextField field9 = new TextField("HAVE NOT DONE YET");
+		TextField field9 = new TextField(Variables.passportData + "%");
 		field9.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field9.setPrefSize(420, 25);
 		field9.setFont(new Font("Microsoft YaHei", 12));

@@ -8,6 +8,20 @@ import ui.Dialogs;
  */
 public class ParseJSON {
 	
+	public static boolean parsePassportJSON(String data) {
+		try {
+			Variables.passportData = String.format("%.1f", ((double) findStrOccurrence("\"visited\":1", data) * 100 / (double) findStrOccurrence("\"visited\":", data)));
+			
+			return true;
+		} catch (Exception e) {
+			Platform.runLater(() -> {
+				Dialogs.showExceptionDialog(e);
+			});
+		}
+		
+		return false;
+	}
+	
 	public static boolean parseProfileJSON(String data) {
 		try {
 			String[] datas = new String[7];

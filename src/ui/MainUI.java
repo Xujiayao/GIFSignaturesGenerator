@@ -347,36 +347,33 @@ class ProfilesThread implements Runnable {
 			if (data != null) {
 				boolean success = ParseJSON.parseProfileJSON(data);
 				
-				if (success) {
-					if (Variables.language.equals("English")) {
-						SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Parse successfully", TrayIcon.MessageType.NONE);
-					} else {
-						SystemTray.trayIcon.displayMessage("PF签名图生成工具", "解析成功", TrayIcon.MessageType.NONE);
-					}
+				data = ProjectFlyAPI.getProfiles(2);
+				
+				if (data != null) {
+					success = ParseJSON.parsePassportJSON(data);
 					
-					Platform.runLater(() -> {
+					if (success) {
 						if (Variables.language.equals("English")) {
-							MainUI.nextButton.setText("Next");
+							SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Parse successfully", TrayIcon.MessageType.NONE);
 						} else {
-							MainUI.nextButton.setText("下一步");
+							SystemTray.trayIcon.displayMessage("PF签名图生成工具", "解析成功", TrayIcon.MessageType.NONE);
 						}
 						
-						MainUI.nextButton.setDisable(false);
-						
-						MainUI.root.setCursor(Cursor.DEFAULT);
-						
-						MainUI.root.getChildren().remove(4);
-						MainUI.root.getChildren().add(Panes.pane2());
-					});
-				//	data = ProjectFlyAPI.getProfiles(1);
-					
-				//	if (data != null) {
-				//		success = ParseJSON.parseProfileJSON(data);
-						
-				//		if (success) {
+						Platform.runLater(() -> {
+							if (Variables.language.equals("English")) {
+								MainUI.nextButton.setText("Next");
+							} else {
+								MainUI.nextButton.setText("下一步");
+							}
 							
-				//		}
-				//	}
+							MainUI.nextButton.setDisable(false);
+							
+							MainUI.root.setCursor(Cursor.DEFAULT);
+							
+							MainUI.root.getChildren().remove(4);
+							MainUI.root.getChildren().add(Panes.pane2());
+						});
+					}
 				}
 			}
 		}
