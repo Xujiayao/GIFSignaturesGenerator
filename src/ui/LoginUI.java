@@ -64,9 +64,8 @@ public class LoginUI extends Application {
 		leftPane.setStyle("-fx-background-color: #25292E");
 		root.setLeft(leftPane);
 		
-		FontAwesomeIconView iconView1 = new FontAwesomeIconView(FontAwesomeIcon.GITHUB);
+		FontAwesomeIconView iconView1 = new FontAwesomeIconView(FontAwesomeIcon.GITHUB, "75");
 		iconView1.setFill(Color.web("#FFF"));
-		iconView1.setSize("75");
 		iconView1.setLayoutX(143);
 		iconView1.setLayoutY(243);
 		
@@ -89,9 +88,8 @@ public class LoginUI extends Application {
 		rightPane.setStyle("-fx-background-color: #FFF");
 		root.setRight(rightPane);
 		
-		FontAwesomeIconView iconView2 = new FontAwesomeIconView(FontAwesomeIcon.BARS);
+		FontAwesomeIconView iconView2 = new FontAwesomeIconView(FontAwesomeIcon.BARS, "14");
 		iconView2.setFill(Color.web("#25292E"));
-		iconView2.setSize("14");
 		
 		Button barsButton = new Button();
 		barsButton.setStyle("-fx-background-color: transparent");
@@ -100,9 +98,8 @@ public class LoginUI extends Application {
 		barsButton.setLayoutX(286);
 		barsButton.setLayoutY(2);
 		
-		FontAwesomeIconView iconView3 = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
+		FontAwesomeIconView iconView3 = new FontAwesomeIconView(FontAwesomeIcon.CLOSE, "15");
 		iconView3.setFill(Color.web("#25292E"));
-		iconView3.setSize("15");
 		
 		Button closeButton = new Button();
 		closeButton.setStyle("-fx-background-color: transparent");

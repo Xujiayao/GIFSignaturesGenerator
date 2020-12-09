@@ -69,9 +69,8 @@ public class MainUI extends Application {
 		topPane.setStyle("-fx-background-color: #FFF");
 		root.getChildren().add(topPane);
 		
-		FontAwesomeIconView iconView1 = new FontAwesomeIconView(FontAwesomeIcon.GITHUB);
+		FontAwesomeIconView iconView1 = new FontAwesomeIconView(FontAwesomeIcon.GITHUB, "30");
 		iconView1.setFill(Color.web("#25292E"));
-		iconView1.setSize("30");
 		iconView1.setLayoutX(7);
 		iconView1.setLayoutY(31);
 		
@@ -81,9 +80,8 @@ public class MainUI extends Application {
 		text1.setLayoutX(43);
 		text1.setLayoutY(28);
 
-		FontAwesomeIconView iconView2 = new FontAwesomeIconView(FontAwesomeIcon.BARS);
+		FontAwesomeIconView iconView2 = new FontAwesomeIconView(FontAwesomeIcon.BARS, "14");
 		iconView2.setFill(Color.web("#25292E"));
-		iconView2.setSize("14");
 		
 		Button barsButton = new Button();
 		barsButton.setStyle("-fx-background-color: transparent");
@@ -92,9 +90,8 @@ public class MainUI extends Application {
 		barsButton.setLayoutX(736);
 		barsButton.setLayoutY(2);
 		
-		FontAwesomeIconView iconView3 = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
+		FontAwesomeIconView iconView3 = new FontAwesomeIconView(FontAwesomeIcon.CLOSE, "15");
 		iconView3.setFill(Color.web("#25292E"));
-		iconView3.setSize("15");
 		
 		Button closeButton = new Button();
 		closeButton.setStyle("-fx-background-color: transparent");
