@@ -256,7 +256,7 @@ public class MainUI extends Application {
 				
 				new Thread(new ProfilesThread()).start();
 			} else if (Panes.paneShowing == 2) {
-				
+				SystemTray.trayIcon.displayMessage("PF签名图生成工具", "别点我啦~ 都还没做完呢（＞人＜；）", TrayIcon.MessageType.NONE);
 			}
 		});
 		

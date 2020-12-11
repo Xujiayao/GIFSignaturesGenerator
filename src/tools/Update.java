@@ -71,39 +71,65 @@ public class Update {
 	}
 	
 	public static File saveFile(byte[] data) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+		
 		try {
-			FileChooser fileChooser = new FileChooser();
+			File jarFile = new File(System.getProperty("user.dir") + "/PFSignaturesGenerator.jar");
 			
-			try {
-				fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-			} catch (Exception e) {
-				Dialogs.showExceptionDialog(e);
-				fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-			}
-			
-			fileChooser.setInitialFileName("Update_PFSignaturesGenerator.exe");
-			
-			if (Variables.language.equals("中文")) {
-				fileChooser.setTitle("保存新版本");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("应用程序", "*.exe"));
-			} else if (Variables.language.equals("English")) {
-				fileChooser.setTitle("Save new version");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Application", "*.exe"));
-			}
-			
-			File file = fileChooser.showSaveDialog(new Stage());
-			
-			if(file != null){
-				FileOutputStream fos = new FileOutputStream(file);
+			if (jarFile.exists()) {
+				FileOutputStream fos = new FileOutputStream(jarFile);
 				fos.write(data);
 				fos.close();
+			} else {
+				if (Variables.language.equals("English")) {
+					Dialogs.showErrorDialog("Unable to locate the file path of PFSignaturesGenerator.jar, please select manually.", true);
+					fileChooser.setTitle("保存新版本");
+					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JAR 文件", "PFSignaturesGenerator.jar"));
+				} else {
+					Dialogs.showErrorDialog("无法定位 PFSignaturesGenerator.jar 的文件路径，请手动选择。", false);
+					fileChooser.setTitle("Save new version");
+					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Java Archive", "PFSignaturesGenerator.jar"));
+				}
 				
-				return file;
+				jarFile = fileChooser.showSaveDialog(new Stage());
+				
+				if (jarFile != null) {
+					FileOutputStream fos = new FileOutputStream(jarFile);
+					fos.write(data);
+					fos.close();
+				}
+			}
+			
+			File exeFile = new File(System.getProperty("user.dir") + "/PFSignaturesGenerator.exe");
+			
+			if (exeFile.exists()) {
+				return exeFile;
+			} else {
+				fileChooser.getExtensionFilters().clear();
+				
+				if (Variables.language.equals("English")) {
+					Dialogs.showErrorDialog("Unable to locate the file path of PFSignaturesGenerator.exe, please select manually.", true);
+					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("应用程序", "PFSignaturesGenerator.exe"));
+				} else {
+					Dialogs.showErrorDialog("无法定位 PFSignaturesGenerator.exe 的文件路径，请手动选择。", false);
+					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Application", "PFSignaturesGenerator.exe"));
+				}
+				
+				exeFile = fileChooser.showSaveDialog(new Stage());
+				
+				if (exeFile != null) {
+					return exeFile;
+				}
 			}
 		} catch (Exception e) {
-			Platform.runLater(() -> {
-				Dialogs.showExceptionDialog(e);
-			});
+			if (Variables.language.equals("English")) {
+				Dialogs.showErrorDialog("Cannot write to the Java Archive or locate the file path of the application. For details, please click OK and read the exception stacktrace.", true);
+			} else {
+				Dialogs.showErrorDialog("无法写入 JAR 文件或定位应用程序的文件路径，详情请点击确定后阅读异常堆栈。", false);
+			}
+			
+			Dialogs.showExceptionDialog(e);
 		}
 		
 		return null;
@@ -266,13 +292,29 @@ class DownloadThread implements Runnable {
 				File file = Update.saveFile(data[0]);
 				
 				if (file != null) {
-					try {
-						Desktop.getDesktop().open(file);
-						
-						System.exit(0);
-					} catch (Exception e) {
-						Dialogs.showExceptionDialog(e);
+					boolean confirmRestart;
+			    	
+			    	if (Variables.language.equals("English")) {
+			    		confirmRestart = Dialogs.showConfirmDialog("Do you want to restart the application now to apply the update?", "Confirm", null, true);
+					} else {
+						confirmRestart = Dialogs.showConfirmDialog("您是否想要现在重新启动应用程序以应用更新？", "确认", null, false);
 					}
+					
+			    	if (confirmRestart) {
+			    		try {
+							Desktop.getDesktop().open(file);
+							
+							System.exit(0);
+						} catch (Exception e) {
+							if (Variables.language.equals("English")) {
+								Dialogs.showErrorDialog("Cannot restart the application, you have to restart the application manually to apply the new settings.", true);
+							} else {
+								Dialogs.showErrorDialog("无法重启应用程序，您需要手动重启应用程序以应用新设置。", false);
+							}
+							
+							Dialogs.showExceptionDialog(e);
+						}
+			    	}
 				} else {
 					Dialogs.dialog.getDialogPane().getButtonTypes().add(new ButtonType("", ButtonBar.ButtonData.OK_DONE));
 					Dialogs.dialog.close();

@@ -287,7 +287,7 @@ public class Dialogs {
 		    	File file = null;
 		    	
 				try {
-					file = new File(Dialogs.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+					file = new File(System.getProperty("user.dir") + "/PFSignaturesGenerator.exe");
 				} catch (Exception e) {
 					Dialogs.showExceptionDialog(e);
 				}
@@ -312,9 +312,9 @@ public class Dialogs {
 					}
 				} else {
 					if (language.equals("English")) {
-						Dialogs.showErrorDialog("Cannot restart the application automatically, you have to restart the application manually to apply the new settings.", true);
+						Dialogs.showErrorDialog("Cannot restart the application, you have to restart the application manually to apply the new settings.", true);
 					} else {
-						Dialogs.showErrorDialog("无法自动重启应用程序，您需要手动重启应用程序以应用新设置。", false);
+						Dialogs.showErrorDialog("无法重启应用程序，您需要手动重启应用程序以应用新设置。", false);
 					}
 				}
 			}
@@ -425,7 +425,7 @@ public class Dialogs {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Desktop.getDesktop().browse(new URI("https://xujiayao147.gitee.io"));
+					Desktop.getDesktop().browse(new URI("https://xujiayao147.gitee.io/"));
 				} catch (Exception e) {
 					Dialogs.showExceptionDialog(e);
 				}
