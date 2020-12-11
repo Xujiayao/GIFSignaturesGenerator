@@ -71,7 +71,7 @@ class DisplayTrayThread implements Runnable {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					if (e.getButton() == 3) {
-						menu.setLocation(e.getX(), e.getY() - 95);
+						menu.setLocation(e.getX(), e.getY() - 110);
 						menu.setInvoker(menu);
 						menu.setVisible(true);
 					} else {
