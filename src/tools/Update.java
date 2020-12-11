@@ -84,12 +84,12 @@ public class Update {
 			} else {
 				if (Variables.language.equals("English")) {
 					Dialogs.showErrorDialog("Unable to locate the file path of PFSignaturesGenerator.jar, please select manually.", true);
-					fileChooser.setTitle("保存新版本");
-					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JAR 文件", "PFSignaturesGenerator.jar"));
-				} else {
-					Dialogs.showErrorDialog("无法定位 PFSignaturesGenerator.jar 的文件路径，请手动选择。", false);
 					fileChooser.setTitle("Save new version");
 					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Java Archive", "PFSignaturesGenerator.jar"));
+				} else {
+					Dialogs.showErrorDialog("无法定位 PFSignaturesGenerator.jar 的文件路径，请手动选择。", false);
+					fileChooser.setTitle("保存新版本");
+					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JAR 文件", "PFSignaturesGenerator.jar"));
 				}
 				
 				jarFile = fileChooser.showSaveDialog(new Stage());
@@ -110,13 +110,15 @@ public class Update {
 				
 				if (Variables.language.equals("English")) {
 					Dialogs.showErrorDialog("Unable to locate the file path of PFSignaturesGenerator.exe, please select manually.", true);
-					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("应用程序", "PFSignaturesGenerator.exe"));
+					fileChooser.setTitle("Locate application file path");
+					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Application", "PFSignaturesGenerator.exe"));
 				} else {
 					Dialogs.showErrorDialog("无法定位 PFSignaturesGenerator.exe 的文件路径，请手动选择。", false);
-					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Application", "PFSignaturesGenerator.exe"));
+					fileChooser.setTitle("定位应用程序文件路径");
+					fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("应用程序", "PFSignaturesGenerator.exe"));
 				}
 				
-				exeFile = fileChooser.showSaveDialog(new Stage());
+				exeFile = fileChooser.showOpenDialog(new Stage());
 				
 				if (exeFile != null) {
 					return exeFile;
@@ -291,6 +293,9 @@ class DownloadThread implements Runnable {
 			Platform.runLater(() -> {
 				File file = Update.saveFile(data[0]);
 				
+				Dialogs.dialog.getDialogPane().getButtonTypes().add(new ButtonType("", ButtonBar.ButtonData.OK_DONE));
+				Dialogs.dialog.close();
+				
 				if (file != null) {
 					boolean confirmRestart;
 			    	
@@ -315,9 +320,6 @@ class DownloadThread implements Runnable {
 							Dialogs.showExceptionDialog(e);
 						}
 			    	}
-				} else {
-					Dialogs.dialog.getDialogPane().getButtonTypes().add(new ButtonType("", ButtonBar.ButtonData.OK_DONE));
-					Dialogs.dialog.close();
 				}
 			});
 		} catch (Exception e) {
