@@ -240,7 +240,7 @@ public class Variables {
 		}
 	}
 	
-	public static void saveVariables() {
+	public static void saveVariables(boolean writeVariables) {
 		try {
 			File dataFolder1 = new File(System.getProperty("user.home") + "/AppData/Roaming/Java Projects");
 			
@@ -274,12 +274,17 @@ public class Variables {
 					ini.addSection(variables);
 					
 					IniItem username = new IniItem("Username");
-					username.setValue(Variables.username);
+					username.setValue("");
 					variables.addItem(username);
 					
 					IniItem password = new IniItem("Password");
-					password.setValue(Variables.password);
+					password.setValue("");
 					variables.addItem(password);
+					
+					if (writeVariables) {
+						username.setValue(Variables.username);
+						password.setValue(Variables.password);
+					}
 					
 					IniFileWriter writer = new IniFileWriter(ini, configFile);
 					writer.setIncludeSpaces(true);

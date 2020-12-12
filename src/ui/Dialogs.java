@@ -282,7 +282,7 @@ public class Dialogs {
 					Variables.saveCheckUpdates = true;
 				}
 		    	
-		    	Variables.saveVariables();
+		    	Variables.saveVariables(false);
 		    	
 		    	File file = null;
 		    	
@@ -389,7 +389,7 @@ public class Dialogs {
 		text6.setLayoutX(10);
 		text6.setLayoutY(232);
 		
-		Hyperlink link2 = new Hyperlink("大便超人JASON的空间");
+		Hyperlink link2 = new Hyperlink("Xujiayao");
 		link2.setFont(new Font("Microsoft YaHei", 14));
 		link2.setLayoutX(230);
 		link2.setLayoutY(213);

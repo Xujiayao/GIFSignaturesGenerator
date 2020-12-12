@@ -368,7 +368,7 @@ class LoginThread implements Runnable {
 				Variables.username = LoginUI.textField.getText();
 				Variables.password = LoginUI.passwordField.getText();			
 				
-				Variables.saveVariables();
+				Variables.saveVariables(true);
 				
 				if (Variables.language.equals("English")) {
 					SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Login successfully", TrayIcon.MessageType.NONE);
