@@ -1,5 +1,13 @@
 package tools;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javafx.application.Platform;
 import ui.Dialogs;
 
@@ -7,6 +15,97 @@ import ui.Dialogs;
  * @author Xujiayao
  */
 public class ParseJSON {
+	
+	static HashMap<String, Integer> airportMap;
+	static HashMap<String, Integer> routeMap;
+	static int counter;
+	
+	static void hashInsert(String string, boolean isAirportMap) {
+		if (isAirportMap) {
+			if (airportMap.containsKey(string)) {
+				counter = (Integer)airportMap.get(string);
+				airportMap.put(string, ++counter);
+			} else {
+				airportMap.put(string, 1);
+			}
+		} else {
+			if (routeMap.containsKey(string)) {
+				counter = (Integer)routeMap.get(string);
+				routeMap.put(string, ++counter);
+			} else {
+				routeMap.put(string, 1);
+			}
+		}
+	}
+	
+	static List<Map.Entry<String, Integer>> list;
+	
+	public static boolean parseLogbookJSON(String data) {
+		try {
+			airportMap = new HashMap<String,Integer>();
+			routeMap = new HashMap<String,Integer>();
+			int airportNum = findStrOccurrence("{\"name\":\"", data);
+			String temp = null;
+			String[] routes = new String[airportNum / 2];
+			
+			for (int i = 0; i < airportNum; i++) {
+				data = data.substring(9).substring(data.indexOf("{\"name\":\""));
+				hashInsert(data.substring(0, data.indexOf("\"")).replace("\\/", "/"), true);
+				
+				if (temp == null) {
+					temp = data.substring(0, data.indexOf("\""));
+					continue;
+				}
+				
+				routes[(i + 1) / 2 - 1] = temp + " - " + data.substring(0, data.indexOf("\""));
+				temp = null;
+			}
+			
+			sortList(true);
+			
+			for (Map.Entry<String, Integer> mapping : list) {
+				Variables.logbookData[0] = mapping.getKey().replace("\\/", "/");
+				break;
+			}
+			
+			counter = 0;
+			list.clear();
+			
+			for (int i = 0; i < routes.length; i++) {
+				hashInsert(routes[i].replace("\\/", "/"), false);
+			}
+			
+			sortList(false);
+			
+			for (Map.Entry<String, Integer> mapping : list) {
+				Variables.logbookData[1] = mapping.getKey().replace("\\/", "/");
+				break;
+			}
+			
+			return true;
+		} catch (Exception e) {
+			Platform.runLater(() -> {
+				Dialogs.showExceptionDialog(e);
+			});
+		}
+		
+		return false;
+	}
+	
+	public static void sortList(boolean isAirportMap) {
+		if (isAirportMap) {
+			list = new ArrayList<Map.Entry<String, Integer>>(airportMap.entrySet());
+		} else {
+			list = new ArrayList<Map.Entry<String, Integer>>(routeMap.entrySet());
+		}
+		
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+			@Override
+			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+				return o2.getValue().compareTo(o1.getValue());
+			}
+		});
+	}
 	
 	public static boolean parsePassportJSON(String data) {
 		try {
@@ -100,11 +199,9 @@ public class ParseJSON {
         int count = 0;
 		
 		try {
-			if (!findStr.contains(" ")) {
-	        	while((index = src.indexOf(findStr, index)) != -1) {
-	        		count++;
-	                index = index + findStr.length();
-	            }
+			while((index = src.indexOf(findStr, index)) != -1) {
+	        	count++;
+	        	index = index + findStr.length();
 			}
 		} catch (Exception e) {
 			Platform.runLater(() -> {

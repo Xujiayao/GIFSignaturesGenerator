@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -260,26 +259,6 @@ public class MainUI extends Application {
 			}
 		});
 		
-		root.setOnKeyReleased(e -> {
-			if (e.getCode().equals(KeyCode.ENTER)) {
-				if (Panes.paneShowing == 1) {
-					if (Variables.language.equals("English")) {
-						nextButton.setText("Loading...");
-					} else {
-						nextButton.setText("加载中...");
-					}
-					
-					nextButton.setDisable(true);
-					
-					root.setCursor(Cursor.WAIT);
-					
-					new Thread(new ProfilesThread()).start();
-				} else if (Panes.paneShowing == 2) {
-					
-				}
-			}
-		});
-		
 		menuItem1.setOnAction(e -> {
 			Dialogs.showPreferencesDialog();
 		});
@@ -360,39 +339,69 @@ class ProfilesThread implements Runnable {
 				MainUI.nextButton.setDisable(false);
 			});
 		} else {
+			boolean success = false;
+			
 			String data = ProjectFlyAPI.getProfiles(0);
 			
 			if (data != null) {
-				boolean success = ParseJSON.parseProfileJSON(data);
+				success = ParseJSON.parseProfileJSON(data);
 				
 				data = ProjectFlyAPI.getProfiles(2);
 				
 				if (data != null) {
 					success = ParseJSON.parsePassportJSON(data);
 					
-					if (success) {
-						if (Variables.language.equals("English")) {
-							SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Parse successfully", TrayIcon.MessageType.NONE);
-						} else {
-							SystemTray.trayIcon.displayMessage("PF签名图生成工具", "解析成功", TrayIcon.MessageType.NONE);
-						}
+					data = ProjectFlyAPI.getProfiles(1);
+					
+					if (data != null) {
+						success = ParseJSON.parseLogbookJSON(data);
 						
-						Platform.runLater(() -> {
+						if (success) {
 							if (Variables.language.equals("English")) {
-								MainUI.nextButton.setText("Next");
+								SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Parse successfully", TrayIcon.MessageType.NONE);
 							} else {
-								MainUI.nextButton.setText("下一步");
+								SystemTray.trayIcon.displayMessage("PF签名图生成工具", "解析成功", TrayIcon.MessageType.NONE);
 							}
 							
-							MainUI.nextButton.setDisable(false);
-							
-							MainUI.root.setCursor(Cursor.DEFAULT);
-							
-							MainUI.root.getChildren().remove(4);
-							MainUI.root.getChildren().add(Panes.pane2());
-						});
+							Platform.runLater(() -> {
+								if (Variables.language.equals("English")) {
+									MainUI.nextButton.setText("Next");
+								} else {
+									MainUI.nextButton.setText("下一步");
+								}
+								
+								MainUI.nextButton.setDisable(false);
+								
+								MainUI.root.setCursor(Cursor.DEFAULT);
+								
+								MainUI.root.getChildren().remove(4);
+								MainUI.root.getChildren().add(Panes.pane2());
+							});
+						}
 					}
 				}
+			}
+			
+			if (!success) {
+				if (Variables.language.equals("English")) {
+					SystemTray.trayIcon.displayMessage("PF Signatures Generator", "Parse unsuccessfully", TrayIcon.MessageType.NONE);
+				} else {
+					SystemTray.trayIcon.displayMessage("PF签名图生成工具", "解析失败", TrayIcon.MessageType.NONE);
+				}
+				
+				Platform.runLater(() -> {
+					if (Variables.language.equals("English")) {
+						MainUI.nextButton.setText("Next");
+						Dialogs.showErrorDialog("Parse unsuccessfully. This problem may be caused by network or parse problem. Please try again and read the exception stacktrace.", true);
+					} else {
+						MainUI.nextButton.setText("下一步");
+						Dialogs.showErrorDialog("解析失败。这可能是网络问题或者是解析的问题，请重试一遍并阅读异常堆栈。", false);
+					}
+					
+					MainUI.nextButton.setDisable(false);
+					
+					MainUI.root.setCursor(Cursor.DEFAULT);
+				});
 			}
 		}
 	}

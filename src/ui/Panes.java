@@ -126,7 +126,7 @@ public class Panes {
 		text7.setLayoutX(10);
 		text7.setLayoutY(318);
 		
-		TextField field7 = new TextField("HAVE NOT DONE YET");
+		TextField field7 = new TextField(Variables.logbookData[0]);
 		field7.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field7.setPrefSize(420, 25);
 		field7.setFont(new Font("Microsoft YaHei", 12));
@@ -140,7 +140,7 @@ public class Panes {
 		text8.setLayoutX(10);
 		text8.setLayoutY(353);
 		
-		TextField field8 = new TextField("HAVE NOT DONE YET");
+		TextField field8 = new TextField(Variables.logbookData[1]);
 		field8.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field8.setPrefSize(420, 25);
 		field8.setFont(new Font("Microsoft YaHei", 12));

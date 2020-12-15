@@ -59,7 +59,7 @@ public class Variables {
 	public static String[] profileData = new String[7];
 	
 	//解析过的 LogbookAPI 返回的数据
-	public static String[] logbookData = new String[7];
+	public static String[] logbookData = new String[2];
 	
 	//解析过的 PassportAPI 返回的数据
 	public static String passportData;
