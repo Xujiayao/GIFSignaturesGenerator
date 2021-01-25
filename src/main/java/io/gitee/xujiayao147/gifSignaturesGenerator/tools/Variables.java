@@ -4,12 +4,16 @@ import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import net.sf.image4j.codec.ico.ICODecoder;
-import org.apache.commons.io.FileUtils;
-import org.dtools.ini.*;
+import org.dtools.ini.BasicIniFile;
+import org.dtools.ini.BasicIniSection;
+import org.dtools.ini.IniFile;
+import org.dtools.ini.IniFileReader;
+import org.dtools.ini.IniFileWriter;
+import org.dtools.ini.IniItem;
+import org.dtools.ini.IniSection;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -39,6 +43,10 @@ public class Variables {
 
 	// 软件图标
 	public List<BufferedImage> icons;
+
+	// 更新功能使用的文件version.json的下载路径
+	// 按链接次序进行下载，下载成功后不再下载后面的链接
+	public String checkUpdateLink = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator/update/version.json";
 
 	public void init() {
 		StringBuilder error = new StringBuilder("发生致命错误，程序将立即退出。\n\n");
@@ -153,10 +161,7 @@ public class Variables {
 			ini.addSection(preferences);
 
 			IniItem checkUpdates = new IniItem("CheckUpdates");
-			if (newCheckUpdates.equals("从不"))
-				checkUpdates.setValue(false);
-			else
-				checkUpdates.setValue(true);
+			checkUpdates.setValue(!newCheckUpdates.equals("从不"));
 			preferences.addItem(checkUpdates);
 
 			IniSection variables = new BasicIniSection("Variables");

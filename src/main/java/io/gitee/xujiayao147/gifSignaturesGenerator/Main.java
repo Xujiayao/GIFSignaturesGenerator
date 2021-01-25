@@ -1,5 +1,7 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator;
 
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.ParseJSON;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Update;
 import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import io.gitee.xujiayao147.gifSignaturesGenerator.ui.LoginUI;
@@ -17,6 +19,8 @@ public class Main extends Application {
 	public static Dialogs dialogs;
 	public static LoginUI loginUI;
 	public static SystemTray systemTray;
+	public static Update update;
+	public static ParseJSON parseJSON;
 
 	public static Stage stage;
 
@@ -61,6 +65,8 @@ public class Main extends Application {
 		dialogs = new Dialogs();
 		loginUI = new LoginUI();
 		systemTray = new SystemTray();
+		update = new Update();
+		parseJSON = new ParseJSON();
 
 		try {
 			Main.stage = stage;
@@ -73,6 +79,9 @@ public class Main extends Application {
 
 			if (java.awt.SystemTray.isSupported())
 				new Thread(systemTray).start();
+
+			if (variables.checkUpdates)
+				new Thread(update).start();
 		} catch (Exception e) {
 			dialogs.showExceptionDialog(e);
 			System.exit(1);

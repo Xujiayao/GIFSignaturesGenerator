@@ -255,10 +255,10 @@ public class Dialogs {
 		alert.showAndWait();
 	}
 
-	public boolean showConfirmDialog(String title, String content) {
+	public boolean showConfirmDialog(String title, String header, String content) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);
-		alert.setHeaderText(null);
+		alert.setHeaderText(header);
 		alert.setContentText(content);
 
 		Optional<ButtonType> result = alert.showAndWait();
