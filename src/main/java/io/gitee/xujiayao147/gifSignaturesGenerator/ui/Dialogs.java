@@ -1,7 +1,6 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -16,7 +15,6 @@ import javafx.scene.text.Text;
 import org.apache.commons.io.FileUtils;
 
 import java.awt.Desktop;
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -28,6 +26,48 @@ import java.util.Optional;
  * @author Xujiayao
  */
 public class Dialogs {
+
+	public void showUpdateDialog(String[] parsedData) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("检查更新");
+		alert.setHeaderText("有新版本可用！");
+
+		alert.getDialogPane().getButtonTypes().setAll(ButtonType.CLOSE);
+
+		Pane pane = new Pane();
+		pane.setPrefSize(360, 260);
+
+		Text text1 = new Text("GIF签名图生成工具 " + parsedData[0] + " 现在可用（您是 " + Main.variables.version + "）。");
+		text1.setFont(new Font("Microsoft YaHei", 14));
+		text1.setFill(Color.web("#323232"));
+		text1.setLayoutX(10);
+		text1.setLayoutY(22);
+
+		Button button1 = new Button("点此下载");
+		button1.setFont(new Font("Microsoft YaHei", 12));
+		button1.setPrefSize(110, 25);
+		button1.setLayoutX(10);
+		button1.setLayoutY(42);
+
+		Text text2 = new Text("更新说明：");
+		text2.setFont(new Font("Microsoft YaHei", 14));
+		text2.setFill(Color.web("#323232"));
+		text2.setLayoutX(10);
+		text2.setLayoutY(100);
+
+		TextArea textArea = new TextArea(parsedData[1].replaceAll("\\\\n", "\n"));
+		textArea.setEditable(false);
+		textArea.setWrapText(true);
+		textArea.setPrefSize(340, 150);
+		textArea.setLayoutX(10);
+		textArea.setLayoutY(110);
+
+		pane.getChildren().addAll(text1, button1, text2, textArea);
+
+		alert.getDialogPane().setContent(pane);
+
+		alert.showAndWait();
+	}
 
 	public void showPreferencesDialog() {
 		Dialog<ButtonType> dialog = new Dialog<>();
@@ -109,9 +149,6 @@ public class Dialogs {
 		button2.setLayoutX(0);
 		button2.setLayoutY(110);
 
-//		if (Variables.checkUpdates == false)
-//			choiceBox.setValue("从不");
-
 		pane1.getChildren().addAll(text1, separator1, text2[0], button1);
 		pane2.getChildren().addAll(text3, text4, comboBox, button2);
 
@@ -134,7 +171,8 @@ public class Dialogs {
 		});
 
 		button2.setOnAction(e -> {
-			//Update.start(false);
+			Main.update.isManualRequest = true;
+			new Thread(Main.update).start();
 		});
 
 		Optional<ButtonType> result = dialog.showAndWait();
@@ -263,10 +301,7 @@ public class Dialogs {
 
 		Optional<ButtonType> result = alert.showAndWait();
 
-		if (result.get() == ButtonType.OK)
-			return true;
-
-		return false;
+		return result.orElse(null) == ButtonType.OK;
 	}
 
 	public void showMessageDialog(String title, String content) {
