@@ -1,6 +1,7 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -15,6 +16,7 @@ import javafx.scene.text.Text;
 import org.apache.commons.io.FileUtils;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -93,7 +95,10 @@ public class Dialogs {
 
 		ComboBox<String> comboBox = new ComboBox<>();
 		comboBox.getItems().addAll("每次启动时", "从不");
-		comboBox.setValue("每次启动时");
+		if (Main.variables.checkUpdates)
+			comboBox.setValue("每次启动时");
+		else
+			comboBox.setValue("从不");
 		comboBox.setPrefSize(140, 20);
 		comboBox.setLayoutX(140);
 		comboBox.setLayoutY(67);
@@ -134,61 +139,10 @@ public class Dialogs {
 
 		Optional<ButtonType> result = dialog.showAndWait();
 
-//		result.ifPresent(usernamePassword -> {
-//			if (result.get().getButtonData() == ButtonData.OK_DONE) {
-//				String language;
-//
-//				if (rb1.isSelected()) {
-//					Variables.saveLanguage = "中文";
-//					language = "中文";
-//				} else {
-//					Variables.saveLanguage = "English";
-//					language = "English";
-//				}
-//
-//				if (choiceBox.getValue().equals("从不") || choiceBox.getValue().equals("Never")) {
-//					Variables.saveCheckUpdates = false;
-//				} else {
-//					Variables.saveCheckUpdates = true;
-//				}
-//
-//				Variables.saveVariables();
-//
-//				File file = null;
-//
-//				try {
-//					file = new File(System.getProperty("user.dir") + "/PFSignaturesGenerator.exe");
-//				} catch (Exception e) {
-//					Dialogs.showExceptionDialog(e);
-//				}
-//
-//				if (file.exists()) {
-//					boolean confirmRestart;
-//
-//					if (language.equals("English")) {
-//						confirmRestart = Dialogs.showConfirmDialog("Do you want to restart the application now to apply the new settings?", "Confirm", null, true);
-//					} else {
-//						confirmRestart = Dialogs.showConfirmDialog("您是否想要现在重新启动应用程序以应用新设置？", "确认", null, false);
-//					}
-//
-//					if (confirmRestart) {
-//						try {
-//							Desktop.getDesktop().open(file);
-//
-//							System.exit(0);
-//						} catch (Exception e) {
-//							Dialogs.showExceptionDialog(e);
-//						}
-//					}
-//				} else {
-//					if (language.equals("English")) {
-//						Dialogs.showErrorDialog("Cannot restart the application, you have to restart the application manually to apply the new settings.", true);
-//					} else {
-//						Dialogs.showErrorDialog("无法重启应用程序，您需要手动重启应用程序以应用新设置。", false);
-//					}
-//				}
-//			}
-//		});
+		result.ifPresent(e -> {
+			if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE)
+				Main.variables.saveConfig(comboBox.getValue());
+		});
 	}
 
 	public void showAboutDialog() {
@@ -299,6 +253,20 @@ public class Dialogs {
 		});
 
 		alert.showAndWait();
+	}
+
+	public boolean showConfirmDialog(String title, String content) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(content);
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == ButtonType.OK)
+			return true;
+
+		return false;
 	}
 
 	public void showMessageDialog(String title, String content) {

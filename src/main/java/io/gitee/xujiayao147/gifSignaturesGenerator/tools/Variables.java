@@ -77,7 +77,6 @@ public class Variables {
 		// 加载配置文件
 		try {
 			File config = new File(dataFolder.toString() + "/config.ini");
-
 			IniFile ini = new BasicIniFile(false);
 
 			if (config.exists() && config.isFile()) {
@@ -142,6 +141,42 @@ public class Variables {
 			Main.dialogs.showErrorDialog("发生致命错误", error.toString());
 
 			System.exit(1);
+		}
+	}
+
+	public void saveConfig(String newCheckUpdates) {
+		try {
+			File config = new File(dataFolder.toString() + "/config.ini");
+			IniFile ini = new BasicIniFile(false);
+
+			IniSection preferences = new BasicIniSection("Preferences");
+			ini.addSection(preferences);
+
+			IniItem checkUpdates = new IniItem("CheckUpdates");
+			if (newCheckUpdates.equals("从不"))
+				checkUpdates.setValue(false);
+			else
+				checkUpdates.setValue(true);
+			preferences.addItem(checkUpdates);
+
+			IniSection variables = new BasicIniSection("Variables");
+			ini.addSection(variables);
+
+			IniItem username = new IniItem("Username");
+			username.setValue(this.username);
+			variables.addItem(username);
+
+			IniItem password = new IniItem("Password");
+			password.setValue(this.password);
+			variables.addItem(password);
+
+			IniFileWriter writer = new IniFileWriter(ini, config);
+			writer.setIncludeSpaces(true);
+
+			writer.write();
+		} catch (Exception e) {
+			Main.dialogs.showExceptionDialog(e);
+			Main.dialogs.showErrorDialog("发生错误", "无法保存新设置。");
 		}
 	}
 }
