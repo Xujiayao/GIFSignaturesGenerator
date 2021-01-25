@@ -21,14 +21,12 @@ public class Update implements Runnable {
 
 			String[] parsedData = Main.parseJSON.parseUpdateJSON(data);
 
-			System.out.println("aaa");
-
 			Platform.runLater(() -> {
 				if (parsedData != null) {
 					boolean response = Main.dialogs.showConfirmDialog("检查更新", "有新版本可用！", "GIF签名图生成工具 " + parsedData[0] + " 现在可用（您是 " + Main.variables.version + "）。您想要现在更新吗？\n\n更新说明：\n\n" + parsedData[1].replaceAll("\\\\n", "\n-> "));
 
 					if (response) {
-						//复制嘛
+						Main.dialogs.showMessageDialog("检查更新", "我还没做");
 					}
 				} else {
 					if (isManualRequest)

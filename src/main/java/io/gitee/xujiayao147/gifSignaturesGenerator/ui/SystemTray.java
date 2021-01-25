@@ -58,7 +58,8 @@ public class SystemTray implements Runnable {
 			}));
 
 			item2.addActionListener(e -> {
-				//Update.start(false);
+				Main.update.isManualRequest = true;
+				new Thread(Main.update).start();
 			});
 
 			item3.addActionListener(e -> Platform.runLater(() -> Main.dialogs.showAboutDialog()));

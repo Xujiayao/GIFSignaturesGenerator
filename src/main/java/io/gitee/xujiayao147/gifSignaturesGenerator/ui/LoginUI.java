@@ -170,6 +170,11 @@ public class LoginUI {
 
 		menuItem1.setOnAction(e -> Main.dialogs.showPreferencesDialog());
 
+		menuItem2.setOnAction(e -> {
+			Main.update.isManualRequest = true;
+			new Thread(Main.update).start();
+		});
+
 		menuItem3.setOnAction(e -> Main.dialogs.showAboutDialog());
 
 		barsButton.setOnAction(e -> {

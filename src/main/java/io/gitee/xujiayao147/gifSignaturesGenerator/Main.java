@@ -7,6 +7,7 @@ import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import io.gitee.xujiayao147.gifSignaturesGenerator.ui.LoginUI;
 import io.gitee.xujiayao147.gifSignaturesGenerator.ui.SystemTray;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -67,6 +68,12 @@ public class Main extends Application {
 		systemTray = new SystemTray();
 		update = new Update();
 		parseJSON = new ParseJSON();
+
+		stage.setOnCloseRequest(e -> {
+			stage.close();
+			Platform.exit();
+			System.exit(0);
+		});
 
 		try {
 			Main.stage = stage;
