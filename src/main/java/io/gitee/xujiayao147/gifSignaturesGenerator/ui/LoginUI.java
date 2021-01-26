@@ -13,6 +13,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -20,6 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.awt.TrayIcon;
 
 /**
  * @author Xujiayao
@@ -29,8 +32,16 @@ public class LoginUI {
 	private double xOffset;
 	private double yOffset;
 
+	private BorderPane root;
+	private ComboBox<String> comboBox;
+	private FontAwesomeIconView iconView7;
+	private FontAwesomeIconView iconView8;
+	private TextField usernameField;
+	private PasswordField passwordField;
+	private Button button;
+
 	public void start(Stage stage) {
-		BorderPane root = new BorderPane();
+		root = new BorderPane();
 		root.setPrefSize(700, 500);
 
 		Scene scene = new Scene(root);
@@ -109,7 +120,7 @@ public class LoginUI {
 		iconView6.setLayoutX(59);
 		iconView6.setLayoutY(223);
 
-		ComboBox<String> comboBox = new ComboBox<>();
+		comboBox = new ComboBox<>();
 		comboBox.getItems().addAll("projectFLY", "哔哩哔哩");
 		comboBox.setValue("projectFLY");
 		comboBox.setStyle("-fx-background-color: #F3F3F3; -fx-border-color: #24292E; -fx-border-width: 0px 0px 2px 0px");
@@ -117,12 +128,12 @@ public class LoginUI {
 		comboBox.setLayoutX(91);
 		comboBox.setLayoutY(203);
 
-		FontAwesomeIconView iconView7 = new FontAwesomeIconView(FontAwesomeIcon.USER, "20");
+		iconView7 = new FontAwesomeIconView(FontAwesomeIcon.USER, "20");
 		iconView7.setFill(Color.web("#24292E"));
 		iconView7.setLayoutX(62);
 		iconView7.setLayoutY(257);
 
-		TextField usernameField = new TextField(Main.variables.username);
+		usernameField = new TextField(Main.variables.username);
 		usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		usernameField.setPrefSize(200, 25);
 		usernameField.setFont(new Font("Microsoft YaHei", 12));
@@ -130,12 +141,12 @@ public class LoginUI {
 		usernameField.setLayoutX(91);
 		usernameField.setLayoutY(238);
 
-		FontAwesomeIconView iconView8 = new FontAwesomeIconView(FontAwesomeIcon.KEY, "20");
+		iconView8 = new FontAwesomeIconView(FontAwesomeIcon.KEY, "20");
 		iconView8.setFill(Color.web("#24292E"));
 		iconView8.setLayoutX(60);
 		iconView8.setLayoutY(292);
 
-		PasswordField passwordField = new PasswordField();
+		passwordField = new PasswordField();
 		passwordField.setText(Main.variables.password);
 		passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		passwordField.setPrefSize(200, 25);
@@ -144,7 +155,7 @@ public class LoginUI {
 		passwordField.setLayoutX(91);
 		passwordField.setLayoutY(273);
 
-		Button button = new Button("登录");
+		button = new Button("登录");
 		button.setFont(new Font("Microsoft YaHei", 14));
 		button.setStyle("-fx-background-color: #24292E");
 		button.setTextFill(Color.web("#FFF"));
@@ -167,6 +178,13 @@ public class LoginUI {
 		contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
 
 		comboBox.setOnMouseEntered(e -> root.setCursor(Cursor.HAND));
+
+		button.setOnAction(e -> login());
+
+		root.setOnKeyReleased(e -> {
+			if (e.getCode().equals(KeyCode.ENTER))
+				login();
+		});
 
 		button.setOnMouseEntered(e -> {
 			root.setCursor(Cursor.HAND);
@@ -214,7 +232,12 @@ public class LoginUI {
 		});
 
 		root.setOnMouseMoved(e -> {
-			root.setCursor(Cursor.DEFAULT);
+			if (button.getText().equals("加载中...")) {
+				root.setCursor(Cursor.WAIT);
+			} else {
+				root.setCursor(Cursor.DEFAULT);
+			}
+
 			iconView2.setFill(Color.web("#24292E"));
 			iconView3.setFill(Color.web("#24292E"));
 			iconView4.setFill(Color.web("#24292E"));
@@ -231,8 +254,72 @@ public class LoginUI {
 			stage.setY(e.getScreenY() - yOffset);
 		});
 
+		button.requestFocus();
+
 		stage.show();
 
 		System.gc();
+	}
+
+	private void login() {
+		if (usernameField.getText().equals("")) {
+			iconView7.setFill(Color.web("#FF0000"));
+			usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #24292E");
+		} else {
+			iconView7.setFill(Color.web("#24292E"));
+			usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
+		}
+
+		if (passwordField.getText().equals("")) {
+			iconView8.setFill(Color.web("#FF0000"));
+			passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #ff0000; -fx-text-inner-color: #24292E");
+		} else {
+			iconView8.setFill(Color.web("#24292E"));
+			passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
+		}
+
+		if (usernameField.getText().equals("") || passwordField.getText().equals(""))
+			return;
+
+		button.setText("加载中...");
+		button.setDisable(true);
+
+		root.setCursor(Cursor.WAIT);
+
+		new Thread(() -> {
+			try {
+				String[] datas;
+
+				switch (comboBox.getValue()) {
+					case "projectFLY":
+						datas = Main.parseJSON.parseLoginJSON(Main.projectFlyAPI.login(usernameField.getText(), passwordField.getText()));
+
+						Platform.runLater(() -> {
+							button.setText("登录");
+							button.setDisable(false);
+
+							root.setCursor(Cursor.DEFAULT);
+						});
+
+						if (datas != null) {
+							Main.variables.username = usernameField.getText();
+							Main.variables.password = passwordField.getText();
+
+							Main.variables.saveConfig();
+
+							Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
+
+							for (String data : datas)
+								System.out.println(data);
+							//stage.close();
+							//new MainUI().start(stage);
+						}
+					case "哔哩哔哩":
+
+				}
+			} catch (Exception e1) {
+				Platform.runLater(() -> Main.dialogs.showExceptionDialog(e1));
+			}
+		}).start();
 	}
 }

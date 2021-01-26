@@ -196,8 +196,11 @@ public class Dialogs {
 		Optional<ButtonType> result = dialog.showAndWait();
 
 		result.ifPresent(e -> {
-			if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE)
-				Main.variables.saveConfig(comboBox.getValue());
+			if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+				Main.variables.checkUpdates = !comboBox.getValue().equals("从不");
+
+				Main.variables.saveConfig();
+			}
 		});
 	}
 

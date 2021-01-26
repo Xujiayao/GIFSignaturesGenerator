@@ -152,7 +152,7 @@ public class Variables {
 		}
 	}
 
-	public void saveConfig(String newCheckUpdates) {
+	public void saveConfig() {
 		try {
 			File config = new File(dataFolder.toString() + "/config.ini");
 			IniFile ini = new BasicIniFile(false);
@@ -161,7 +161,7 @@ public class Variables {
 			ini.addSection(preferences);
 
 			IniItem checkUpdates = new IniItem("CheckUpdates");
-			checkUpdates.setValue(!newCheckUpdates.equals("从不"));
+			checkUpdates.setValue(this.checkUpdates);
 			preferences.addItem(checkUpdates);
 
 			IniSection variables = new BasicIniSection("Variables");

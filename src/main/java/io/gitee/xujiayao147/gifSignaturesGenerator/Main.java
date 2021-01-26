@@ -1,6 +1,7 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator;
 
 import io.gitee.xujiayao147.gifSignaturesGenerator.tools.ParseJSON;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.ProjectFlyAPI;
 import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Update;
 import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
@@ -22,6 +23,7 @@ public class Main extends Application {
 	public static SystemTray systemTray;
 	public static Update update;
 	public static ParseJSON parseJSON;
+	public static ProjectFlyAPI projectFlyAPI;
 
 	public static Stage stage;
 
@@ -68,6 +70,7 @@ public class Main extends Application {
 		systemTray = new SystemTray();
 		update = new Update();
 		parseJSON = new ParseJSON();
+		projectFlyAPI = new ProjectFlyAPI();
 
 		stage.setOnCloseRequest(e -> {
 			stage.close();
