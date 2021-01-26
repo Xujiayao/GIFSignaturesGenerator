@@ -64,6 +64,14 @@ public class Dialogs {
 
 		pane.getChildren().addAll(text1, button1, text2, textArea);
 
+		button1.setOnAction(e -> {
+			try {
+				Desktop.getDesktop().browse(new URI(parsedData[2]));
+			} catch (Exception e1) {
+				showExceptionDialog(e1);
+			}
+		});
+
 		alert.getDialogPane().setContent(pane);
 
 		alert.showAndWait();
@@ -291,17 +299,6 @@ public class Dialogs {
 		});
 
 		alert.showAndWait();
-	}
-
-	public boolean showConfirmDialog(String title, String header, String content) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle(title);
-		alert.setHeaderText(header);
-		alert.setContentText(content);
-
-		Optional<ButtonType> result = alert.showAndWait();
-
-		return result.orElse(null) == ButtonType.OK;
 	}
 
 	public void showMessageDialog(String title, String content) {
