@@ -3,8 +3,10 @@ package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
 import javafx.application.Platform;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.UIManager;
+import java.awt.TrayIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
