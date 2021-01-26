@@ -4,6 +4,9 @@ import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -14,7 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.apache.commons.io.FileUtils;
 
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;

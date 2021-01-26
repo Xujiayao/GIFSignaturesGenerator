@@ -37,7 +37,7 @@ public class Update implements Runnable {
 	private String downloadJSON(String link) throws Exception {
 		String data = null;
 		BufferedReader reader = null;
-		
+
 		try {
 			URLConnection conn = new URL(link).openConnection();
 			conn.setUseCaches(false);
