@@ -4,13 +4,7 @@ import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import net.sf.image4j.codec.ico.ICODecoder;
-import org.dtools.ini.BasicIniFile;
-import org.dtools.ini.BasicIniSection;
-import org.dtools.ini.IniFile;
-import org.dtools.ini.IniFileReader;
-import org.dtools.ini.IniFileWriter;
-import org.dtools.ini.IniItem;
-import org.dtools.ini.IniSection;
+import org.dtools.ini.*;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
