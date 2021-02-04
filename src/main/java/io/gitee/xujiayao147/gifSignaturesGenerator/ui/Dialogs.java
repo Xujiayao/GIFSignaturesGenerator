@@ -1,6 +1,7 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
@@ -37,7 +38,7 @@ import java.util.Optional;
  */
 public class Dialogs {
 
-	public void showUpdateDialog(String[] parsedData) {
+	public static void showUpdateDialog(String[] parsedData) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("检查更新");
 		alert.setHeaderText("有新版本可用！");
@@ -47,7 +48,7 @@ public class Dialogs {
 		Pane pane = new Pane();
 		pane.setPrefSize(360, 260);
 
-		Text text1 = new Text("GIF签名图生成工具 " + parsedData[0] + " 现在可用（您是 " + Main.variables.version + "）。");
+		Text text1 = new Text("GIF签名图生成工具 " + parsedData[0] + " 现在可用（您是 " + Variables.version + "）。");
 		text1.setFont(new Font("Microsoft YaHei", 14));
 		text1.setFill(Color.web("#323232"));
 		text1.setLayoutX(10);
@@ -87,7 +88,7 @@ public class Dialogs {
 		alert.showAndWait();
 	}
 
-	public void showPreferencesDialog() {
+	public static void showPreferencesDialog() {
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("首选项");
 
@@ -119,9 +120,9 @@ public class Dialogs {
 		final Text[] text2 = new Text[1];
 
 		try {
-			text2[0] = new Text("已用空间：\n\n" + FileUtils.sizeOfDirectory(Main.variables.dataFolder) + " 字节 (B)\n" +
-				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Main.variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KiB)\n" +
-				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Main.variables.dataFolder) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 兆字节 (MiB)");
+			text2[0] = new Text("已用空间：\n\n" + FileUtils.sizeOfDirectory(Variables.dataFolder) + " 字节 (B)\n" +
+				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)\n" +
+				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 兆字节 (MB)");
 		} catch (Exception e) {
 			if (e.getMessage().contains("exist"))
 				showErrorDialog("发生错误", "缓存目录不存在。");
@@ -153,7 +154,7 @@ public class Dialogs {
 
 		ComboBox<String> comboBox = new ComboBox<>();
 		comboBox.getItems().addAll("每次启动时", "从不");
-		if (Main.variables.checkUpdates)
+		if (Variables.checkUpdates)
 			comboBox.setValue("每次启动时");
 		else
 			comboBox.setValue("从不");
@@ -177,11 +178,11 @@ public class Dialogs {
 
 		button1.setOnAction(e -> {
 			try {
-				FileUtils.cleanDirectory(Main.variables.dataFolder);
+				FileUtils.cleanDirectory(Variables.dataFolder);
 				showMessageDialog("清理缓存", "缓存清理完毕。");
-				text2[0].setText("已用空间：\n\n" + FileUtils.sizeOfDirectory(Main.variables.dataFolder) + " 字节 (B)\n" +
-					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Main.variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KiB)\n" +
-					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Main.variables.dataFolder) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 兆字节 (MiB)");
+				text2[0].setText("已用空间：\n\n" + FileUtils.sizeOfDirectory(Variables.dataFolder) + " 字节 (B)\n" +
+					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KiB)\n" +
+					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 兆字节 (MiB)");
 			} catch (Exception e1) {
 				showExceptionDialog(e1);
 				showErrorDialog("发生错误", "缓存清理失败。");
@@ -197,14 +198,14 @@ public class Dialogs {
 
 		result.ifPresent(e -> {
 			if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-				Main.variables.checkUpdates = !comboBox.getValue().equals("从不");
+				Variables.checkUpdates = !comboBox.getValue().equals("从不");
 
-				Main.variables.saveConfig();
+				Variables.saveConfig();
 			}
 		});
 	}
 
-	public void showAboutDialog() {
+	public static void showAboutDialog() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("关于");
 		alert.setHeaderText("关于GIF签名图生成工具");
@@ -212,14 +213,14 @@ public class Dialogs {
 		Pane pane = new Pane();
 		pane.setPrefSize(400, 260);
 
-		ImageView imageView = new ImageView(SwingFXUtils.toFXImage(Main.variables.icons.get(8), null));
+		ImageView imageView = new ImageView(SwingFXUtils.toFXImage(Variables.icons.get(8), null));
 		imageView.setPreserveRatio(true);
 		imageView.setFitWidth(48);
 		imageView.setFitHeight(48);
 		imageView.setLayoutX(10);
 		imageView.setLayoutY(10);
 
-		Text text1 = new Text("GIF签名图生成工具 " + Main.variables.version);
+		Text text1 = new Text("GIF签名图生成工具 " + Variables.version);
 		text1.setFont(new Font("Microsoft YaHei", 18));
 		text1.setFill(Color.web("#323232"));
 		text1.setLayoutX(68);
@@ -314,7 +315,7 @@ public class Dialogs {
 		alert.showAndWait();
 	}
 
-	public void showMessageDialog(String title, String content) {
+	public static void showMessageDialog(String title, String content) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(title);
 		alert.setHeaderText(null);
@@ -323,7 +324,7 @@ public class Dialogs {
 		alert.showAndWait();
 	}
 
-	public void showExceptionDialog(Exception e) {
+	public static void showExceptionDialog(Exception e) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("异常");
 		alert.setHeaderText(null);
@@ -355,7 +356,7 @@ public class Dialogs {
 		alert.showAndWait();
 	}
 
-	public void showErrorDialog(String header, String content) {
+	public static void showErrorDialog(String header, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("错误");
 		alert.setHeaderText(header);

@@ -1,6 +1,6 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.tools;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import javafx.application.Platform;
 
 import java.io.BufferedReader;
@@ -34,9 +34,9 @@ public class ProjectFlyAPI {
 		} catch (Exception e) {
 			Platform.runLater(() -> {
 				if (e.getMessage().contains("HTTP response code: 401"))
-					Main.dialogs.showErrorDialog("发生错误", "无效的用户名或密码。");
+					Dialogs.showErrorDialog("发生错误", "无效的用户名或密码。");
 				else
-					Main.dialogs.showExceptionDialog(e);
+					Dialogs.showExceptionDialog(e);
 			});
 		} finally {
 			if (reader != null)

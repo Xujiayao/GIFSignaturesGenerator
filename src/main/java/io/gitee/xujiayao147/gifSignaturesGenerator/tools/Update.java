@@ -1,6 +1,7 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.tools;
 
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import javafx.application.Platform;
 
 import java.io.BufferedReader;
@@ -17,20 +18,20 @@ public class Update implements Runnable {
 	public void run() {
 		try {
 			boolean isManualRequest = this.isManualRequest;
-			String data = downloadJSON(Main.variables.checkUpdateLink);
+			String data = downloadJSON(Variables.checkUpdateLink);
 
 			String[] parsedData = Main.parseJSON.parseUpdateJSON(data);
 
 			Platform.runLater(() -> {
 				if (parsedData != null) {
-					Main.dialogs.showUpdateDialog(parsedData);
+					Dialogs.showUpdateDialog(parsedData);
 				} else {
 					if (isManualRequest)
-						Main.dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
+						Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
 				}
 			});
 		} catch (Exception e) {
-			Platform.runLater(() -> Main.dialogs.showExceptionDialog(e));
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
 	}
 
@@ -47,7 +48,7 @@ public class Update implements Runnable {
 
 			data = reader.readLine();
 		} catch (Exception e) {
-			Platform.runLater(() -> Main.dialogs.showExceptionDialog(e));
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		} finally {
 			if (reader != null)
 				reader.close();

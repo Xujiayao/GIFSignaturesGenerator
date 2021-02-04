@@ -1,6 +1,6 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.tools;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import javafx.application.Platform;
 
 public class ParseJSON {
@@ -33,7 +33,7 @@ public class ParseJSON {
 			data = data.substring(data.indexOf("token\"") + 8);
 			datas[6] = data.substring(0, data.indexOf("\""));
 		} catch (Exception e) {
-			Platform.runLater(() -> Main.dialogs.showExceptionDialog(e));
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
 
 		return datas;
@@ -46,7 +46,7 @@ public class ParseJSON {
 			data = data.substring(12);
 			datas[0] = data.substring(0, data.indexOf("\""));
 
-			if (datas[0].equals(Main.variables.version))
+			if (datas[0].equals(Variables.version))
 				return null;
 
 			data = data.substring(data.indexOf("\"")).substring(10);
@@ -55,7 +55,7 @@ public class ParseJSON {
 			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[2] = data.substring(0, data.indexOf("\""));
 		} catch (Exception e) {
-			Platform.runLater(() -> Main.dialogs.showExceptionDialog(e));
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
 
 		return datas;

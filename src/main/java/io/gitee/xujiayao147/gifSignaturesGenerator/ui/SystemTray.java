@@ -1,6 +1,7 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.application.Platform;
 
 import javax.swing.JMenuItem;
@@ -38,7 +39,7 @@ public class SystemTray implements Runnable {
 			JMenuItem item4 = new JMenuItem("退出");
 			menu.add(item4);
 
-			trayIcon = new TrayIcon(Main.variables.icons.get(11), "GIF签名图生成工具");
+			trayIcon = new TrayIcon(Variables.icons.get(11), "GIF签名图生成工具");
 
 			tray.add(trayIcon);
 
@@ -55,14 +56,14 @@ public class SystemTray implements Runnable {
 				}
 			});
 
-			item1.addActionListener(e -> Platform.runLater(() -> Main.dialogs.showPreferencesDialog()));
+			item1.addActionListener(e -> Platform.runLater(() -> Dialogs.showPreferencesDialog()));
 
 			item2.addActionListener(e -> {
 				Main.update.isManualRequest = true;
 				new Thread(Main.update).start();
 			});
 
-			item3.addActionListener(e -> Platform.runLater(() -> Main.dialogs.showAboutDialog()));
+			item3.addActionListener(e -> Platform.runLater(() -> Dialogs.showAboutDialog()));
 
 			item4.addActionListener(e -> {
 				Platform.runLater(() -> Main.stage.close());
@@ -72,7 +73,7 @@ public class SystemTray implements Runnable {
 
 			trayIcon.displayMessage("GIF签名图生成工具", "GIF签名图生成工具正在运行", TrayIcon.MessageType.NONE);
 		} catch (Exception e) {
-			Platform.runLater(() -> Main.dialogs.showExceptionDialog(e));
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
 	}
 }

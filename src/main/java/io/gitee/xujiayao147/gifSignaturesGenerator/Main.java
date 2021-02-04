@@ -17,9 +17,6 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-	public static Variables variables;
-	public static Dialogs dialogs;
-	public static LoginUI loginUI;
 	public static SystemTray systemTray;
 	public static Update update;
 	public static ParseJSON parseJSON;
@@ -32,7 +29,7 @@ public class Main extends Application {
 
 		try {
 			// 检查字体是否已安装
-			if (!Font.getFamilies().contains(variables.font))
+			if (!Font.getFamilies().contains(Variables.font))
 				error.append("-> 找不到微软雅黑字体\n");
 
 			// 分析操作系统（本程序只支持Windows 7或以上）
@@ -41,13 +38,13 @@ public class Main extends Application {
 			if (!(os.equals("Windows 7") || os.equals("Windows 8") || os.equals("Windows 8.1") || os.equals("Windows 10")))
 				error.append("-> 本程序不支持 ").append(os).append("（只支持 Windows 7 或以上）\n");
 		} catch (Exception e) {
-			dialogs.showExceptionDialog(e);
+			Dialogs.showExceptionDialog(e);
 		}
 
 		if (error.indexOf("->") != -1) {
 			error.append("\n如果你认为这是一个错误，请告诉我。");
 
-			dialogs.showErrorDialog("发生致命错误", error.toString());
+			Dialogs.showErrorDialog("发生致命错误", error.toString());
 
 			System.exit(1);
 		}
@@ -64,9 +61,6 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		variables = new Variables();
-		dialogs = new Dialogs();
-		loginUI = new LoginUI();
 		systemTray = new SystemTray();
 		update = new Update();
 		parseJSON = new ParseJSON();
@@ -83,17 +77,17 @@ public class Main extends Application {
 
 			checkError();
 
-			variables.init();
+			Variables.init();
 
-			loginUI.start(Main.stage);
+			new LoginUI().start(Main.stage);
 
 			if (java.awt.SystemTray.isSupported())
 				new Thread(systemTray).start();
 
-			if (variables.checkUpdates)
+			if (Variables.checkUpdates)
 				new Thread(update).start();
 		} catch (Exception e) {
-			dialogs.showExceptionDialog(e);
+			Dialogs.showExceptionDialog(e);
 			System.exit(1);
 		}
 	}

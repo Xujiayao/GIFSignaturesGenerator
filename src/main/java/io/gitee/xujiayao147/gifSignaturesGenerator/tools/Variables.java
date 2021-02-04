@@ -1,6 +1,6 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.tools;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import net.sf.image4j.codec.ico.ICODecoder;
@@ -22,33 +22,33 @@ import java.util.List;
 public class Variables {
 
 	// 软件版本
-	public String version = "v2.0.0";
+	public static String version = "v2.0.0";
 
 	// 界面的字体
-	public String font = "Microsoft YaHei";
+	public static String font = "Microsoft YaHei";
 
 	// 是否每次启动时检查更新
-	public boolean checkUpdates = true;
+	public static boolean checkUpdates = true;
 
 	// 用户名和密码
-	public String username = "";
-	public String password = "";
+	public static String username = "";
+	public static String password = "";
 
 	// 屏幕宽度和高度
-	public double screenWidth;
-	public double screenHeight;
+	public static double screenWidth;
+	public static double screenHeight;
 
 	// 存放缓存的文件夹
-	public File dataFolder;
+	public static File dataFolder;
 
 	// 软件图标
-	public List<BufferedImage> icons;
+	public static List<BufferedImage> icons;
 
 	// 更新功能使用的文件version.json的下载路径
 	// 按链接次序进行下载，下载成功后不再下载后面的链接
-	public String checkUpdateLink = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator/update/version.json";
+	public static String checkUpdateLink = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator/update/version.json";
 
-	public void init() {
+	public static void init() {
 		StringBuilder error = new StringBuilder("发生致命错误，程序将立即退出。\n\n");
 
 		// 分析屏幕宽高
@@ -60,7 +60,7 @@ public class Variables {
 			if ((screenWidth == 0) || (screenHeight == 0))
 				throw new Exception("Custom: bounds are equal to 0");
 		} catch (Exception e) {
-			Main.dialogs.showExceptionDialog(e);
+			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法获取屏幕宽高\n");
 		}
 
@@ -78,7 +78,7 @@ public class Variables {
 				if (!dataFolder.mkdir())
 					throw new Exception("Custom: the folder can't be created");
 		} catch (Exception e) {
-			Main.dialogs.showExceptionDialog(e);
+			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法分析文件夹是否存在或创建文件夹\n");
 		}
 
@@ -131,7 +131,7 @@ public class Variables {
 				writer.write();
 			}
 		} catch (Exception e) {
-			Main.dialogs.showExceptionDialog(e);
+			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法加载配置文件\n");
 		}
 
@@ -139,20 +139,20 @@ public class Variables {
 		try {
 			icons = ICODecoder.read(ClassLoader.getSystemClassLoader().getResourceAsStream("icon.ico"));
 		} catch (Exception e) {
-			Main.dialogs.showExceptionDialog(e);
+			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法加载图标\n");
 		}
 
 		if (error.indexOf("->") != -1) {
 			error.append("\n如果你认为这是一个错误，请告诉我。");
 
-			Main.dialogs.showErrorDialog("发生致命错误", error.toString());
+			Dialogs.showErrorDialog("发生致命错误", error.toString());
 
 			System.exit(1);
 		}
 	}
 
-	public void saveConfig() {
+	public static void saveConfig() {
 		try {
 			File config = new File(dataFolder.toString() + "/config.ini");
 			IniFile ini = new BasicIniFile(false);
@@ -161,18 +161,18 @@ public class Variables {
 			ini.addSection(preferences);
 
 			IniItem checkUpdates = new IniItem("CheckUpdates");
-			checkUpdates.setValue(this.checkUpdates);
+			checkUpdates.setValue(Variables.checkUpdates);
 			preferences.addItem(checkUpdates);
 
 			IniSection variables = new BasicIniSection("Variables");
 			ini.addSection(variables);
 
 			IniItem username = new IniItem("Username");
-			username.setValue(this.username);
+			username.setValue(Variables.username);
 			variables.addItem(username);
 
 			IniItem password = new IniItem("Password");
-			password.setValue(this.password);
+			password.setValue(Variables.password);
 			variables.addItem(password);
 
 			IniFileWriter writer = new IniFileWriter(ini, config);
@@ -180,8 +180,8 @@ public class Variables {
 
 			writer.write();
 		} catch (Exception e) {
-			Main.dialogs.showExceptionDialog(e);
-			Main.dialogs.showErrorDialog("发生错误", "无法保存新设置。");
+			Dialogs.showExceptionDialog(e);
+			Dialogs.showErrorDialog("发生错误", "无法保存新设置。");
 		}
 	}
 }

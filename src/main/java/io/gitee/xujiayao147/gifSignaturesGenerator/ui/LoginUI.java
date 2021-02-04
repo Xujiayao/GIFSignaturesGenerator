@@ -3,6 +3,7 @@ package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.application.Platform;
 import javafx.geometry.Side;
 import javafx.scene.Cursor;
@@ -47,8 +48,8 @@ public class LoginUI {
 		Scene scene = new Scene(root);
 		stage.setTitle("GIF签名图生成工具");
 		stage.initStyle(StageStyle.UNDECORATED);
-		stage.setX((Main.variables.screenWidth - 700) / 2);
-		stage.setY((Main.variables.screenHeight - 500) / 2);
+		stage.setX((Variables.screenWidth - 700) / 2);
+		stage.setY((Variables.screenHeight - 500) / 2);
 		stage.setScene(scene);
 
 		Pane leftPane = new Pane();
@@ -133,7 +134,7 @@ public class LoginUI {
 		iconView7.setLayoutX(62);
 		iconView7.setLayoutY(257);
 
-		usernameField = new TextField(Main.variables.username);
+		usernameField = new TextField(Variables.username);
 		usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		usernameField.setPrefSize(200, 25);
 		usernameField.setFont(new Font("Microsoft YaHei", 12));
@@ -147,7 +148,7 @@ public class LoginUI {
 		iconView8.setLayoutY(292);
 
 		passwordField = new PasswordField();
-		passwordField.setText(Main.variables.password);
+		passwordField.setText(Variables.password);
 		passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		passwordField.setPrefSize(200, 25);
 		passwordField.setFont(new Font("Microsoft YaHei", 12));
@@ -191,14 +192,14 @@ public class LoginUI {
 			button.setStyle("-fx-background-color: #414449");
 		});
 
-		menuItem1.setOnAction(e -> Main.dialogs.showPreferencesDialog());
+		menuItem1.setOnAction(e -> Dialogs.showPreferencesDialog());
 
 		menuItem2.setOnAction(e -> {
 			Main.update.isManualRequest = true;
 			new Thread(Main.update).start();
 		});
 
-		menuItem3.setOnAction(e -> Main.dialogs.showAboutDialog());
+		menuItem3.setOnAction(e -> Dialogs.showAboutDialog());
 
 		barsButton.setOnAction(e -> {
 			if (contextMenu.isShowing()) {
@@ -302,15 +303,13 @@ public class LoginUI {
 						});
 
 						if (datas != null) {
-							Main.variables.username = usernameField.getText();
-							Main.variables.password = passwordField.getText();
+							Variables.username = usernameField.getText();
+							Variables.password = passwordField.getText();
 
-							Main.variables.saveConfig();
+							Variables.saveConfig();
 
 							Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
 
-							for (String data : datas)
-								System.out.println(data);
 							//stage.close();
 							//new MainUI().start(stage);
 						}
@@ -318,7 +317,7 @@ public class LoginUI {
 
 				}
 			} catch (Exception e1) {
-				Platform.runLater(() -> Main.dialogs.showExceptionDialog(e1));
+				Platform.runLater(() -> Dialogs.showExceptionDialog(e1));
 			}
 		}).start();
 	}

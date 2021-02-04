@@ -1,14 +1,10 @@
 package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 
-import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class MainUI extends Application {
+public class MainUI {
 
-	@Override
 	public void start(Stage stage) {
-
-
 //		if (Avatar.downloadAvatar()) {
 //			Avatar.processAvatar();
 //
