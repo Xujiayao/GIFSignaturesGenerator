@@ -30,6 +30,9 @@ public class Variables {
 	// 是否每次启动时检查更新
 	public static boolean checkUpdates = true;
 
+	// 登录方式
+	public static String loginType = "projectFLY";
+
 	// 用户名和密码
 	public static String username = "";
 	public static String password = "";
@@ -97,6 +100,10 @@ public class Variables {
 								if (item.getValue().equals("false"))
 									checkUpdates = false;
 								break;
+							case "LoginType":
+								if (item.getValue().equals("哔哩哔哩"))
+									loginType = item.getValue();
+								break;
 							case "Username":
 								username = item.getValue();
 								break;
@@ -116,6 +123,10 @@ public class Variables {
 
 				IniSection variables = new BasicIniSection("Variables");
 				ini.addSection(variables);
+
+				IniItem loginType = new IniItem("LoginType");
+				loginType.setValue("projectFLY");
+				variables.addItem(loginType);
 
 				IniItem username = new IniItem("Username");
 				username.setValue("");
@@ -166,6 +177,10 @@ public class Variables {
 
 			IniSection variables = new BasicIniSection("Variables");
 			ini.addSection(variables);
+
+			IniItem loginType = new IniItem("LoginType");
+			loginType.setValue(Variables.loginType);
+			variables.addItem(loginType);
 
 			IniItem username = new IniItem("Username");
 			username.setValue(Variables.username);

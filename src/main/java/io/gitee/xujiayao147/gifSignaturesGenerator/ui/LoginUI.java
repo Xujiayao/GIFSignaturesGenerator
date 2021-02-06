@@ -123,7 +123,7 @@ public class LoginUI {
 
 		comboBox = new ComboBox<>();
 		comboBox.getItems().addAll("projectFLY", "哔哩哔哩");
-		comboBox.setValue("projectFLY");
+		comboBox.setValue(Variables.loginType);
 		comboBox.setStyle("-fx-background-color: #F3F3F3; -fx-border-color: #24292E; -fx-border-width: 0px 0px 2px 0px");
 		comboBox.setPrefSize(200, 25);
 		comboBox.setLayoutX(91);
@@ -303,6 +303,7 @@ public class LoginUI {
 						});
 
 						if (datas != null) {
+							Variables.loginType = comboBox.getValue();
 							Variables.username = usernameField.getText();
 							Variables.password = passwordField.getText();
 
@@ -310,11 +311,20 @@ public class LoginUI {
 
 							Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
 
-							//stage.close();
-							//new MainUI().start(stage);
+							Platform.runLater(() -> {
+								Main.stage.close();
+								new MainUI().start(Main.stage);
+							});
 						}
 					case "哔哩哔哩":
+						Platform.runLater(() -> {
+							button.setText("登录");
+							button.setDisable(false);
 
+							root.setCursor(Cursor.DEFAULT);
+						});
+
+						Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "哔哩哔哩的还没做喔~", TrayIcon.MessageType.NONE);
 				}
 			} catch (Exception e1) {
 				Platform.runLater(() -> Dialogs.showExceptionDialog(e1));
