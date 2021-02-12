@@ -292,7 +292,7 @@ public class LoginUI {
 				String[] datas;
 
 				switch (comboBox.getValue()) {
-					case "projectFLY":
+					case "projectFLY" -> {
 						datas = Main.parseJSON.parseLoginJSON(Main.projectFlyAPI.login(usernameField.getText(), passwordField.getText()));
 
 						Platform.runLater(() -> {
@@ -316,7 +316,8 @@ public class LoginUI {
 								new MainUI().start(Main.stage);
 							});
 						}
-					case "哔哩哔哩":
+					}
+					case "哔哩哔哩" -> {
 						Platform.runLater(() -> {
 							button.setText("登录");
 							button.setDisable(false);
@@ -325,6 +326,7 @@ public class LoginUI {
 						});
 
 						Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "哔哩哔哩的还没做喔~", TrayIcon.MessageType.NONE);
+					}
 				}
 			} catch (Exception e1) {
 				Platform.runLater(() -> Dialogs.showExceptionDialog(e1));

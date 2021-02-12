@@ -96,20 +96,16 @@ public class Variables {
 				for (int i = 0; i < ini.getNumberOfSections(); i++) {
 					for (IniItem item : ini.getSection(i).getItems()) {
 						switch (item.getName()) {
-							case "CheckUpdates":
+							case "CheckUpdates" -> {
 								if (item.getValue().equals("false"))
 									checkUpdates = false;
-								break;
-							case "LoginType":
+							}
+							case "LoginType" -> {
 								if (item.getValue().equals("哔哩哔哩"))
 									loginType = item.getValue();
-								break;
-							case "Username":
-								username = item.getValue();
-								break;
-							case "Password":
-								password = item.getValue();
-								break;
+							}
+							case "Username" -> username = item.getValue();
+							case "Password" -> password = item.getValue();
 						}
 					}
 				}

@@ -121,12 +121,11 @@ public class Dialogs {
 
 		try {
 			text2[0] = new Text("已用空间：\n\n" + FileUtils.sizeOfDirectory(Variables.dataFolder) + " 字节 (B)\n" +
-				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)\n" +
-				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 兆字节 (MB)");
+				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)");
 		} catch (Exception e) {
 			if (e.getMessage().contains("exist"))
 				showErrorDialog("发生错误", "缓存目录不存在。");
-			text2[0] = new Text("已用空间：\n\n0 字节 (B)\n0 千字节 (KiB)\n0 兆字节 (MiB)");
+			text2[0] = new Text("已用空间：\n\n0 字节 (B)\n0 千字节 (KB)");
 		}
 		text2[0].setFont(new Font("Microsoft YaHei", 14));
 		text2[0].setFill(Color.web("#323232"));
@@ -137,7 +136,7 @@ public class Dialogs {
 		button1.setFont(new Font("Microsoft YaHei", 12));
 		button1.setPrefSize(110, 25);
 		button1.setLayoutX(0);
-		button1.setLayoutY(160);
+		button1.setLayoutY(140);
 
 		Text text3 = new Text("GIF签名图生成工具可以自动检查其更新版本。检查将在后台执行，并且只有在有新版本可用时才会通知您。");
 		text3.setFont(new Font("Microsoft YaHei", 14));
@@ -179,10 +178,14 @@ public class Dialogs {
 		button1.setOnAction(e -> {
 			try {
 				FileUtils.cleanDirectory(Variables.dataFolder);
+
+				Variables.loginType = "";
+				Variables.username = "";
+				Variables.password = "";
+
 				showMessageDialog("清理缓存", "缓存清理完毕。");
 				text2[0].setText("已用空间：\n\n" + FileUtils.sizeOfDirectory(Variables.dataFolder) + " 字节 (B)\n" +
-					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KiB)\n" +
-					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 兆字节 (MiB)");
+					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)");
 			} catch (Exception e1) {
 				showExceptionDialog(e1);
 				showErrorDialog("发生错误", "缓存清理失败。");
