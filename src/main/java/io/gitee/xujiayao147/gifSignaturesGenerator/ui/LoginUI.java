@@ -3,8 +3,10 @@ package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Avatar;
 import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Side;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -24,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.awt.TrayIcon;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Xujiayao
@@ -289,11 +292,9 @@ public class LoginUI {
 
 		new Thread(() -> {
 			try {
-				String[] datas;
-
 				switch (comboBox.getValue()) {
 					case "projectFLY" -> {
-						datas = Main.parseJSON.parseLoginJSON(Main.projectFlyAPI.login(usernameField.getText(), passwordField.getText()));
+						Variables.ProjectFly.loginData = Main.parseJSON.parseLoginJSON(Main.projectFlyAPI.login(usernameField.getText(), passwordField.getText()));
 
 						Platform.runLater(() -> {
 							button.setText("登录");
@@ -302,7 +303,7 @@ public class LoginUI {
 							root.setCursor(Cursor.DEFAULT);
 						});
 
-						if (datas != null) {
+						if (Variables.ProjectFly.loginData != null) {
 							Variables.loginType = comboBox.getValue();
 							Variables.username = usernameField.getText();
 							Variables.password = passwordField.getText();
@@ -315,6 +316,15 @@ public class LoginUI {
 								Main.stage.close();
 								new MainUI().start(Main.stage);
 							});
+
+							BufferedImage avatar = Avatar.processAvatar(Avatar.downloadAvatar());
+
+							if (avatar != null) {
+								Variables.avatar = avatar;
+
+								MainUI.imageView.setImage(SwingFXUtils.toFXImage(Variables.avatar, null));
+								Avatar.success = true;
+							}
 						}
 					}
 					case "哔哩哔哩" -> {

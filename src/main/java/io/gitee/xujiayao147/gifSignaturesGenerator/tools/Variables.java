@@ -12,9 +12,11 @@ import org.dtools.ini.IniFileWriter;
 import org.dtools.ini.IniItem;
 import org.dtools.ini.IniSection;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Xujiayao
@@ -24,8 +26,8 @@ public class Variables {
 	// 软件版本
 	public static String version = "v2.0.0";
 
-	// 界面的字体
-	public static String font = "Microsoft YaHei";
+	// 软件使用到的字体
+	public static String[] fonts = {"Microsoft YaHei"};
 
 	// 是否每次启动时检查更新
 	public static boolean checkUpdates = true;
@@ -47,8 +49,10 @@ public class Variables {
 	// 软件图标
 	public static List<BufferedImage> icons;
 
-	// 更新功能使用的文件version.json的下载路径
-	// 按链接次序进行下载，下载成功后不再下载后面的链接
+	// 用户头像
+	public static BufferedImage avatar;
+
+	// 更新功能使用的文件 version.json 的下载路径
 	public static String checkUpdateLink = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator/update/version.json";
 
 	public static void init() {
@@ -150,6 +154,14 @@ public class Variables {
 			error.append("-> 无法加载图标\n");
 		}
 
+		// 加载默认头像
+		try {
+			avatar = ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("no-profile-image.png")));
+		} catch (Exception e) {
+			Dialogs.showExceptionDialog(e);
+			error.append("-> 无法加载默认头像\n");
+		}
+
 		if (error.indexOf("->") != -1) {
 			error.append("\n如果你认为这是一个错误，请告诉我。");
 
@@ -194,5 +206,11 @@ public class Variables {
 			Dialogs.showExceptionDialog(e);
 			Dialogs.showErrorDialog("发生错误", "无法保存新设置。");
 		}
+	}
+
+	// ProjectFly 需要使用的变量
+	public static class ProjectFly {
+		// 解析过的 LoginAPI 返回的数据
+		public static String[] loginData;
 	}
 }

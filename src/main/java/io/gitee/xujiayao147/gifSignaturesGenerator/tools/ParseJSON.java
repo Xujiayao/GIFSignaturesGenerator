@@ -5,6 +5,15 @@ import javafx.application.Platform;
 
 public class ParseJSON {
 
+	/*
+	0: username
+	1: display_name
+	2: avatar
+	3: account_type
+	4: roles
+	5: colour
+	6: token
+	 */
 	public String[] parseLoginJSON(String data) {
 		if (data == null)
 			return null;
@@ -39,6 +48,11 @@ public class ParseJSON {
 		return datas;
 	}
 
+	/*
+	0: version
+	1: data
+	2: link
+	 */
 	public String[] parseUpdateJSON(String data) {
 		String[] datas = new String[3];
 

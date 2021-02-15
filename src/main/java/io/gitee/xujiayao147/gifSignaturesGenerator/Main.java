@@ -29,10 +29,11 @@ public class Main extends Application {
 
 		try {
 			// 检查字体是否已安装
-			if (!Font.getFamilies().contains(Variables.font))
-				error.append("-> 找不到微软雅黑字体\n");
+			for (String font : Variables.fonts)
+				if (!Font.getFamilies().contains(font))
+					error.append("-> 找不到 ").append(font).append(" 字体\n");
 
-			// 分析操作系统（本程序只支持Windows 7或以上）
+			// 分析操作系统（本程序只支持 Windows 7 或以上）
 			String os = System.getProperty("os.name");
 
 			if (!(os.equals("Windows 7") || os.equals("Windows 8") || os.equals("Windows 8.1") || os.equals("Windows 10")))

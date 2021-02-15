@@ -3,22 +3,29 @@ package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
+import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Utils;
 import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class MainUI {
 
+	public static ImageView imageView;
 	private double xOffset;
 	private double yOffset;
 
@@ -80,75 +87,56 @@ public class MainUI {
 
 		topPane.getChildren().addAll(iconView1, text1, barsButton, minimizeButton, closeButton);
 
-//		Pane rightPane = new Pane();
-//		rightPane.setPrefSize(350, 500);
-//		rightPane.setStyle("-fx-background-color: #FFF");
-//		root.setRight(rightPane);
-//
-//
-//		FontAwesomeIconView iconView5 = new FontAwesomeIconView(FontAwesomeIcon.CUBE, "30");
-//		iconView5.setFill(Color.web("#24292E"));
-//		iconView5.setLayoutX(160);
-//		iconView5.setLayoutY(130);
-//
-//		Text text3 = new Text(153, 165, "欢迎");
-//		text3.setFont(new Font("Microsoft YaHei", 22));
-//		text3.setFill(Color.web("#24292E"));
-//
-//		FontAwesomeIconView iconView6 = new FontAwesomeIconView(FontAwesomeIcon.CODE, "20");
-//		iconView6.setFill(Color.web("#24292E"));
-//		iconView6.setLayoutX(59);
-//		iconView6.setLayoutY(223);
-//
-//		comboBox = new ComboBox<>();
-//		comboBox.getItems().addAll("projectFLY", "哔哩哔哩");
-//		comboBox.setValue(Variables.loginType);
-//		comboBox.setStyle("-fx-background-color: #F3F3F3; -fx-border-color: #24292E; -fx-border-width: 0px 0px 2px 0px");
-//		comboBox.setPrefSize(200, 25);
-//		comboBox.setLayoutX(91);
-//		comboBox.setLayoutY(203);
-//
-//		iconView7 = new FontAwesomeIconView(FontAwesomeIcon.USER, "20");
-//		iconView7.setFill(Color.web("#24292E"));
-//		iconView7.setLayoutX(62);
-//		iconView7.setLayoutY(257);
-//
-//		usernameField = new TextField(Variables.username);
-//		usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
-//		usernameField.setPrefSize(200, 25);
-//		usernameField.setFont(new Font("Microsoft YaHei", 12));
-//		usernameField.setPromptText("用户名 / 邮箱地址");
-//		usernameField.setLayoutX(91);
-//		usernameField.setLayoutY(238);
-//
-//		iconView8 = new FontAwesomeIconView(FontAwesomeIcon.KEY, "20");
-//		iconView8.setFill(Color.web("#24292E"));
-//		iconView8.setLayoutX(60);
-//		iconView8.setLayoutY(292);
-//
-//		passwordField = new PasswordField();
-//		passwordField.setText(Variables.password);
-//		passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
-//		passwordField.setPrefSize(200, 25);
-//		passwordField.setFont(new Font("Microsoft YaHei", 12));
-//		passwordField.setPromptText("密码");
-//		passwordField.setLayoutX(91);
-//		passwordField.setLayoutY(273);
-//
-//		button = new Button("登录");
-//		button.setFont(new Font("Microsoft YaHei", 14));
-//		button.setStyle("-fx-background-color: #24292E");
-//		button.setTextFill(Color.web("#FFF"));
-//		button.setPrefSize(90, 30);
-//		button.setLayoutX(130);
-//		button.setLayoutY(365);
-//
-//		Text authorText = new Text(142, 481, "By Xujiayao");
-//		authorText.setFont(new Font("Microsoft YaHei", 12));
-//		authorText.setFill(Color.web("#24292E"));
-//
-//		rightPane.getChildren().addAll(barsButton, minimizeButton, closeButton, iconView5, text3, iconView6, comboBox, iconView7, usernameField, iconView8, passwordField, button, authorText);
-//
+		Pane leftPane = new Pane();
+		leftPane.setLayoutX(0);
+		leftPane.setLayoutY(40);
+		leftPane.setPrefSize(180, 560);
+		leftPane.setStyle("-fx-background-color: #24292E; -fx-background-radius: 0 20 0 0");
+		root.getChildren().add(leftPane);
+
+		imageView = new ImageView(SwingFXUtils.toFXImage(Variables.avatar, null));
+		imageView.setPreserveRatio(true);
+		imageView.setSmooth(true);
+		imageView.setFitWidth(140);
+		imageView.setFitHeight(140);
+		imageView.setLayoutX(20);
+		imageView.setLayoutY(20);
+
+		Text text2 = new Text(15, 188, Utils.unicodeToString(Variables.ProjectFly.loginData[1]));
+		text2.setFont(new Font("Microsoft YaHei Bold", 18));
+		text2.setTextAlignment(TextAlignment.CENTER);
+		text2.setFill(Color.web("#FFF"));
+		text2.setWrappingWidth(150);
+
+		Text text3 = new Text(15, 217, "@" + Utils.unicodeToString(Variables.ProjectFly.loginData[0]));
+		text3.setFont(new Font("Microsoft YaHei", 14));
+		text3.setTextAlignment(TextAlignment.CENTER);
+		text3.setFill(Color.web("#5F5D5F"));
+		text3.setWrappingWidth(150);
+
+		Text text4 = new Text(15, 240, Utils.unicodeToString(Variables.ProjectFly.loginData[3]) + " MEMBER");
+		text4.setFont(new Font("Microsoft YaHei", 14));
+		text4.setTextAlignment(TextAlignment.CENTER);
+		text4.setFill(Color.web("#5F5D5F"));
+		text4.setWrappingWidth(150);
+
+		Label label = new Label(Variables.ProjectFly.loginData[4].toUpperCase());
+		label.setFont(new Font("Microsoft YaHei Bold", 16));
+		label.setTextFill(Color.web("#FFF"));
+		label.setStyle("-fx-background-color: " + Variables.ProjectFly.loginData[5] + "; -fx-border-width: 2 2 2 2; -fx-border-color: #FFF");
+		label.setAlignment(Pos.CENTER);
+		label.setPrefSize(140, 26);
+		label.setLayoutX(20);
+		label.setLayoutY(254);
+
+		Text authorText = new Text(15, 543, "By Xujiayao");
+		authorText.setFont(new Font("Microsoft YaHei", 12));
+		authorText.setFill(Color.web("#FFF"));
+		authorText.setTextAlignment(TextAlignment.CENTER);
+		authorText.setWrappingWidth(150);
+
+		leftPane.getChildren().addAll(imageView, text2, text3, text4, label, authorText);
+
 		ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem menuItem1 = new MenuItem("首选项");
@@ -156,27 +144,6 @@ public class MainUI {
 		MenuItem menuItem3 = new MenuItem("关于");
 
 		contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
-
-//		if (Avatar.downloadAvatar()) {
-//			Avatar.processAvatar();
-//
-//			MainUI.imageView.setImage(new Image("file:" + Variables.avatarFilePath));
-//			Avatar.success = true;
-//		}
-//
-//		comboBox.setOnMouseEntered(e -> root.setCursor(Cursor.HAND));
-//
-//		button.setOnAction(e -> login());
-//
-//		root.setOnKeyReleased(e -> {
-//			if (e.getCode().equals(KeyCode.ENTER))
-//				login();
-//		});
-//
-//		button.setOnMouseEntered(e -> {
-//			root.setCursor(Cursor.HAND);
-//			button.setStyle("-fx-background-color: #414449");
-//		});
 
 		menuItem1.setOnAction(e -> Dialogs.showPreferencesDialog());
 
