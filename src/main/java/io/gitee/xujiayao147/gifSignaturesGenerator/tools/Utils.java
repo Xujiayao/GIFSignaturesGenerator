@@ -17,8 +17,7 @@ public class Utils {
 				} else if (unicode.charAt(i) == '\\') {
 					if ((i < maxLoop - 5) && ((unicode.charAt(i + 1) == 'u') || (unicode.charAt(i + 1) == 'U'))) {
 						try {
-							builder.append((char) Integer.parseInt(
-								  unicode.substring(i + 2, i + 6), 16));
+							builder.append((char) Integer.parseInt(unicode.substring(i + 2, i + 6), 16));
 							i += 5;
 						} catch (NumberFormatException e) {
 							builder.append(unicode.charAt(i));
