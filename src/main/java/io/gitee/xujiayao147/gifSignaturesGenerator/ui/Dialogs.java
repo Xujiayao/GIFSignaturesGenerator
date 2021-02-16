@@ -214,7 +214,7 @@ public class Dialogs {
 		alert.setHeaderText("关于GIF签名图生成工具");
 
 		Pane pane = new Pane();
-		pane.setPrefSize(400, 260);
+		pane.setPrefSize(415, 260);
 
 		ImageView imageView = new ImageView(SwingFXUtils.toFXImage(Variables.icons.get(8), null));
 		imageView.setPreserveRatio(true);
@@ -235,7 +235,7 @@ public class Dialogs {
 		link1.setLayoutY(32);
 
 		Separator separator1 = new Separator(Orientation.HORIZONTAL);
-		separator1.setPrefWidth(380);
+		separator1.setPrefWidth(395);
 		separator1.setLayoutX(10);
 		separator1.setLayoutY(68);
 
@@ -246,22 +246,22 @@ public class Dialogs {
 		text3.setLayoutY(88);
 
 		Separator separator2 = new Separator(Orientation.HORIZONTAL);
-		separator2.setPrefWidth(380);
+		separator2.setPrefWidth(395);
 		separator2.setLayoutX(10);
 		separator2.setLayoutY(98);
 
 		Text text4 = new Text("""
-			  软件首选项与用户存储的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
+			  所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
 			  			  
-			  已存储的变量将自动被填充，您可以在软件首选项中删除这些缓存。""");
+			  再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
 		text4.setFont(new Font("Microsoft YaHei", 14));
 		text4.setFill(Color.web("#323232"));
-		text4.setWrappingWidth(380);
+		text4.setWrappingWidth(395);
 		text4.setLayoutX(10);
 		text4.setLayoutY(118);
 
 		Separator separator3 = new Separator(Orientation.HORIZONTAL);
-		separator3.setPrefWidth(380);
+		separator3.setPrefWidth(395);
 		separator3.setLayoutX(10);
 		separator3.setLayoutY(202);
 
@@ -273,7 +273,7 @@ public class Dialogs {
 
 		Hyperlink link2 = new Hyperlink("GitHub (GIFSignaturesGenerator)");
 		link2.setFont(new Font("Microsoft YaHei", 14));
-		link2.setLayoutX(150);
+		link2.setLayoutX(170);
 		link2.setLayoutY(203);
 
 		Text text6 = new Text("欢迎访问我的博客！");
@@ -284,7 +284,7 @@ public class Dialogs {
 
 		Hyperlink link3 = new Hyperlink("Xujiayao's Blog");
 		link3.setFont(new Font("Microsoft YaHei", 14));
-		link3.setLayoutX(150);
+		link3.setLayoutX(170);
 		link3.setLayoutY(223);
 
 		pane.getChildren().addAll(imageView, text1, link1, separator1, text3, separator2, text4, separator3, text5, link2, text6, link3);
