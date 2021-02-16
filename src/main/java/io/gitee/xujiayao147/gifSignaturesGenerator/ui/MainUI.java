@@ -26,6 +26,9 @@ import javafx.stage.Stage;
 public class MainUI {
 
 	public static ImageView imageView;
+
+	public static short showingPane = 1;
+
 	private double xOffset;
 	private double yOffset;
 
@@ -137,6 +140,38 @@ public class MainUI {
 
 		leftPane.getChildren().addAll(imageView, text2, text3, text4, label, authorText);
 
+		Pane splitPane = new Pane();
+		splitPane.setPrefSize(620, 2);
+		splitPane.setLayoutX(180);
+		splitPane.setLayoutY(558);
+		splitPane.setStyle("-fx-background-color: #24292E");
+		root.getChildren().add(splitPane);
+
+		Pane bottomPane = new Pane();
+		bottomPane.setPrefSize(620, 40);
+		bottomPane.setLayoutX(180);
+		bottomPane.setLayoutY(560);
+		bottomPane.setStyle("-fx-background-color: #FFF");
+		root.getChildren().add(bottomPane);
+
+		Button backButton = new Button("上一步");
+		backButton.setFont(new Font("Microsoft YaHei", 14));
+		backButton.setStyle("-fx-background-color: #24292E");
+		backButton.setTextFill(Color.web("#FFF"));
+		backButton.setPrefSize(90, 29);
+		backButton.setLayoutX(217);
+		backButton.setLayoutY(5);
+
+		Button nextButton = new Button("下一步");
+		nextButton.setFont(new Font("Microsoft YaHei", 14));
+		nextButton.setStyle("-fx-background-color: #24292E");
+		nextButton.setTextFill(Color.web("#FFF"));
+		nextButton.setPrefSize(90, 29);
+		nextButton.setLayoutX(313);
+		nextButton.setLayoutY(5);
+
+		bottomPane.getChildren().addAll(backButton, nextButton);
+
 		ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem menuItem1 = new MenuItem("首选项");
@@ -177,7 +212,26 @@ public class MainUI {
 			iconView4.setFill(Color.web("#FF0000"));
 		});
 
+		backButton.setOnMouseEntered(e -> {
+			root.setCursor(Cursor.HAND);
+			backButton.setStyle("-fx-background-color: #414449");
+		});
+
+		nextButton.setOnMouseEntered(e -> {
+			root.setCursor(Cursor.HAND);
+			nextButton.setStyle("-fx-background-color: #414449");
+		});
+
 		minimizeButton.setOnAction(e -> stage.setIconified(true));
+
+		backButton.setOnAction(e -> {
+			switch (showingPane) {
+				case 1 -> {
+					stage.close();
+					new LoginUI().start(stage);
+				}
+			}
+		});
 
 		closeButton.setOnAction(e -> {
 			stage.close();
@@ -189,6 +243,8 @@ public class MainUI {
 			iconView2.setFill(Color.web("#24292E"));
 			iconView3.setFill(Color.web("#24292E"));
 			iconView4.setFill(Color.web("#24292E"));
+			backButton.setStyle("-fx-background-color: #24292E");
+			nextButton.setStyle("-fx-background-color: #24292E");
 		});
 
 		root.setOnMousePressed(e -> {

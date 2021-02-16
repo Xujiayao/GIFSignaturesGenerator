@@ -50,7 +50,6 @@ public class LoginUI {
 
 		Scene scene = new Scene(root);
 		stage.setTitle("GIF签名图生成工具");
-		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setX((Variables.screenWidth - 700) / 2);
 		stage.setY((Variables.screenHeight - 500) / 2);
 		stage.setScene(scene);

@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * @author Xujiayao
@@ -66,6 +67,8 @@ public class Main extends Application {
 		update = new Update();
 		parseJSON = new ParseJSON();
 		projectFlyAPI = new ProjectFlyAPI();
+
+		stage.initStyle(StageStyle.UNDECORATED);
 
 		stage.setOnCloseRequest(e -> {
 			stage.close();
