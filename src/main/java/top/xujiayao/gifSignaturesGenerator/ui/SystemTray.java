@@ -1,8 +1,8 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
+package top.xujiayao.gifSignaturesGenerator.ui;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.application.Platform;
+import top.xujiayao.gifSignaturesGenerator.Main;
+import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;

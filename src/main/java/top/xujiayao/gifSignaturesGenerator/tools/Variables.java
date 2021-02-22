@@ -1,6 +1,5 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator.tools;
+package top.xujiayao.gifSignaturesGenerator.tools;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import net.sf.image4j.codec.ico.ICODecoder;
@@ -11,6 +10,7 @@ import org.dtools.ini.IniFileReader;
 import org.dtools.ini.IniFileWriter;
 import org.dtools.ini.IniItem;
 import org.dtools.ini.IniSection;
+import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

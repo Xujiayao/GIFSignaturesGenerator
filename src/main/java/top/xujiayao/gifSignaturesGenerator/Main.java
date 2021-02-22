@@ -1,17 +1,17 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator;
+package top.xujiayao.gifSignaturesGenerator;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.ParseJSON;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.ProjectFlyAPI;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Update;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
-import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
-import io.gitee.xujiayao147.gifSignaturesGenerator.ui.LoginUI;
-import io.gitee.xujiayao147.gifSignaturesGenerator.ui.SystemTray;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import top.xujiayao.gifSignaturesGenerator.tools.ParseJSON;
+import top.xujiayao.gifSignaturesGenerator.tools.ProjectFlyAPI;
+import top.xujiayao.gifSignaturesGenerator.tools.Update;
+import top.xujiayao.gifSignaturesGenerator.tools.Variables;
+import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
+import top.xujiayao.gifSignaturesGenerator.ui.LoginUI;
+import top.xujiayao.gifSignaturesGenerator.ui.SystemTray;
 
 /**
  * @author Xujiayao

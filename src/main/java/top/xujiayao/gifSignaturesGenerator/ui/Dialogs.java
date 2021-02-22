@@ -1,7 +1,5 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
+package top.xujiayao.gifSignaturesGenerator.ui;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
@@ -24,6 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.apache.commons.io.FileUtils;
+import top.xujiayao.gifSignaturesGenerator.Main;
+import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
 import java.awt.Desktop;
 import java.io.PrintWriter;
@@ -309,7 +309,7 @@ public class Dialogs {
 
 		link3.setOnAction(e -> {
 			try {
-				Desktop.getDesktop().browse(new URI("https://xujiayao147.gitee.io/"));
+				Desktop.getDesktop().browse(new URI("https://blog.xujiayao.top/"));
 			} catch (Exception e1) {
 				showExceptionDialog(e1);
 			}

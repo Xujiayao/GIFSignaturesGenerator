@@ -1,10 +1,7 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
+package top.xujiayao.gifSignaturesGenerator.ui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Avatar;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Side;
@@ -23,7 +20,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import top.xujiayao.gifSignaturesGenerator.Main;
+import top.xujiayao.gifSignaturesGenerator.tools.Avatar;
+import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
 import java.awt.TrayIcon;
 import java.awt.image.BufferedImage;

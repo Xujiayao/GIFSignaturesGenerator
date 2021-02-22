@@ -1,8 +1,8 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator.tools;
+package top.xujiayao.gifSignaturesGenerator.tools;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
-import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import javafx.application.Platform;
+import top.xujiayao.gifSignaturesGenerator.Main;
+import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

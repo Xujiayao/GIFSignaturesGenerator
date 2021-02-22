@@ -1,7 +1,7 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator.tools;
+package top.xujiayao.gifSignaturesGenerator.tools;
 
-import io.gitee.xujiayao147.gifSignaturesGenerator.ui.Dialogs;
 import javafx.application.Platform;
+import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 public class ParseJSON {
 

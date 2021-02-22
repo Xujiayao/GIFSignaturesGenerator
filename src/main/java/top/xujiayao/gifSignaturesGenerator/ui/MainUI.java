@@ -1,10 +1,7 @@
-package io.gitee.xujiayao147.gifSignaturesGenerator.ui;
+package top.xujiayao.gifSignaturesGenerator.ui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import io.gitee.xujiayao147.gifSignaturesGenerator.Main;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Utils;
-import io.gitee.xujiayao147.gifSignaturesGenerator.tools.Variables;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -22,6 +19,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import top.xujiayao.gifSignaturesGenerator.Main;
+import top.xujiayao.gifSignaturesGenerator.tools.Utils;
+import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
 public class MainUI {
 
@@ -240,6 +240,8 @@ public class MainUI {
 		});
 
 		root.setOnMouseMoved(e -> {
+			root.setCursor(Cursor.DEFAULT);
+
 			iconView2.setFill(Color.web("#24292E"));
 			iconView3.setFill(Color.web("#24292E"));
 			iconView4.setFill(Color.web("#24292E"));

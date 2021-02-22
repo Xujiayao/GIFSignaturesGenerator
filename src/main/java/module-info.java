@@ -9,7 +9,7 @@ module GIFSignaturesGenerator {
 	requires commons.io;
 	requires jdk.crypto.ec;
 
-	exports io.gitee.xujiayao147.gifSignaturesGenerator;
-	exports io.gitee.xujiayao147.gifSignaturesGenerator.ui;
-	exports io.gitee.xujiayao147.gifSignaturesGenerator.tools;
+	exports top.xujiayao.gifSignaturesGenerator;
+	exports top.xujiayao.gifSignaturesGenerator.ui;
+	exports top.xujiayao.gifSignaturesGenerator.tools;
 }

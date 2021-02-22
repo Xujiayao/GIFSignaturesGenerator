@@ -56,7 +56,7 @@ dependencies {
 
 application {
     mainModule = 'GIFSignaturesGenerator'
-    mainClass = 'io.gitee.xujiayao147.gifSignaturesGenerator.Main'
+    mainClass = 'top.xujiayao.gifSignaturesGenerator.Main'
 }
 
 jlink {
