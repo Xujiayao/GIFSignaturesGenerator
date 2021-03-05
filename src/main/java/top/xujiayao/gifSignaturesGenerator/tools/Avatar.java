@@ -24,6 +24,7 @@ public class Avatar {
 		try {
 			int w = avatar.getWidth();
 			int h = avatar.getHeight();
+
 			BufferedImage output = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
 			Graphics2D g2 = output.createGraphics();
@@ -39,8 +40,8 @@ public class Avatar {
 			g2.fill(new RoundRectangle2D.Float(0, 0, w, h, 120, 120));
 
 			g2.setComposite(AlphaComposite.SrcAtop);
-			g2.drawImage(avatar, 0, 0, null);
 
+			g2.drawImage(avatar, 0, 0, null);
 			g2.dispose();
 
 			return output;
@@ -70,8 +71,9 @@ public class Avatar {
 
 			int count;
 
-			while ((count = is.read(buff)) != -1)
+			while ((count = is.read(buff)) != -1) {
 				output.write(buff, 0, count);
+			}
 
 			is.close();
 			output.close();
@@ -79,18 +81,21 @@ public class Avatar {
 			return ImageIO.read(new ByteArrayInputStream(output.toByteArray()));
 		} catch (Exception e) {
 			Platform.runLater(() -> {
-				if (e.getMessage().contains("Connection timed out"))
+				if (e.getMessage().contains("Connection timed out")) {
 					Dialogs.showErrorDialog("发生错误", "无法下载您的头像，请尝试重新上传一遍您的头像。如果您是中国大陆用户，使用 VPN 再试一次。");
-				else
+				} else {
 					Dialogs.showExceptionDialog(e);
+				}
 			});
 		} finally {
 			try {
-				if (is != null)
+				if (is != null) {
 					is.close();
+				}
 
-				if (output != null)
+				if (output != null) {
 					output.close();
+				}
 			} catch (Exception e) {
 				Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 			}

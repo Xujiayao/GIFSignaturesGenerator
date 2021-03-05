@@ -5,8 +5,6 @@ import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import top.xujiayao.gifSignaturesGenerator.tools.ParseJSON;
-import top.xujiayao.gifSignaturesGenerator.tools.ProjectFlyAPI;
 import top.xujiayao.gifSignaturesGenerator.tools.Update;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
@@ -20,8 +18,6 @@ public class Main extends Application {
 
 	public static SystemTray systemTray;
 	public static Update update;
-	public static ParseJSON parseJSON;
-	public static ProjectFlyAPI projectFlyAPI;
 
 	public static Stage stage;
 
@@ -30,15 +26,18 @@ public class Main extends Application {
 
 		try {
 			// 检查字体是否已安装
-			for (String font : Variables.fonts)
-				if (!Font.getFamilies().contains(font))
+			for (String font : Variables.fonts) {
+				if (!Font.getFamilies().contains(font)) {
 					error.append("-> 找不到 ").append(font).append(" 字体\n");
+				}
+			}
 
 			// 分析操作系统（本程序只支持 Windows 7 或以上）
 			String os = System.getProperty("os.name");
 
-			if (!(os.equals("Windows 7") || os.equals("Windows 8") || os.equals("Windows 8.1") || os.equals("Windows 10")))
+			if (!(os.equals("Windows 7") || os.equals("Windows 8") || os.equals("Windows 8.1") || os.equals("Windows 10"))) {
 				error.append("-> 本程序不支持 ").append(os).append("（只支持 Windows 7 或以上）\n");
+			}
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 		}
@@ -65,8 +64,6 @@ public class Main extends Application {
 	public void start(Stage stage) {
 		systemTray = new SystemTray();
 		update = new Update();
-		parseJSON = new ParseJSON();
-		projectFlyAPI = new ProjectFlyAPI();
 
 		stage.initStyle(StageStyle.UNDECORATED);
 
@@ -85,11 +82,13 @@ public class Main extends Application {
 
 			new LoginUI().start(Main.stage);
 
-			if (java.awt.SystemTray.isSupported())
+			if (java.awt.SystemTray.isSupported()) {
 				new Thread(systemTray).start();
+			}
 
-			if (Variables.checkUpdates)
+			if (Variables.checkUpdates) {
 				new Thread(update).start();
+			}
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			System.exit(1);

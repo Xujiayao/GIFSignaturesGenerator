@@ -14,9 +14,10 @@ public class ParseJSON {
 	5: colour
 	6: token
 	 */
-	public String[] parseLoginJSON(String data) {
-		if (data == null)
+	public static String[] parseLoginJSON(String data) {
+		if (data == null) {
 			return null;
+		}
 
 		String[] datas = new String[7];
 
@@ -53,15 +54,16 @@ public class ParseJSON {
 	1: data
 	2: link
 	 */
-	public String[] parseUpdateJSON(String data) {
+	public static String[] parseUpdateJSON(String data) {
 		String[] datas = new String[3];
 
 		try {
 			data = data.substring(12);
 			datas[0] = data.substring(0, data.indexOf("\""));
 
-			if (datas[0].equals(Variables.version))
+			if (datas[0].equals(Variables.version)) {
 				return null;
+			}
 
 			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[1] = data.substring(0, data.indexOf("\""));

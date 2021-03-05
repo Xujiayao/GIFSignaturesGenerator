@@ -1,7 +1,6 @@
 package top.xujiayao.gifSignaturesGenerator.tools;
 
 import javafx.application.Platform;
-import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 import java.io.BufferedReader;
@@ -20,14 +19,15 @@ public class Update implements Runnable {
 			boolean isManualRequest = this.isManualRequest;
 			String data = downloadJSON(Variables.checkUpdateLink);
 
-			String[] parsedData = Main.parseJSON.parseUpdateJSON(data);
+			String[] parsedData = ParseJSON.parseUpdateJSON(data);
 
 			Platform.runLater(() -> {
 				if (parsedData != null) {
 					Dialogs.showUpdateDialog(parsedData);
 				} else {
-					if (isManualRequest)
+					if (isManualRequest) {
 						Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
+					}
 				}
 			});
 		} catch (Exception e) {
@@ -50,8 +50,9 @@ public class Update implements Runnable {
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		} finally {
-			if (reader != null)
+			if (reader != null) {
 				reader.close();
+			}
 		}
 
 		return data;

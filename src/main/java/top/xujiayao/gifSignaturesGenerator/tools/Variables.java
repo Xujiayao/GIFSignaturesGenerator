@@ -64,8 +64,9 @@ public class Variables {
 			screenWidth = screen.getWidth();
 			screenHeight = screen.getHeight();
 
-			if ((screenWidth == 0) || (screenHeight == 0))
+			if ((screenWidth == 0) || (screenHeight == 0)) {
 				throw new Exception("Custom: bounds are equal to 0");
+			}
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法获取屏幕宽高\n");
@@ -75,15 +76,19 @@ public class Variables {
 		try {
 			dataFolder = new File(System.getenv("APPDATA") + "/Java Projects");
 
-			if (!dataFolder.exists() || !dataFolder.isDirectory())
-				if (!dataFolder.mkdir())
+			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
+				if (!dataFolder.mkdir()) {
 					throw new Exception("Custom: the folder can't be created");
+				}
+			}
 
 			dataFolder = new File(dataFolder.toString() + "/GIFSignaturesGenerator");
 
-			if (!dataFolder.exists() || !dataFolder.isDirectory())
-				if (!dataFolder.mkdir())
+			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
+				if (!dataFolder.mkdir()) {
 					throw new Exception("Custom: the folder can't be created");
+				}
+			}
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法分析文件夹是否存在或创建文件夹\n");

@@ -153,10 +153,11 @@ public class Dialogs {
 
 		ComboBox<String> comboBox = new ComboBox<>();
 		comboBox.getItems().addAll("每次启动时", "从不");
-		if (Variables.checkUpdates)
+		if (Variables.checkUpdates) {
 			comboBox.setValue("每次启动时");
-		else
+		} else {
 			comboBox.setValue("从不");
+		}
 		comboBox.setPrefSize(140, 20);
 		comboBox.setLayoutX(140);
 		comboBox.setLayoutY(67);

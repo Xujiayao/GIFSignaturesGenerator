@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 public class ProjectFlyAPI {
 
-	public String login(String username, String password) throws Exception {
+	public static String login(String username, String password) throws Exception {
 		String data = null;
 		BufferedReader reader = null;
 
@@ -33,14 +33,16 @@ public class ProjectFlyAPI {
 			data = reader.readLine();
 		} catch (Exception e) {
 			Platform.runLater(() -> {
-				if (e.getMessage().contains("HTTP response code: 401"))
+				if (e.getMessage().contains("HTTP response code: 401")) {
 					Dialogs.showErrorDialog("发生错误", "无效的用户名或密码。");
-				else
+				} else {
 					Dialogs.showExceptionDialog(e);
+				}
 			});
 		} finally {
-			if (reader != null)
+			if (reader != null) {
 				reader.close();
+			}
 		}
 
 		return data;

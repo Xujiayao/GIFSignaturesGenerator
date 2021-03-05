@@ -22,6 +22,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.tools.Avatar;
+import top.xujiayao.gifSignaturesGenerator.tools.ParseJSON;
+import top.xujiayao.gifSignaturesGenerator.tools.ProjectFlyAPI;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
 import java.awt.TrayIcon;
@@ -184,8 +186,9 @@ public class LoginUI {
 		button.setOnAction(e -> login());
 
 		root.setOnKeyReleased(e -> {
-			if (e.getCode().equals(KeyCode.ENTER))
+			if (e.getCode().equals(KeyCode.ENTER)) {
 				login();
+			}
 		});
 
 		button.setOnMouseEntered(e -> {
@@ -292,7 +295,7 @@ public class LoginUI {
 			try {
 				switch (comboBox.getValue()) {
 					case "projectFLY" -> {
-						Variables.ProjectFly.loginData = Main.parseJSON.parseLoginJSON(Main.projectFlyAPI.login(usernameField.getText(), passwordField.getText()));
+						Variables.ProjectFly.loginData = ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText()));
 
 						Platform.runLater(() -> {
 							button.setText("登录");
