@@ -297,6 +297,10 @@ public class LoginUI {
 					case "projectFLY" -> {
 						Variables.ProjectFly.loginData = ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText()));
 
+						Variables.ProjectFly.profileData = ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0));
+						Variables.ProjectFly.logbookData = ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1));
+						Variables.ProjectFly.passportData = ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2));
+
 						Platform.runLater(() -> {
 							button.setText("登录");
 							button.setDisable(false);
@@ -304,7 +308,10 @@ public class LoginUI {
 							root.setCursor(Cursor.DEFAULT);
 						});
 
-						if (Variables.ProjectFly.loginData != null) {
+						if (Variables.ProjectFly.loginData != null &&
+							  Variables.ProjectFly.profileData != null &&
+							  Variables.ProjectFly.logbookData != null &&
+							  Variables.ProjectFly.passportData != null) {
 							Variables.loginType = comboBox.getValue();
 							Variables.username = usernameField.getText();
 							Variables.password = passwordField.getText();

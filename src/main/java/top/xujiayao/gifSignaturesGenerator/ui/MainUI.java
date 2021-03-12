@@ -180,6 +180,8 @@ public class MainUI {
 
 		contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
 
+		root.getChildren().add(Panes.pane1());
+
 		menuItem1.setOnAction(e -> Dialogs.showPreferencesDialog());
 
 		menuItem2.setOnAction(e -> {

@@ -5,6 +5,22 @@ import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 public class Utils {
 
+	public static int findStrOccurrence(String findStr, String src) {
+		int index = 0;
+		int count = 0;
+
+		try {
+			while ((index = src.indexOf(findStr, index)) != -1) {
+				count++;
+				index = index + findStr.length();
+			}
+		} catch (Exception e) {
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+		}
+
+		return count;
+	}
+
 	public static String unicodeToString(String unicode) {
 		StringBuilder builder = new StringBuilder();
 

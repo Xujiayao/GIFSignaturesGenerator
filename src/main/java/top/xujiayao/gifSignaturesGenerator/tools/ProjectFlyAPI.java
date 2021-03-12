@@ -13,6 +13,40 @@ import java.nio.charset.StandardCharsets;
 
 public class ProjectFlyAPI {
 
+	public static String getProfile(int useLinkNumber) throws Exception {
+		String data = null;
+		BufferedReader reader = null;
+
+		String[] links = {"https://api.projectfly.co.uk/api/v3/community/user/" + Variables.ProjectFly.loginData[0] + "/profile",
+			  "https://api.projectfly.co.uk/api/v3/bookings/logbook/" + Variables.ProjectFly.loginData[0] + "?page=0",
+			  "https://api.projectfly.co.uk/api/v3/community/user/" + Variables.ProjectFly.loginData[0] + "/passport"};
+
+		try {
+			URLConnection conn = new URL(links[useLinkNumber]).openConnection();
+
+			conn.addRequestProperty("Authorization", "Bearer " + Variables.ProjectFly.loginData[6]);
+			conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
+
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+
+			data = reader.readLine();
+		} catch (Exception e) {
+			Platform.runLater(() -> {
+				if (e.getMessage().contains("HTTP response code: 401")) {
+					Dialogs.showErrorDialog("发生错误", "令牌已过期，请返回上一步重新登录。");
+				} else {
+					Dialogs.showExceptionDialog(e);
+				}
+			});
+		} finally {
+			if (reader != null) {
+				reader.close();
+			}
+		}
+
+		return data;
+	}
+
 	public static String login(String username, String password) throws Exception {
 		String data = null;
 		BufferedReader reader = null;
