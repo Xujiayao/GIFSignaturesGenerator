@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import top.xujiayao.gifSignaturesGenerator.Main;
+import top.xujiayao.gifSignaturesGenerator.tools.Avatar;
 import top.xujiayao.gifSignaturesGenerator.tools.Utils;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
@@ -231,6 +232,31 @@ public class MainUI {
 				case 1 -> {
 					stage.close();
 					new LoginUI().start(stage);
+				}
+				case 2 -> {
+					try {
+						root.getChildren().remove(4);
+						root.getChildren().add(Panes.pane2());
+					} catch (Exception e1) {
+						Dialogs.showExceptionDialog(e1);
+					}
+				}
+			}
+		});
+
+		nextButton.setOnAction(e -> {
+			switch (showingPane) {
+				case 1 -> {
+					if (!Avatar.success) {
+						Dialogs.showErrorDialog("发生错误", "请在继续下一步之前先等头像处理成功。");
+						return;
+					}
+					try {
+						root.getChildren().remove(4);
+						root.getChildren().add(Panes.pane2());
+					} catch (Exception e1) {
+						Dialogs.showExceptionDialog(e1);
+					}
 				}
 			}
 		});

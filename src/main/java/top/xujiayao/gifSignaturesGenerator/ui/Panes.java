@@ -1,10 +1,16 @@
 package top.xujiayao.gifSignaturesGenerator.ui;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
+
+import javax.imageio.ImageIO;
+import java.util.Objects;
 
 /**
  * @author Xujiayao
@@ -194,6 +200,64 @@ public class Panes {
 		field11.setLayoutY(470);
 
 		pane.getChildren().addAll(title, text0, text00, text1, field1, text2, field2, text3, field3, text4, field4, text5, field5, text6, field6, text7, field7, text8, field8, text9, field9, text10, field10, text11, field11);
+
+		return pane;
+	}
+
+	public static Pane pane2() throws Exception {
+		paneShowing = 2;
+
+		Pane pane = new Pane();
+		pane.setPrefSize(620, 518);
+		pane.setLayoutX(180);
+		pane.setLayoutY(40);
+		pane.setStyle("-fx-background-color: #FFF");
+
+		Text title = new Text("选择签名图样式");
+		title.setFont(new Font("Microsoft YaHei Bold", 18));
+		title.setWrappingWidth(600);
+		title.setLayoutX(10);
+		title.setLayoutY(28);
+
+		Text text0 = new Text("请根据自己的喜好选择以下其中一款签名图样式。");
+		text0.setFont(new Font("Microsoft YaHei", 14));
+		text0.setWrappingWidth(600);
+		text0.setLayoutX(10);
+		text0.setLayoutY(67);
+
+		Text text00 = new Text("欢迎设计其他签名图样式并发送给我，我会在优化后添加到软件里。");
+		text00.setFont(new Font("Microsoft YaHei", 14));
+		text00.setWrappingWidth(600);
+		text00.setLayoutX(10);
+		text00.setLayoutY(96);
+
+		RadioButton rb1 = new RadioButton("projectFLY v2");
+		rb1.setFont(new Font("Microsoft YaHei", 14));
+		rb1.setLayoutX(10);
+		rb1.setLayoutY(120);
+
+		ImageView imageView1 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("signature.png"))), null));
+		imageView1.setPreserveRatio(true);
+		imageView1.setSmooth(true);
+		imageView1.setFitWidth(600);
+		imageView1.setFitHeight(40);
+		imageView1.setLayoutX(10);
+		imageView1.setLayoutY(150);
+
+		RadioButton rb2 = new RadioButton("projectFLY v3");
+		rb2.setFont(new Font("Microsoft YaHei", 14));
+		rb2.setLayoutX(10);
+		rb2.setLayoutY(220);
+
+		ImageView imageView2 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("signature.png"))), null));
+		imageView2.setPreserveRatio(true);
+		imageView2.setSmooth(true);
+		imageView2.setFitWidth(600);
+		imageView2.setFitHeight(40);
+		imageView2.setLayoutX(10);
+		imageView2.setLayoutY(250);
+
+		pane.getChildren().addAll(title, text0, text00, rb1, imageView1, rb2, imageView2);
 
 		return pane;
 	}

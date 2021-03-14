@@ -213,6 +213,7 @@ public class Variables {
 		}
 	}
 
+	// 这里以后改成不要static的，避免浪费资源，在login的时候才new一个
 	// projectFLY 需要使用的变量
 	public static class ProjectFly {
 		// 解析过的 LoginAPI 返回的数据
