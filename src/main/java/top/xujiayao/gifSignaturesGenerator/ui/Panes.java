@@ -3,6 +3,7 @@ package top.xujiayao.gifSignaturesGenerator.ui;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -231,10 +232,14 @@ public class Panes {
 		text00.setLayoutX(10);
 		text00.setLayoutY(96);
 
+		ToggleGroup group = new ToggleGroup();
+
 		RadioButton rb1 = new RadioButton("projectFLY v2");
 		rb1.setFont(new Font("Microsoft YaHei", 14));
 		rb1.setLayoutX(10);
 		rb1.setLayoutY(120);
+		rb1.setToggleGroup(group);
+		rb1.setUserData(1);
 
 		ImageView imageView1 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("signature.png"))), null));
 		imageView1.setPreserveRatio(true);
@@ -248,6 +253,13 @@ public class Panes {
 		rb2.setFont(new Font("Microsoft YaHei", 14));
 		rb2.setLayoutX(10);
 		rb2.setLayoutY(220);
+		rb2.setToggleGroup(group);
+		rb2.setUserData(2);
+
+		switch (Variables.useStyleProjectFly) {
+			case 1 -> rb1.setSelected(true);
+			case 2 -> rb2.setSelected(true);
+		}
 
 		ImageView imageView2 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("signature.png"))), null));
 		imageView2.setPreserveRatio(true);
@@ -258,6 +270,12 @@ public class Panes {
 		imageView2.setLayoutY(250);
 
 		pane.getChildren().addAll(title, text0, text00, rb1, imageView1, rb2, imageView2);
+
+		group.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
+			if (group.getSelectedToggle() != null) {
+				Variables.useStyleProjectFly = (int) group.getSelectedToggle().getUserData();
+			}
+		});
 
 		return pane;
 	}

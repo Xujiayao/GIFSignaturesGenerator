@@ -39,6 +39,9 @@ public class Variables {
 	public static String username = "";
 	public static String password = "";
 
+	// 用户选择的签名图样式
+	public static int useStyleProjectFly = 1;
+
 	// 屏幕宽度和高度
 	public static double screenWidth;
 	public static double screenHeight;
@@ -115,6 +118,7 @@ public class Variables {
 							}
 							case "Username" -> username = item.getValue();
 							case "Password" -> password = item.getValue();
+							case "UseStyleProjectFly" -> useStyleProjectFly = Integer.valueOf(item.getValue());
 						}
 					}
 				}
@@ -140,6 +144,10 @@ public class Variables {
 				IniItem password = new IniItem("Password");
 				password.setValue("");
 				variables.addItem(password);
+
+				IniItem useStyleProjectFly = new IniItem("UseStyleProjectFly");
+				useStyleProjectFly.setValue(1);
+				variables.addItem(useStyleProjectFly);
 
 				IniFileWriter writer = new IniFileWriter(ini, config);
 				writer.setIncludeSpaces(true);
@@ -202,6 +210,10 @@ public class Variables {
 			IniItem password = new IniItem("Password");
 			password.setValue(Variables.password);
 			variables.addItem(password);
+
+			IniItem useStyleProjectFly = new IniItem("UseStyleProjectFly");
+			useStyleProjectFly.setValue(Variables.useStyleProjectFly);
+			variables.addItem(useStyleProjectFly);
 
 			IniFileWriter writer = new IniFileWriter(ini, config);
 			writer.setIncludeSpaces(true);

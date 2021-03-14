@@ -28,8 +28,6 @@ public class MainUI {
 
 	public static ImageView imageView;
 
-	public static short showingPane = 1;
-
 	private double xOffset;
 	private double yOffset;
 
@@ -228,7 +226,7 @@ public class MainUI {
 		minimizeButton.setOnAction(e -> stage.setIconified(true));
 
 		backButton.setOnAction(e -> {
-			switch (showingPane) {
+			switch (Panes.paneShowing) {
 				case 1 -> {
 					stage.close();
 					new LoginUI().start(stage);
@@ -245,18 +243,22 @@ public class MainUI {
 		});
 
 		nextButton.setOnAction(e -> {
-			switch (showingPane) {
+			switch (Panes.paneShowing) {
 				case 1 -> {
 					if (!Avatar.success) {
 						Dialogs.showErrorDialog("发生错误", "请在继续下一步之前先等头像处理成功。");
 						return;
 					}
+
 					try {
 						root.getChildren().remove(4);
 						root.getChildren().add(Panes.pane2());
 					} catch (Exception e1) {
 						Dialogs.showExceptionDialog(e1);
 					}
+				}
+				case 2 -> {
+					Variables.saveConfig();
 				}
 			}
 		});
