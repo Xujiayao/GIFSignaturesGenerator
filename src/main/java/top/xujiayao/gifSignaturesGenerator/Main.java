@@ -19,6 +19,8 @@ public class Main extends Application {
 	public static SystemTray systemTray;
 	public static Update update;
 
+	public static Variables.ProjectFly projectFlyData;
+
 	public static Stage stage;
 
 	private static void checkError() {
@@ -62,8 +64,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		systemTray = new SystemTray();
 		update = new Update();
+		systemTray = new SystemTray();
 
 		stage.initStyle(StageStyle.UNDECORATED);
 

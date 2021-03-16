@@ -104,28 +104,28 @@ public class MainUI {
 		imageView.setLayoutX(20);
 		imageView.setLayoutY(20);
 
-		Text text2 = new Text(15, 188, Utils.unicodeToString(Variables.ProjectFly.loginData[1]));
+		Text text2 = new Text(15, 188, Utils.unicodeToString(Main.projectFlyData.loginData[1]));
 		text2.setFont(new Font("Microsoft YaHei Bold", 18));
 		text2.setTextAlignment(TextAlignment.CENTER);
 		text2.setFill(Color.web("#FFF"));
 		text2.setWrappingWidth(150);
 
-		Text text3 = new Text(15, 217, "@" + Utils.unicodeToString(Variables.ProjectFly.loginData[0]));
+		Text text3 = new Text(15, 217, "@" + Utils.unicodeToString(Main.projectFlyData.loginData[0]));
 		text3.setFont(new Font("Microsoft YaHei", 14));
 		text3.setTextAlignment(TextAlignment.CENTER);
 		text3.setFill(Color.web("#5F5D5F"));
 		text3.setWrappingWidth(150);
 
-		Text text4 = new Text(15, 240, Utils.unicodeToString(Variables.ProjectFly.loginData[3]) + " MEMBER");
+		Text text4 = new Text(15, 240, Utils.unicodeToString(Main.projectFlyData.loginData[3]) + " MEMBER");
 		text4.setFont(new Font("Microsoft YaHei", 14));
 		text4.setTextAlignment(TextAlignment.CENTER);
 		text4.setFill(Color.web("#5F5D5F"));
 		text4.setWrappingWidth(150);
 
-		Label label = new Label(Variables.ProjectFly.loginData[4].toUpperCase());
+		Label label = new Label(Main.projectFlyData.loginData[4].toUpperCase());
 		label.setFont(new Font("Microsoft YaHei Bold", 16));
 		label.setTextFill(Color.web("#FFF"));
-		label.setStyle("-fx-background-color: " + Variables.ProjectFly.loginData[5] + "; -fx-border-width: 2 2 2 2; -fx-border-color: #FFF");
+		label.setStyle("-fx-background-color: " + Main.projectFlyData.loginData[5] + "; -fx-border-width: 2 2 2 2; -fx-border-color: #FFF");
 		label.setAlignment(Pos.CENTER);
 		label.setPrefSize(140, 26);
 		label.setLayoutX(20);
@@ -234,7 +234,9 @@ public class MainUI {
 				case 2 -> {
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Panes.pane2());
+						root.getChildren().add(Panes.pane1());
+
+						System.gc();
 					} catch (Exception e1) {
 						Dialogs.showExceptionDialog(e1);
 					}
@@ -246,13 +248,15 @@ public class MainUI {
 			switch (Panes.paneShowing) {
 				case 1 -> {
 					if (!Avatar.success) {
-						Dialogs.showErrorDialog("发生错误", "请在继续下一步之前先等头像处理成功。");
+						Dialogs.showErrorDialog("发生错误", "头像必须先处理成功才能继续下一步。");
 						return;
 					}
 
 					try {
 						root.getChildren().remove(4);
 						root.getChildren().add(Panes.pane2());
+
+						System.gc();
 					} catch (Exception e1) {
 						Dialogs.showExceptionDialog(e1);
 					}

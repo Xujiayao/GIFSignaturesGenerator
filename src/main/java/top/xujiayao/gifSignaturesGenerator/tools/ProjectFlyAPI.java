@@ -1,6 +1,7 @@
 package top.xujiayao.gifSignaturesGenerator.tools;
 
 import javafx.application.Platform;
+import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 import java.io.BufferedReader;
@@ -17,14 +18,14 @@ public class ProjectFlyAPI {
 		String data = null;
 		BufferedReader reader = null;
 
-		String[] links = {"https://api.projectfly.co.uk/api/v3/community/user/" + Variables.ProjectFly.loginData[0] + "/profile",
-			  "https://api.projectfly.co.uk/api/v3/bookings/logbook/" + Variables.ProjectFly.loginData[0] + "?page=0",
-			  "https://api.projectfly.co.uk/api/v3/community/user/" + Variables.ProjectFly.loginData[0] + "/passport"};
+		String[] links = {"https://api.projectfly.co.uk/api/v3/community/user/" + Main.projectFlyData.loginData[0] + "/profile",
+			  "https://api.projectfly.co.uk/api/v3/bookings/logbook/" + Main.projectFlyData.loginData[0] + "?page=0",
+			  "https://api.projectfly.co.uk/api/v3/community/user/" + Main.projectFlyData.loginData[0] + "/passport"};
 
 		try {
 			URLConnection conn = new URL(links[useLinkNumber]).openConnection();
 
-			conn.addRequestProperty("Authorization", "Bearer " + Variables.ProjectFly.loginData[6]);
+			conn.addRequestProperty("Authorization", "Bearer " + Main.projectFlyData.loginData[6]);
 			conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
 
 			reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));

@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
 import javax.imageio.ImageIO;
@@ -53,7 +54,7 @@ public class Panes {
 		text1.setLayoutX(10);
 		text1.setLayoutY(138);
 
-		TextField field1 = new TextField(Variables.ProjectFly.loginData[1]);
+		TextField field1 = new TextField(Main.projectFlyData.loginData[1]);
 		field1.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field1.setPrefSize(420, 25);
 		field1.setFont(new Font("Microsoft YaHei", 12));
@@ -67,7 +68,7 @@ public class Panes {
 		text2.setLayoutX(10);
 		text2.setLayoutY(173);
 
-		TextField field2 = new TextField(Variables.ProjectFly.loginData[0]);
+		TextField field2 = new TextField(Main.projectFlyData.loginData[0]);
 		field2.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field2.setPrefSize(420, 25);
 		field2.setFont(new Font("Microsoft YaHei", 12));
@@ -81,7 +82,7 @@ public class Panes {
 		text3.setLayoutX(10);
 		text3.setLayoutY(208);
 
-		TextField field3 = new TextField(Variables.ProjectFly.profileData[3]);
+		TextField field3 = new TextField(Main.projectFlyData.profileData[3]);
 		field3.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field3.setPrefSize(420, 25);
 		field3.setFont(new Font("Microsoft YaHei", 12));
@@ -95,7 +96,7 @@ public class Panes {
 		text4.setLayoutX(10);
 		text4.setLayoutY(243);
 
-		TextField field4 = new TextField(Variables.ProjectFly.profileData[2]);
+		TextField field4 = new TextField(Main.projectFlyData.profileData[2]);
 		field4.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field4.setPrefSize(420, 25);
 		field4.setFont(new Font("Microsoft YaHei", 12));
@@ -109,7 +110,7 @@ public class Panes {
 		text5.setLayoutX(10);
 		text5.setLayoutY(278);
 
-		TextField field5 = new TextField(Variables.ProjectFly.profileData[0]);
+		TextField field5 = new TextField(Main.projectFlyData.profileData[0]);
 		field5.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field5.setPrefSize(420, 25);
 		field5.setFont(new Font("Microsoft YaHei", 12));
@@ -122,7 +123,7 @@ public class Panes {
 		text6.setLayoutX(10);
 		text6.setLayoutY(313);
 
-		TextField field6 = new TextField(Variables.ProjectFly.profileData[5] + " / " + Variables.ProjectFly.profileData[4]);
+		TextField field6 = new TextField(Main.projectFlyData.profileData[5] + " / " + Main.projectFlyData.profileData[4]);
 		field6.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field6.setPrefSize(420, 25);
 		field6.setFont(new Font("Microsoft YaHei", 12));
@@ -136,7 +137,7 @@ public class Panes {
 		text7.setLayoutX(10);
 		text7.setLayoutY(348);
 
-		TextField field7 = new TextField(Variables.ProjectFly.logbookData[0]);
+		TextField field7 = new TextField(Main.projectFlyData.logbookData[0]);
 		field7.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field7.setPrefSize(420, 25);
 		field7.setFont(new Font("Microsoft YaHei", 12));
@@ -150,7 +151,7 @@ public class Panes {
 		text8.setLayoutX(10);
 		text8.setLayoutY(383);
 
-		TextField field8 = new TextField(Variables.ProjectFly.logbookData[1]);
+		TextField field8 = new TextField(Main.projectFlyData.logbookData[1]);
 		field8.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field8.setPrefSize(420, 25);
 		field8.setFont(new Font("Microsoft YaHei", 12));
@@ -164,7 +165,7 @@ public class Panes {
 		text9.setLayoutX(10);
 		text9.setLayoutY(418);
 
-		TextField field9 = new TextField(Variables.ProjectFly.passportData + "%");
+		TextField field9 = new TextField(Main.projectFlyData.passportData + "%");
 		field9.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field9.setPrefSize(420, 25);
 		field9.setFont(new Font("Microsoft YaHei", 12));
@@ -178,7 +179,7 @@ public class Panes {
 		text10.setLayoutX(10);
 		text10.setLayoutY(453);
 
-		TextField field10 = new TextField(Variables.ProjectFly.profileData[6] + " fpm");
+		TextField field10 = new TextField(Main.projectFlyData.profileData[6] + " fpm");
 		field10.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field10.setPrefSize(420, 25);
 		field10.setFont(new Font("Microsoft YaHei", 12));
@@ -192,7 +193,7 @@ public class Panes {
 		text11.setLayoutX(10);
 		text11.setLayoutY(488);
 
-		TextField field11 = new TextField(Variables.ProjectFly.profileData[1]);
+		TextField field11 = new TextField(Main.projectFlyData.profileData[1]);
 		field11.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field11.setPrefSize(420, 25);
 		field11.setFont(new Font("Microsoft YaHei", 12));

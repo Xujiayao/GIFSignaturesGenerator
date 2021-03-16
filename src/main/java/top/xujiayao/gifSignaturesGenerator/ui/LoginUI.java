@@ -295,11 +295,13 @@ public class LoginUI {
 			try {
 				switch (comboBox.getValue()) {
 					case "projectFLY" -> {
-						Variables.ProjectFly.loginData = ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText()));
+						Main.projectFlyData = new Variables.ProjectFly();
 
-						Variables.ProjectFly.profileData = ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0));
-						Variables.ProjectFly.logbookData = ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1));
-						Variables.ProjectFly.passportData = ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2));
+						Main.projectFlyData.loginData = ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText()));
+
+						Main.projectFlyData.profileData = ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0));
+						Main.projectFlyData.logbookData = ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1));
+						Main.projectFlyData.passportData = ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2));
 
 						Platform.runLater(() -> {
 							button.setText("登录");
@@ -308,10 +310,10 @@ public class LoginUI {
 							root.setCursor(Cursor.DEFAULT);
 						});
 
-						if (Variables.ProjectFly.loginData != null &&
-							  Variables.ProjectFly.profileData != null &&
-							  Variables.ProjectFly.logbookData != null &&
-							  Variables.ProjectFly.passportData != null) {
+						if (Main.projectFlyData.loginData != null &&
+							  Main.projectFlyData.profileData != null &&
+							  Main.projectFlyData.logbookData != null &&
+							  Main.projectFlyData.passportData != null) {
 							Variables.loginType = comboBox.getValue();
 							Variables.username = usernameField.getText();
 							Variables.password = passwordField.getText();

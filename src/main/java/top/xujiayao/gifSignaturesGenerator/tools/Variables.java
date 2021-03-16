@@ -229,15 +229,15 @@ public class Variables {
 	// projectFLY 需要使用的变量
 	public static class ProjectFly {
 		// 解析过的 LoginAPI 返回的数据
-		public static String[] loginData;
+		public String[] loginData;
 
 		// 解析过的 ProfileAPI 返回的数据
-		public static String[] profileData;
+		public String[] profileData;
 
 		// 解析过的 LogbookAPI 返回的数据
-		public static String[] logbookData;
+		public String[] logbookData;
 
 		// 解析过的 PassportAPI 返回的数据
-		public static String passportData;
+		public String passportData;
 	}
 }

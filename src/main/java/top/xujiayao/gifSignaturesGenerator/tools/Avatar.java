@@ -1,6 +1,7 @@
 package top.xujiayao.gifSignaturesGenerator.tools;
 
 import javafx.application.Platform;
+import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 import javax.imageio.ImageIO;
@@ -59,7 +60,7 @@ public class Avatar {
 		try {
 			byte[] buff = new byte[8192];
 
-			URL url = new URL(Variables.ProjectFly.loginData[2].replace("\\/", "/"));
+			URL url = new URL(Main.projectFlyData.loginData[2].replace("\\/", "/"));
 
 			URLConnection conn = url.openConnection();
 
