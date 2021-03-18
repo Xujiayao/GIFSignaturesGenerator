@@ -312,9 +312,9 @@ public class LoginUI {
 						});
 
 						if (Main.projectFlyData.loginData != null &&
-						    Main.projectFlyData.profileData != null &&
-						    Main.projectFlyData.logbookData != null &&
-						    Main.projectFlyData.passportData != null) {
+							  Main.projectFlyData.profileData != null &&
+							  Main.projectFlyData.logbookData != null &&
+							  Main.projectFlyData.passportData != null) {
 							Variables.loginType = comboBox.getValue();
 							Variables.username = usernameField.getText();
 							Variables.password = passwordField.getText();

@@ -36,10 +36,6 @@ public class GenerateGIF {
 
 				encoder.finish();
 
-				if (!temp.createNewFile()) {
-					throw new Exception("自定义：无法创建文件");
-				}
-
 				if (!temp.delete()) {
 					throw new Exception("自定义：无法删除文件");
 				}
