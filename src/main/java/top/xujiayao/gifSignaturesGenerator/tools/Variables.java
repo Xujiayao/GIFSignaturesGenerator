@@ -81,7 +81,7 @@ public class Variables {
 
 			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
 				if (!dataFolder.mkdir()) {
-					throw new Exception("Custom: the folder can't be created");
+					throw new Exception("自定义：无法创建文件夹");
 				}
 			}
 
@@ -89,7 +89,15 @@ public class Variables {
 
 			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
 				if (!dataFolder.mkdir()) {
-					throw new Exception("Custom: the folder can't be created");
+					throw new Exception("自定义：无法创建文件夹");
+				}
+			}
+
+			File tempFolder = new File(dataFolder.toString() + "/temp");
+
+			if (!tempFolder.exists() || !tempFolder.isDirectory()) {
+				if (!tempFolder.mkdir()) {
+					throw new Exception("自定义：无法创建文件夹");
 				}
 			}
 		} catch (Exception e) {
@@ -161,7 +169,7 @@ public class Variables {
 
 		// 加载图标
 		try {
-			icons = ICODecoder.read(ClassLoader.getSystemClassLoader().getResourceAsStream("icon.ico"));
+			icons = ICODecoder.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("icon.ico")));
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法加载图标\n");

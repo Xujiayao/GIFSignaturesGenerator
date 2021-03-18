@@ -165,7 +165,7 @@ public class Panes {
 		text9.setLayoutX(10);
 		text9.setLayoutY(418);
 
-		TextField field9 = new TextField(Main.projectFlyData.passportData + "%");
+		TextField field9 = new TextField(Main.projectFlyData.passportData);
 		field9.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field9.setPrefSize(420, 25);
 		field9.setFont(new Font("Microsoft YaHei", 12));
@@ -179,7 +179,7 @@ public class Panes {
 		text10.setLayoutX(10);
 		text10.setLayoutY(453);
 
-		TextField field10 = new TextField(Main.projectFlyData.profileData[6] + " fpm");
+		TextField field10 = new TextField(Main.projectFlyData.profileData[6]);
 		field10.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #25292E; -fx-text-inner-color: #25292E");
 		field10.setPrefSize(420, 25);
 		field10.setFont(new Font("Microsoft YaHei", 12));
@@ -242,7 +242,7 @@ public class Panes {
 		rb1.setToggleGroup(group);
 		rb1.setUserData(1);
 
-		ImageView imageView1 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("signature.png"))), null));
+		ImageView imageView1 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("pf-signature-1.png"))), null));
 		imageView1.setPreserveRatio(true);
 		imageView1.setSmooth(true);
 		imageView1.setFitWidth(600);
@@ -262,7 +262,7 @@ public class Panes {
 			case 2 -> rb2.setSelected(true);
 		}
 
-		ImageView imageView2 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("signature.png"))), null));
+		ImageView imageView2 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("pf-signature-1.png"))), null));
 		imageView2.setPreserveRatio(true);
 		imageView2.setSmooth(true);
 		imageView2.setFitWidth(600);

@@ -121,7 +121,7 @@ public class Dialogs {
 
 		try {
 			text2[0] = new Text("已用空间：\n\n" + FileUtils.sizeOfDirectory(Variables.dataFolder) + " 字节 (B)\n" +
-				  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)");
+			                    BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)");
 		} catch (Exception e) {
 			if (e.getMessage().contains("exist"))
 				showErrorDialog("发生错误", "缓存目录不存在。");
@@ -186,7 +186,7 @@ public class Dialogs {
 
 				showMessageDialog("清理缓存", "缓存清理完毕。");
 				text2[0].setText("已用空间：\n\n" + FileUtils.sizeOfDirectory(Variables.dataFolder) + " 字节 (B)\n" +
-					  BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)");
+				                 BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " 千字节 (KB)");
 			} catch (Exception e1) {
 				showExceptionDialog(e1);
 				showErrorDialog("发生错误", "缓存清理失败。");

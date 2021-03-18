@@ -21,6 +21,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.tools.Avatar;
+import top.xujiayao.gifSignaturesGenerator.tools.GenerateGIF;
+import top.xujiayao.gifSignaturesGenerator.tools.GeneratePNG;
+import top.xujiayao.gifSignaturesGenerator.tools.ImageUpload;
 import top.xujiayao.gifSignaturesGenerator.tools.Utils;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
@@ -31,8 +34,11 @@ public class MainUI {
 	private double xOffset;
 	private double yOffset;
 
+	private Pane root;
+	private Button nextButton;
+
 	public void start(Stage stage) {
-		Pane root = new Pane();
+		root = new Pane();
 		root.setPrefSize(800, 600);
 		root.setStyle("-fx-background-color: #FFF");
 
@@ -161,7 +167,7 @@ public class MainUI {
 		backButton.setLayoutX(217);
 		backButton.setLayoutY(5);
 
-		Button nextButton = new Button("下一步");
+		nextButton = new Button("下一步");
 		nextButton.setFont(new Font("Microsoft YaHei", 14));
 		nextButton.setStyle("-fx-background-color: #24292E");
 		nextButton.setTextFill(Color.web("#FFF"));
@@ -261,9 +267,7 @@ public class MainUI {
 						Dialogs.showExceptionDialog(e1);
 					}
 				}
-				case 2 -> {
-					Variables.saveConfig();
-				}
+				case 2 -> generateSignature();
 			}
 		});
 
@@ -274,7 +278,11 @@ public class MainUI {
 		});
 
 		root.setOnMouseMoved(e -> {
-			root.setCursor(Cursor.DEFAULT);
+			if (nextButton.getText().equals("加载中...")) {
+				root.setCursor(Cursor.WAIT);
+			} else {
+				root.setCursor(Cursor.DEFAULT);
+			}
 
 			iconView2.setFill(Color.web("#24292E"));
 			iconView3.setFill(Color.web("#24292E"));
@@ -296,5 +304,46 @@ public class MainUI {
 		stage.show();
 
 		System.gc();
+	}
+
+	private void generateSignature() {
+		Variables.saveConfig();
+
+		nextButton.setText("加载中...");
+		nextButton.setDisable(true);
+
+		root.setCursor(Cursor.WAIT);
+
+		new Thread(() -> {
+			boolean success = false;
+			String message = null;
+
+			try {
+				switch (Variables.useStyleProjectFly) {
+					case 1 -> success = GeneratePNG.generateProjectFly1();
+				}
+
+				if (success) {
+					success = GenerateGIF.generate();
+				}
+
+				if (success) {
+					message = ImageUpload.upload();
+				}
+			} catch (Exception e) {
+				Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+			}
+
+			Platform.runLater(() -> {
+				nextButton.setText("下一步");
+				nextButton.setDisable(false);
+
+				root.setCursor(Cursor.DEFAULT);
+			});
+
+			if (message != null) {
+				System.out.println(message);
+			}
+		}).start();
 	}
 }

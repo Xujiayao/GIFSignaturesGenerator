@@ -283,8 +283,9 @@ public class LoginUI {
 			passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		}
 
-		if (usernameField.getText().equals("") || passwordField.getText().equals(""))
+		if (usernameField.getText().equals("") || passwordField.getText().equals("")) {
 			return;
+		}
 
 		button.setText("加载中...");
 		button.setDisable(true);
@@ -311,9 +312,9 @@ public class LoginUI {
 						});
 
 						if (Main.projectFlyData.loginData != null &&
-							  Main.projectFlyData.profileData != null &&
-							  Main.projectFlyData.logbookData != null &&
-							  Main.projectFlyData.passportData != null) {
+						    Main.projectFlyData.profileData != null &&
+						    Main.projectFlyData.logbookData != null &&
+						    Main.projectFlyData.passportData != null) {
 							Variables.loginType = comboBox.getValue();
 							Variables.username = usernameField.getText();
 							Variables.password = passwordField.getText();
@@ -348,8 +349,8 @@ public class LoginUI {
 						Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "哔哩哔哩的还没做喔~", TrayIcon.MessageType.NONE);
 					}
 				}
-			} catch (Exception e1) {
-				Platform.runLater(() -> Dialogs.showExceptionDialog(e1));
+			} catch (Exception e) {
+				Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 			}
 		}).start();
 	}

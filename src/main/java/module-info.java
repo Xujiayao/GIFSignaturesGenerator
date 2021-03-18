@@ -8,6 +8,7 @@ module GIFSignaturesGenerator {
 	requires org.dtools.javaini;
 	requires commons.io;
 	requires jdk.crypto.ec;
+	requires animated.gif.lib;
 
 	exports top.xujiayao.gifSignaturesGenerator;
 	exports top.xujiayao.gifSignaturesGenerator.ui;

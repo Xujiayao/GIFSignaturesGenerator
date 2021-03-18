@@ -49,6 +49,8 @@ dependencies {
     }
 
     implementation "commons-io:commons-io:+"
+    implementation "com.madgag:animated-gif-lib:+"
+
 
     implementation files('lib/net.sf.image4j-0.7.2.jar')
     implementation files('lib/org.dtools.javaini-1.1.1.jar')

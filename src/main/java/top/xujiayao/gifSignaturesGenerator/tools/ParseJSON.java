@@ -101,7 +101,7 @@ public class ParseJSON {
 		String visitedPercentage = null;
 
 		try {
-			visitedPercentage = String.format("%.1f", ((double) Utils.findStrOccurrence("\"visited\":1", data) * 100 / (double) Utils.findStrOccurrence("\"visited\":", data)));
+			visitedPercentage = String.format("%.1f", ((double) Utils.findStrOccurrence("\"visited\":1", data) * 100 / (double) Utils.findStrOccurrence("\"visited\":", data))) + "%";
 
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
@@ -145,7 +145,7 @@ public class ParseJSON {
 			datas[5] = data.substring(0, data.indexOf("\""));
 
 			data = data.substring(data.indexOf("average_landing_rate\"") + 23);
-			datas[6] = data.substring(0, data.indexOf("\""));
+			datas[6] = data.substring(0, data.indexOf("\"")) + " fpm";
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
