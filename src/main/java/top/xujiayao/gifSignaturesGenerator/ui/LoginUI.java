@@ -34,9 +34,9 @@ import java.awt.image.BufferedImage;
  */
 public class LoginUI {
 
+	private final int[] getProfileSuccessCount = new int[1];
 	private double xOffset;
 	private double yOffset;
-
 	private BorderPane root;
 	private ComboBox<String> comboBox;
 	private FontAwesomeIconView iconView7;
@@ -300,42 +300,44 @@ public class LoginUI {
 
 						Main.projectFlyData.loginData = ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText()));
 
-						Main.projectFlyData.profileData = ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0));
-						Main.projectFlyData.logbookData = ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1));
-						Main.projectFlyData.passportData = ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2));
+						getProfileSuccessCount[0] = 0;
 
-						Platform.runLater(() -> {
-							button.setText("登录");
-							button.setDisable(false);
+						if (Main.projectFlyData.loginData != null) {
+							new Thread(() -> {
+								try {
+									Main.projectFlyData.profileData = ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0));
 
-							root.setCursor(Cursor.DEFAULT);
-						});
+									getProfileSuccessCount[0]++;
+									finishLogin();
+								} catch (Exception e) {
+									Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+								}
 
-						if (Main.projectFlyData.loginData != null &&
-							  Main.projectFlyData.profileData != null &&
-							  Main.projectFlyData.logbookData != null &&
-							  Main.projectFlyData.passportData != null) {
-							Variables.loginType = comboBox.getValue();
-							Variables.username = usernameField.getText();
-							Variables.password = passwordField.getText();
+								try {
+									Main.projectFlyData.logbookData = ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1));
 
-							Variables.saveConfig();
+									getProfileSuccessCount[0]++;
+									finishLogin();
+								} catch (Exception e) {
+									Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+								}
 
-							Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
+								try {
+									Main.projectFlyData.passportData = ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2));
 
+									getProfileSuccessCount[0]++;
+									finishLogin();
+								} catch (Exception e) {
+									Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+								}
+							}).start();
+						} else {
 							Platform.runLater(() -> {
-								Main.stage.close();
-								new MainUI().start(Main.stage);
+								button.setText("登录");
+								button.setDisable(false);
+
+								root.setCursor(Cursor.DEFAULT);
 							});
-
-							BufferedImage avatar = Avatar.processAvatar(Avatar.downloadAvatar());
-
-							if (avatar != null) {
-								Variables.avatar = avatar;
-
-								MainUI.imageView.setImage(SwingFXUtils.toFXImage(Variables.avatar, null));
-								Avatar.success = true;
-							}
 						}
 					}
 					case "哔哩哔哩" -> {
@@ -353,5 +355,48 @@ public class LoginUI {
 				Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 			}
 		}).start();
+	}
+
+	private void finishLogin() {
+		if (getProfileSuccessCount[0] != 3) {
+			return;
+		}
+
+		try {
+			if (Main.projectFlyData.profileData != null &&
+				  Main.projectFlyData.logbookData != null &&
+				  Main.projectFlyData.passportData != null) {
+				Platform.runLater(() -> {
+					button.setText("登录");
+					button.setDisable(false);
+
+					root.setCursor(Cursor.DEFAULT);
+				});
+
+				Variables.loginType = comboBox.getValue();
+				Variables.username = usernameField.getText();
+				Variables.password = passwordField.getText();
+
+				Variables.saveConfig();
+
+				Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
+
+				Platform.runLater(() -> {
+					Main.stage.close();
+					new MainUI().start(Main.stage);
+				});
+
+				BufferedImage avatar = Avatar.processAvatar(Avatar.downloadAvatar());
+
+				if (avatar != null) {
+					Variables.avatar = avatar;
+
+					MainUI.imageView.setImage(SwingFXUtils.toFXImage(Variables.avatar, null));
+					Avatar.success = true;
+				}
+			}
+		} catch (Exception e) {
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+		}
 	}
 }
