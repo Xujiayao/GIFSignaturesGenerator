@@ -45,11 +45,11 @@ public class ParseJSON {
 				}
 
 				if (temp == null) {
-					temp = data.substring(0, data.indexOf("\""));
+					temp = data.substring(0, data.indexOf("\\/"));
 					continue;
 				}
 
-				routes[(i + 1) / 2 - 1] = temp + " - " + data.substring(0, data.indexOf("\""));
+				routes[(i + 1) / 2 - 1] = temp + " - " + data.substring(0, data.indexOf("\\/"));
 				temp = null;
 			}
 

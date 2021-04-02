@@ -382,6 +382,8 @@ public class LoginUI {
 				Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
 
 				Platform.runLater(() -> {
+					Main.panes = new Panes();
+
 					Main.stage.close();
 					new MainUI().start(Main.stage);
 				});

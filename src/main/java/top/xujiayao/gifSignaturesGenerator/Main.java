@@ -9,6 +9,7 @@ import top.xujiayao.gifSignaturesGenerator.tools.Update;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 import top.xujiayao.gifSignaturesGenerator.ui.LoginUI;
+import top.xujiayao.gifSignaturesGenerator.ui.Panes;
 import top.xujiayao.gifSignaturesGenerator.ui.SystemTray;
 
 /**
@@ -18,6 +19,7 @@ public class Main extends Application {
 
 	public static SystemTray systemTray;
 	public static Update update;
+	public static Panes panes;
 
 	public static Variables.ProjectFly projectFlyData;
 

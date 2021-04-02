@@ -72,20 +72,20 @@ public class GeneratePNG {
 				g.setFont(new Font("Microsoft YaHei", Font.PLAIN, 58));
 
 				switch (i) {
-					case 1 -> g.drawString("Total Flights:", 2366, 121);
-					case 3 -> g.drawString("Fav Airport:", 2394, 121);
-					case 4 -> g.drawString("Visited Countries:", 2233, 121);
-					case 5 -> g.drawString("Achvs Completed:", 2218, 121);
+					case 1 -> g.drawString("Total Flights:", 2266, 121);
+					case 3 -> g.drawString("Fav Airport:", 2299, 121);
+					case 4 -> g.drawString("Visited Countries:", 2133, 121);
+					case 5 -> g.drawString("Achvs Completed:", 2118, 121);
 				}
 
 				g.setColor(new Color(246, 170, 50));
 				g.setFont(new Font("Microsoft YaHei", Font.BOLD, 64));
 
 				switch (i) {
-					case 1 -> g.drawString(Main.projectFlyData.profileData[2], 2759, 124);
-					case 3 -> g.drawString(Main.projectFlyData.logbookData[0], 2759, 124);
-					case 4 -> g.drawString(Main.projectFlyData.passportData, 2759, 124);
-					case 5 -> g.drawString(Main.projectFlyData.profileData[1], 2759, 124);
+					case 1 -> g.drawString(Main.projectFlyData.profileData[2], 2659, 124);
+					case 3 -> g.drawString(Main.projectFlyData.logbookData[0], 2659, 124);
+					case 4 -> g.drawString(Main.projectFlyData.passportData, 2659, 124);
+					case 5 -> g.drawString(Main.projectFlyData.profileData[1], 2659, 124);
 				}
 
 				g.dispose();

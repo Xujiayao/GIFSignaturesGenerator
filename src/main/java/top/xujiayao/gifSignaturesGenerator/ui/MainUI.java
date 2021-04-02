@@ -186,7 +186,7 @@ public class MainUI {
 
 		contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
 
-		root.getChildren().add(Panes.pane1());
+		root.getChildren().add(Main.panes.pane1());
 
 		menuItem1.setOnAction(e -> Dialogs.showPreferencesDialog());
 
@@ -233,7 +233,7 @@ public class MainUI {
 		minimizeButton.setOnAction(e -> stage.setIconified(true));
 
 		backButton.setOnAction(e -> {
-			switch (Panes.paneShowing) {
+			switch (Main.panes.paneShowing) {
 				case 1 -> {
 					stage.close();
 					new LoginUI().start(stage);
@@ -241,7 +241,7 @@ public class MainUI {
 				case 2 -> {
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Panes.pane1());
+						root.getChildren().add(Main.panes.pane1());
 
 						System.gc();
 					} catch (Exception e1) {
@@ -251,7 +251,7 @@ public class MainUI {
 				case 3 -> {
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Panes.pane2());
+						root.getChildren().add(Main.panes.pane2());
 
 						nextButton.setText("下一步");
 
@@ -264,16 +264,18 @@ public class MainUI {
 		});
 
 		nextButton.setOnAction(e -> {
-			switch (Panes.paneShowing) {
+			switch (Main.panes.paneShowing) {
 				case 1 -> {
 					if (!Avatar.success) {
 						Dialogs.showErrorDialog("发生错误", "头像必须先处理成功才能继续下一步。");
 						return;
 					}
 
+					Main.projectFlyData.profileData[0] = Main.panes.field5.getText();
+
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Panes.pane2());
+						root.getChildren().add(Main.panes.pane2());
 
 						System.gc();
 					} catch (Exception e1) {
@@ -367,7 +369,7 @@ public class MainUI {
 				Platform.runLater(() -> {
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Panes.pane3());
+						root.getChildren().add(Main.panes.pane3());
 
 						nextButton.setText("退出");
 

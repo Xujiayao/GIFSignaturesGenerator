@@ -25,9 +25,11 @@ import java.util.Objects;
  */
 public class Panes {
 
-	public static int paneShowing;
+	public int paneShowing;
 
-	public static Pane pane1() {
+	public TextField field5;
+
+	public Pane pane1() {
 		paneShowing = 1;
 
 		Pane pane = new Pane();
@@ -116,7 +118,7 @@ public class Panes {
 		text5.setLayoutX(10);
 		text5.setLayoutY(278);
 
-		TextField field5 = new TextField(Main.projectFlyData.profileData[0]);
+		field5 = new TextField(Main.projectFlyData.profileData[0]);
 		field5.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field5.setPrefSize(420, 25);
 		field5.setFont(new Font("Microsoft YaHei", 12));
@@ -212,7 +214,7 @@ public class Panes {
 		return pane;
 	}
 
-	public static Pane pane2() {
+	public Pane pane2() {
 		paneShowing = 2;
 
 		Pane pane = new Pane();
@@ -298,7 +300,7 @@ public class Panes {
 		return pane;
 	}
 
-	public static Pane pane3() {
+	public Pane pane3() {
 		paneShowing = 3;
 
 		Pane pane = new Pane();
