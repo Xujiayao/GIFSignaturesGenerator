@@ -17,7 +17,7 @@ public class Update implements Runnable {
 	public void run() {
 		try {
 			boolean isManualRequest = this.isManualRequest;
-			String data = downloadJSON(Variables.checkUpdateLink);
+			String data = downloadJSON();
 
 			String[] parsedData = ParseJSON.parseUpdateJSON(data);
 
@@ -35,12 +35,12 @@ public class Update implements Runnable {
 		}
 	}
 
-	private String downloadJSON(String link) throws Exception {
+	private String downloadJSON() throws Exception {
 		String data = null;
 		BufferedReader reader = null;
 
 		try {
-			URLConnection conn = new URL(link).openConnection();
+			URLConnection conn = new URL(Variables.checkUpdateLink).openConnection();
 			conn.setUseCaches(false);
 			conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36");
 

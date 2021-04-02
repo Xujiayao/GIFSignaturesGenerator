@@ -63,17 +63,17 @@ public class LoginUI {
 		FontAwesomeIconView iconView1 = new FontAwesomeIconView(FontAwesomeIcon.GITHUB, "75");
 		iconView1.setFill(Color.web("#FFF"));
 		iconView1.setLayoutX(143);
-		iconView1.setLayoutY(245);
+		iconView1.setLayoutY(256);
 
-		Text text1 = new Text(72, 290, "GIF签名图生成工具");
+		Text text1 = new Text(72, 301, "GIF签名图生成工具");
 		text1.setFont(new Font("Microsoft YaHei", 24));
 		text1.setFill(Color.web("#FFF"));
 
-		Text text2 = new Text(108, 314, "GitHub开源项目");
-		text2.setFont(new Font("Microsoft YaHei", 18));
-		text2.setFill(Color.web("#FFF"));
+//		Text text2 = new Text(108, 314, "GitHub开源项目");
+//		text2.setFont(new Font("Microsoft YaHei", 18));
+//		text2.setFill(Color.web("#FFF"));
 
-		leftPane.getChildren().addAll(iconView1, text1, text2);
+		leftPane.getChildren().addAll(iconView1, text1);
 
 		Pane rightPane = new Pane();
 		rightPane.setPrefSize(350, 500);

@@ -13,6 +13,8 @@ import org.dtools.ini.IniSection;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 import javax.imageio.ImageIO;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -24,10 +26,13 @@ import java.util.Objects;
 public class Variables {
 
 	// 软件版本
-	public static String version = "v2.0.0";
+	public static final String version = "v2.0.0";
 
 	// 软件使用到的字体
-	public static String[] fonts = {"Microsoft YaHei"};
+	public static final String[] fonts = {"Microsoft YaHei"};
+
+	// 更新功能使用的文件 version.json 的下载路径
+	public static final String checkUpdateLink = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator/update/version.json";
 
 	// 是否每次启动时检查更新
 	public static boolean checkUpdates = true;
@@ -55,8 +60,11 @@ public class Variables {
 	// 用户头像
 	public static BufferedImage avatar;
 
-	// 更新功能使用的文件 version.json 的下载路径
-	public static String checkUpdateLink = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator/update/version.json";
+	// 解析过的图床返回的内容
+	public static String[] uploadData;
+
+	// 系统剪贴板
+	public static Clipboard clipboard;
 
 	public static void init() {
 		StringBuilder error = new StringBuilder("发生致命错误，程序将立即退出。\n\n");
@@ -128,7 +136,7 @@ public class Variables {
 							}
 							case "Username" -> username = item.getValue();
 							case "Password" -> password = item.getValue();
-							case "UseStyleProjectFly" -> useStyleProjectFly = Integer.valueOf(item.getValue());
+							case "UseStyleProjectFly" -> useStyleProjectFly = Integer.parseInt(item.getValue());
 						}
 					}
 				}
@@ -183,6 +191,14 @@ public class Variables {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法加载默认头像\n");
+		}
+
+		// 加载系统剪贴板
+		try {
+			clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		} catch (Exception e) {
+			Dialogs.showExceptionDialog(e);
+			error.append("-> 无法加载系统剪贴板\n");
 		}
 
 		if (error.indexOf("->") != -1) {

@@ -224,4 +224,58 @@ public class ParseJSON {
 
 		return datas;
 	}
+
+	/*
+	0: version
+	1: data
+	2: link
+	*/
+	public static String[] parseUploadJSON(String data) {
+		String[] datas = new String[7];
+
+		try {
+			data = data.substring(11);
+			datas[0] = data.substring(0, data.indexOf(","));
+
+			data = data.substring(data.indexOf("\"")).substring(8);
+			datas[1] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("message")).substring(10);
+			datas[2] = data.substring(0, data.indexOf("\""));
+
+			switch (datas[1]) {
+				case "success" -> {
+					data = data.substring(data.indexOf("url")).substring(6);
+					datas[3] = data.substring(0, data.indexOf("\""));
+
+					data = data.substring(data.indexOf("delete")).substring(9);
+					datas[4] = data.substring(0, data.indexOf("\""));
+
+					datas[5] = "[img=3200,200]" + datas[3] + "[/img]";
+
+					datas[6] = "![signature.gif](" + datas[3] + ")";
+				}
+				case "image_repeated" -> {
+					data = data.substring(data.indexOf("images")).substring(9);
+					datas[3] = data.substring(0, data.indexOf("\""));
+
+					datas[4] = "N/A";
+
+					datas[5] = "[img=3200,200]" + datas[3] + "[/img]";
+
+					datas[6] = "![signature.gif](" + datas[3] + ")";
+				}
+				default -> {
+					datas[3] = "N/A";
+					datas[4] = "N/A";
+					datas[5] = "N/A";
+					datas[6] = "N/A";
+				}
+			}
+		} catch (Exception e) {
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+		}
+
+		return datas;
+	}
 }

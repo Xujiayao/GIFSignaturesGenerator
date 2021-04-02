@@ -24,6 +24,7 @@ import top.xujiayao.gifSignaturesGenerator.tools.Avatar;
 import top.xujiayao.gifSignaturesGenerator.tools.GenerateGIF;
 import top.xujiayao.gifSignaturesGenerator.tools.GeneratePNG;
 import top.xujiayao.gifSignaturesGenerator.tools.ImageUpload;
+import top.xujiayao.gifSignaturesGenerator.tools.ParseJSON;
 import top.xujiayao.gifSignaturesGenerator.tools.Utils;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
@@ -247,6 +248,18 @@ public class MainUI {
 						Dialogs.showExceptionDialog(e1);
 					}
 				}
+				case 3 -> {
+					try {
+						root.getChildren().remove(4);
+						root.getChildren().add(Panes.pane2());
+
+						nextButton.setText("下一步");
+
+						System.gc();
+					} catch (Exception e1) {
+						Dialogs.showExceptionDialog(e1);
+					}
+				}
 			}
 		});
 
@@ -268,6 +281,11 @@ public class MainUI {
 					}
 				}
 				case 2 -> generateSignature();
+				case 3 -> {
+					stage.close();
+					Platform.exit();
+					System.exit(0);
+				}
 			}
 		});
 
@@ -342,7 +360,22 @@ public class MainUI {
 			});
 
 			if (message != null) {
-				System.out.println(message);
+				Variables.uploadData = ParseJSON.parseUploadJSON(message.replaceAll("\\\\", ""));
+			}
+
+			if (Variables.uploadData != null) {
+				Platform.runLater(() -> {
+					try {
+						root.getChildren().remove(4);
+						root.getChildren().add(Panes.pane3());
+
+						nextButton.setText("退出");
+
+						System.gc();
+					} catch (Exception e) {
+						Dialogs.showExceptionDialog(e);
+					}
+				});
 			}
 		}).start();
 	}
