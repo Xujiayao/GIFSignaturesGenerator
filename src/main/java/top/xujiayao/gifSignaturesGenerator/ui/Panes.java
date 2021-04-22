@@ -256,7 +256,7 @@ public class Panes {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 		}
-		imageView1.setPreserveRatio(true);
+		Objects.requireNonNull(imageView1).setPreserveRatio(true);
 		imageView1.setSmooth(true);
 		imageView1.setFitWidth(600);
 		imageView1.setFitHeight(40);
@@ -282,7 +282,7 @@ public class Panes {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 		}
-		imageView2.setPreserveRatio(true);
+		Objects.requireNonNull(imageView2).setPreserveRatio(true);
 		imageView2.setSmooth(true);
 		imageView2.setFitWidth(600);
 		imageView2.setFitHeight(40);

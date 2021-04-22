@@ -203,7 +203,7 @@ public class Dialogs {
 		alert.setHeaderText("关于GIF签名图生成工具");
 
 		Pane pane = new Pane();
-		pane.setPrefSize(415, 260);
+		pane.setPrefSize(415, 305);
 
 		ImageView imageView = new ImageView(SwingFXUtils.toFXImage(Variables.icons.get(8), null));
 		imageView.setPreserveRatio(true);
@@ -240,9 +240,9 @@ public class Dialogs {
 		separator2.setLayoutY(98);
 
 		Text text4 = new Text("""
-			  所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
-			  			  
-			  再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
+			所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
+			
+			再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
 		text4.setFont(new Font("Microsoft YaHei", 14));
 		text4.setFill(Color.web("#323232"));
 		text4.setWrappingWidth(395);
@@ -276,7 +276,20 @@ public class Dialogs {
 		link3.setLayoutX(170);
 		link3.setLayoutY(223);
 
-		pane.getChildren().addAll(imageView, text1, link1, separator1, text3, separator2, text4, separator3, text5, link2, text6, link3);
+		Separator separator4 = new Separator(Orientation.HORIZONTAL);
+		separator4.setPrefWidth(395);
+		separator4.setLayoutX(10);
+		separator4.setLayoutY(252);
+
+		Text text2 = new Text("Java version:\t\t" + System.getProperty("java.version") + " (" + Runtime.version() + ")\n"
+			  + "JavaFX version:\t" + System.getProperty("javafx.version") + "\n"
+			  + "OS version:\t\t" + System.getProperty("os.name") + " " + System.getProperty("os.arch"));
+		text2.setFont(new Font("Microsoft YaHei", 14));
+		text2.setFill(Color.web("#778899"));
+		text2.setLayoutX(10);
+		text2.setLayoutY(272);
+
+		pane.getChildren().addAll(imageView, text1, link1, separator1, text3, separator2, text4, separator3, text5, link2, text6, link3, separator4, text2);
 
 		alert.getDialogPane().setContent(pane);
 
