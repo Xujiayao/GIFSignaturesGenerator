@@ -228,48 +228,48 @@ public class Dialogs {
 		separator1.setLayoutX(10);
 		separator1.setLayoutY(68);
 
-		Text text3 = new Text("本软件仅兼容 Windows 7 以上 64 位系统。");
-		text3.setFont(new Font("Microsoft YaHei", 14));
-		text3.setFill(Color.web("#323232"));
-		text3.setLayoutX(10);
-		text3.setLayoutY(88);
+		Text text2 = new Text("本软件仅兼容 Windows 7 以上 64 位系统。");
+		text2.setFont(new Font("Microsoft YaHei", 14));
+		text2.setFill(Color.web("#323232"));
+		text2.setLayoutX(10);
+		text2.setLayoutY(88);
 
 		Separator separator2 = new Separator(Orientation.HORIZONTAL);
 		separator2.setPrefWidth(395);
 		separator2.setLayoutX(10);
 		separator2.setLayoutY(98);
 
-		Text text4 = new Text("""
+		Text text3 = new Text("""
 			所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
 			
 			再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
-		text4.setFont(new Font("Microsoft YaHei", 14));
-		text4.setFill(Color.web("#323232"));
-		text4.setWrappingWidth(395);
-		text4.setLayoutX(10);
-		text4.setLayoutY(118);
+		text3.setFont(new Font("Microsoft YaHei", 14));
+		text3.setFill(Color.web("#323232"));
+		text3.setWrappingWidth(395);
+		text3.setLayoutX(10);
+		text3.setLayoutY(118);
 
 		Separator separator3 = new Separator(Orientation.HORIZONTAL);
 		separator3.setPrefWidth(395);
 		separator3.setLayoutX(10);
 		separator3.setLayoutY(202);
 
-		Text text5 = new Text("这是一个开源项目。");
-		text5.setFont(new Font("Microsoft YaHei", 14));
-		text5.setFill(Color.web("#323232"));
-		text5.setLayoutX(10);
-		text5.setLayoutY(222);
+		Text text4 = new Text("这是一个开源项目。");
+		text4.setFont(new Font("Microsoft YaHei", 14));
+		text4.setFill(Color.web("#323232"));
+		text4.setLayoutX(10);
+		text4.setLayoutY(222);
 
 		Hyperlink link2 = new Hyperlink("GitHub (GIFSignaturesGenerator)");
 		link2.setFont(new Font("Microsoft YaHei", 14));
 		link2.setLayoutX(170);
 		link2.setLayoutY(203);
 
-		Text text6 = new Text("欢迎访问我的博客！");
-		text6.setFont(new Font("Microsoft YaHei", 14));
-		text6.setFill(Color.web("#323232"));
-		text6.setLayoutX(10);
-		text6.setLayoutY(242);
+		Text text5 = new Text("欢迎访问我的博客！");
+		text5.setFont(new Font("Microsoft YaHei", 14));
+		text5.setFill(Color.web("#323232"));
+		text5.setLayoutX(10);
+		text5.setLayoutY(242);
 
 		Hyperlink link3 = new Hyperlink("Xujiayao's Blog");
 		link3.setFont(new Font("Microsoft YaHei", 14));
@@ -281,15 +281,15 @@ public class Dialogs {
 		separator4.setLayoutX(10);
 		separator4.setLayoutY(252);
 
-		Text text2 = new Text("Java version:\t\t" + System.getProperty("java.version") + " (" + Runtime.version() + ")\n"
+		Text text6 = new Text("Java version:\t\t" + System.getProperty("java.version") + " (" + Runtime.version() + ")\n"
 			  + "JavaFX version:\t" + System.getProperty("javafx.version") + "\n"
 			  + "OS version:\t\t" + System.getProperty("os.name") + " " + System.getProperty("os.arch"));
-		text2.setFont(new Font("Microsoft YaHei", 14));
-		text2.setFill(Color.web("#778899"));
-		text2.setLayoutX(10);
-		text2.setLayoutY(272);
+		text6.setFont(new Font("Microsoft YaHei", 14));
+		text6.setFill(Color.web("#778899"));
+		text6.setLayoutX(10);
+		text6.setLayoutY(272);
 
-		pane.getChildren().addAll(imageView, text1, link1, separator1, text3, separator2, text4, separator3, text5, link2, text6, link3, separator4, text2);
+		pane.getChildren().addAll(imageView, text1, link1, separator1, text2, separator2, text3, separator3, text4, link2, text5, link3, separator4, text6);
 
 		alert.getDialogPane().setContent(pane);
 
