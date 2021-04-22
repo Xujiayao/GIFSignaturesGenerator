@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Xujiayao
+ */
 public class ParseJSON {
 
 	/*
@@ -203,6 +206,10 @@ public class ParseJSON {
 	2: link
 	 */
 	public static String[] parseUpdateJSON(String data) {
+		if (data == null) {
+			return null;
+		}
+
 		String[] datas = new String[3];
 
 		try {
@@ -231,6 +238,10 @@ public class ParseJSON {
 	2: link
 	*/
 	public static String[] parseUploadJSON(String data) {
+		if (data == null) {
+			return null;
+		}
+
 		String[] datas = new String[7];
 
 		try {
@@ -272,6 +283,30 @@ public class ParseJSON {
 					datas[6] = "N/A";
 				}
 			}
+		} catch (Exception e) {
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+		}
+
+		return datas;
+	}
+
+	/*
+	0: hitokoto
+	1: from
+	*/
+	public static String[] parseHitokotoJSON(String data) {
+		if (data == null) {
+			return null;
+		}
+
+		String[] datas = new String[2];
+
+		try {
+			data = data.substring(data.indexOf("hitokoto")).substring(11);
+			datas[0] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("from")).substring(7);
+			datas[1] = data.substring(0, data.indexOf("\""));
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}

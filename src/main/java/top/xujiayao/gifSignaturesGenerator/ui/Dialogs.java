@@ -240,9 +240,9 @@ public class Dialogs {
 		separator2.setLayoutY(98);
 
 		Text text3 = new Text("""
-			所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
-			
-			再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
+			  所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
+			  			
+			  再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
 		text3.setFont(new Font("Microsoft YaHei", 14));
 		text3.setFill(Color.web("#323232"));
 		text3.setWrappingWidth(395);

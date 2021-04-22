@@ -3,6 +3,9 @@ package top.xujiayao.gifSignaturesGenerator.tools;
 import javafx.application.Platform;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
+/**
+ * @author Xujiayao
+ */
 public class Utils {
 
 	public static int findStrOccurrence(String findStr, String src) {

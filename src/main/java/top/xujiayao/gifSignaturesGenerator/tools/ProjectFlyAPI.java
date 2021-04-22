@@ -12,6 +12,9 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * @author Xujiayao
+ */
 public class ProjectFlyAPI {
 
 	public static String getProfile(int useLinkNumber) throws Exception {

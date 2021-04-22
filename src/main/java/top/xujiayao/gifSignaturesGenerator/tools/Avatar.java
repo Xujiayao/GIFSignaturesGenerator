@@ -17,6 +17,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * @author Xujiayao
+ */
 public class Avatar {
 
 	public static boolean success;

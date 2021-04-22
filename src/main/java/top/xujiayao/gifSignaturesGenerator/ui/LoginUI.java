@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.tools.Avatar;
@@ -35,6 +36,7 @@ import java.awt.image.BufferedImage;
 public class LoginUI {
 
 	private final int[] getProfileSuccessCount = new int[1];
+	public Text text2;
 	private double xOffset;
 	private double yOffset;
 	private BorderPane root;
@@ -69,11 +71,16 @@ public class LoginUI {
 		text1.setFont(new Font("Microsoft YaHei", 24));
 		text1.setFill(Color.web("#FFF"));
 
-//		Text text2 = new Text(108, 314, "GitHub开源项目");
-//		text2.setFont(new Font("Microsoft YaHei", 18));
-//		text2.setFill(Color.web("#FFF"));
+		text2 = new Text(20, 457, Variables.displayHitokotoData);
+		if ((Variables.hitokotoData != null) && (Variables.hitokotoData[0].length() > 21)) {
+			text2.setY(438);
+		}
+		text2.setFont(new Font("Microsoft YaHei", 14));
+		text2.setWrappingWidth(310);
+		text2.setTextAlignment(TextAlignment.CENTER);
+		text2.setFill(Color.web("#FFF"));
 
-		leftPane.getChildren().addAll(iconView1, text1);
+		leftPane.getChildren().addAll(iconView1, text1, text2);
 
 		Pane rightPane = new Pane();
 		rightPane.setPrefSize(350, 500);
@@ -385,7 +392,11 @@ public class LoginUI {
 					Main.panes = new Panes();
 
 					Main.stage.close();
-					new MainUI().start(Main.stage);
+
+					if (Main.mainUI == null) {
+						Main.mainUI = new MainUI();
+					}
+					Main.mainUI.start(Main.stage);
 				});
 
 				BufferedImage avatar = Avatar.processAvatar(Avatar.downloadAvatar());

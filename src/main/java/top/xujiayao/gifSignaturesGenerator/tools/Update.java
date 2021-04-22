@@ -9,6 +9,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * @author Xujiayao
+ */
 public class Update implements Runnable {
 
 	public boolean isManualRequest = false;
@@ -17,8 +20,8 @@ public class Update implements Runnable {
 	public void run() {
 		try {
 			boolean isManualRequest = this.isManualRequest;
-			String data = downloadJSON();
 
+			String data = downloadJSON();
 			String[] parsedData = ParseJSON.parseUpdateJSON(data);
 
 			Platform.runLater(() -> {

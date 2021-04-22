@@ -5,10 +5,12 @@ import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import top.xujiayao.gifSignaturesGenerator.tools.HitokotoAPI;
 import top.xujiayao.gifSignaturesGenerator.tools.Update;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 import top.xujiayao.gifSignaturesGenerator.ui.LoginUI;
+import top.xujiayao.gifSignaturesGenerator.ui.MainUI;
 import top.xujiayao.gifSignaturesGenerator.ui.Panes;
 import top.xujiayao.gifSignaturesGenerator.ui.SystemTray;
 
@@ -17,9 +19,13 @@ import top.xujiayao.gifSignaturesGenerator.ui.SystemTray;
  */
 public class Main extends Application {
 
+	public static HitokotoAPI hitokotoAPI;
 	public static SystemTray systemTray;
 	public static Update update;
 	public static Panes panes;
+
+	public static LoginUI loginUI;
+	public static MainUI mainUI;
 
 	public static Variables.ProjectFly projectFlyData;
 
@@ -66,6 +72,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		hitokotoAPI = new HitokotoAPI();
 		update = new Update();
 		systemTray = new SystemTray();
 
@@ -84,7 +91,10 @@ public class Main extends Application {
 
 			Variables.init();
 
-			new LoginUI().start(Main.stage);
+			loginUI = new LoginUI();
+			loginUI.start(Main.stage);
+
+			new Thread(hitokotoAPI).start();
 
 			if (java.awt.SystemTray.isSupported()) {
 				new Thread(systemTray).start();

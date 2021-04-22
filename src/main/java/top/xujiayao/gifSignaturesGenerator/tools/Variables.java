@@ -66,6 +66,12 @@ public class Variables {
 	// 系统剪贴板
 	public static Clipboard clipboard;
 
+	// 解析过的一言语句
+	public static String[] hitokotoData;
+
+	// 显示的一言语句
+	public static String displayHitokotoData = "";
+
 	public static void init() {
 		StringBuilder error = new StringBuilder("发生致命错误，程序将立即退出。\n\n");
 

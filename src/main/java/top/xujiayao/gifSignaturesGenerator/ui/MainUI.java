@@ -28,6 +28,9 @@ import top.xujiayao.gifSignaturesGenerator.tools.ParseJSON;
 import top.xujiayao.gifSignaturesGenerator.tools.Utils;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
+/**
+ * @author Xujiayao
+ */
 public class MainUI {
 
 	public static ImageView imageView;
@@ -236,7 +239,7 @@ public class MainUI {
 			switch (Main.panes.paneShowing) {
 				case 1 -> {
 					stage.close();
-					new LoginUI().start(stage);
+					Main.loginUI.start(stage);
 				}
 				case 2 -> {
 					try {
