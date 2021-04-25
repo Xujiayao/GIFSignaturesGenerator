@@ -25,10 +25,26 @@ public class Update implements Runnable {
 			String[] parsedData = ParseJSON.parseUpdateJSON(data);
 
 			Platform.runLater(() -> {
-				if (parsedData != null) {
-					Dialogs.showUpdateDialog(parsedData);
+				if (Variables.checkBetaUpdates) {
+					if (Integer.parseInt(parsedData[1]) > Integer.parseInt(parsedData[5])) {
+						if (parsedData[0].equals(Variables.version)) {
+							if (isManualRequest) {
+								Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
+							}
+						} else {
+							Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3]);
+						}
+					} else {
+						if (parsedData[4].equals(Variables.version)) {
+							if (isManualRequest) {
+								Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
+							}
+						} else {
+							Dialogs.showUpdateDialog(parsedData[4], parsedData[6], parsedData[7]);
+						}
+					}
 				} else {
-					if (isManualRequest) {
+					if (parsedData[0].equals(Variables.version) && isManualRequest) {
 						Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
 					}
 				}

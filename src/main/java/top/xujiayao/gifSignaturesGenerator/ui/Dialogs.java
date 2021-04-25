@@ -38,7 +38,7 @@ import java.util.Optional;
  */
 public class Dialogs {
 
-	public static void showUpdateDialog(String[] parsedData) {
+	public static void showUpdateDialog(String version, String data, String link) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("检查更新");
 		alert.setHeaderText("有新版本可用！");
@@ -46,11 +46,12 @@ public class Dialogs {
 		alert.getDialogPane().getButtonTypes().setAll(ButtonType.CLOSE);
 
 		Pane pane = new Pane();
-		pane.setPrefSize(360, 260);
+		pane.setPrefSize(415, 260);
 
-		Text text1 = new Text("GIF签名图生成工具 " + parsedData[0] + " 现在可用（您是 " + Variables.version + "）。");
+		Text text1 = new Text("GIF签名图生成工具 " + version + " 现在可用（您是 " + Variables.version + "）。");
 		text1.setFont(new Font("Microsoft YaHei", 14));
 		text1.setFill(Color.web("#323232"));
+		text1.setWrappingWidth(395);
 		text1.setLayoutX(10);
 		text1.setLayoutY(22);
 
@@ -66,10 +67,10 @@ public class Dialogs {
 		text2.setLayoutX(10);
 		text2.setLayoutY(100);
 
-		TextArea textArea = new TextArea(parsedData[1].replaceAll("\\\\n", "\n"));
+		TextArea textArea = new TextArea(data.replaceAll("\\\\n", "\n"));
 		textArea.setEditable(false);
 		textArea.setWrapText(true);
-		textArea.setPrefSize(340, 150);
+		textArea.setPrefSize(395, 150);
 		textArea.setLayoutX(10);
 		textArea.setLayoutY(110);
 
@@ -77,7 +78,7 @@ public class Dialogs {
 
 		button1.setOnAction(e -> {
 			try {
-				Desktop.getDesktop().browse(new URI(parsedData[2]));
+				Desktop.getDesktop().browse(new URI(link));
 			} catch (Exception e1) {
 				showExceptionDialog(e1);
 			}
@@ -125,7 +126,7 @@ public class Dialogs {
 		button1.setFont(new Font("Microsoft YaHei", 12));
 		button1.setPrefSize(110, 25);
 		button1.setLayoutX(0);
-		button1.setLayoutY(110);
+		button1.setLayoutY(150);
 
 		Text text3 = new Text("GIF签名图生成工具可以自动检查其更新版本。检查将在后台执行，并且只有在有新版本可用时才会通知您。");
 		text3.setFont(new Font("Microsoft YaHei", 14));
@@ -140,25 +141,46 @@ public class Dialogs {
 		text4.setLayoutX(0);
 		text4.setLayoutY(82);
 
-		ComboBox<String> comboBox = new ComboBox<>();
-		comboBox.getItems().addAll("每次启动时", "从不");
+		ComboBox<String> comboBox1 = new ComboBox<>();
+		comboBox1.getItems().addAll("每次启动时", "从不");
 		if (Variables.checkUpdates) {
-			comboBox.setValue("每次启动时");
+			comboBox1.setValue("每次启动时");
 		} else {
-			comboBox.setValue("从不");
+			comboBox1.setValue("从不");
 		}
-		comboBox.setPrefSize(140, 20);
-		comboBox.setLayoutX(140);
-		comboBox.setLayoutY(67);
+		comboBox1.setPrefSize(140, 20);
+		comboBox1.setLayoutX(140);
+		comboBox1.setLayoutY(67);
+
+		Text text5 = new Text("检查测试版更新：");
+		text5.setFont(new Font("Microsoft YaHei", 14));
+		text5.setFill(Color.web("#323232"));
+		text5.setLayoutX(0);
+		text5.setLayoutY(112);
+
+		ComboBox<String> comboBox2 = new ComboBox<>();
+		comboBox2.getItems().addAll("检查", "不检查");
+		if (Variables.checkBetaUpdates) {
+			comboBox2.setValue("检查");
+		} else {
+			comboBox2.setValue("不检查");
+		}
+		comboBox2.setPrefSize(140, 20);
+		comboBox2.setLayoutX(140);
+		comboBox2.setLayoutY(97);
+		if (comboBox1.getValue().equals("从不")) {
+			comboBox2.setValue("不检查");
+			comboBox2.setDisable(true);
+		}
 
 		Button button2 = new Button("现在检查");
 		button2.setFont(new Font("Microsoft YaHei", 12));
 		button2.setPrefSize(110, 25);
 		button2.setLayoutX(0);
-		button2.setLayoutY(110);
+		button2.setLayoutY(150);
 
 		pane1.getChildren().addAll(text2[0], button1);
-		pane2.getChildren().addAll(text3, text4, comboBox, button2);
+		pane2.getChildren().addAll(text3, text4, comboBox1, text5, comboBox2, button2);
 
 		tab1.setContent(pane1);
 		tab2.setContent(pane2);
@@ -186,11 +208,26 @@ public class Dialogs {
 			new Thread(Main.update).start();
 		});
 
+		comboBox1.valueProperty().addListener((e, oldVal, newVal) -> {
+			if (newVal.equals("从不")) {
+				comboBox2.setValue("不检查");
+				comboBox2.setDisable(true);
+			} else {
+				comboBox2.setDisable(false);
+				if (Variables.checkBetaUpdates == true) {
+					comboBox2.setValue("检查");
+				} else {
+					comboBox2.setValue("不检查");
+				}
+			}
+		});
+
 		Optional<ButtonType> result = dialog.showAndWait();
 
 		result.ifPresent(e -> {
 			if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-				Variables.checkUpdates = !comboBox.getValue().equals("从不");
+				Variables.checkUpdates = !comboBox1.getValue().equals("从不");
+				Variables.checkBetaUpdates = !comboBox2.getValue().equals("不检查");
 
 				Variables.saveConfig();
 			}

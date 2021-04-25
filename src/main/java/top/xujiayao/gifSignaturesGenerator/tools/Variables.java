@@ -26,7 +26,7 @@ import java.util.Objects;
 public class Variables {
 
 	// 软件版本
-	public static final String version = "v2.0.0";
+	public static final String version = "21w16a";
 
 	// 软件使用到的字体
 	public static final String[] fonts = {"Microsoft YaHei"};
@@ -36,6 +36,9 @@ public class Variables {
 
 	// 是否每次启动时检查更新
 	public static boolean checkUpdates = true;
+
+	// 是否检查测试版更新
+	public static boolean checkBetaUpdates = true;
 
 	// 登录方式
 	public static String loginType = "projectFLY";
@@ -135,6 +138,11 @@ public class Variables {
 									checkUpdates = false;
 								}
 							}
+							case "CheckBetaUpdates" -> {
+								if (item.getValue().equals("false")) {
+									checkBetaUpdates = false;
+								}
+							}
 							case "LoginType" -> {
 								if (item.getValue().equals("哔哩哔哩")) {
 									loginType = item.getValue();
@@ -153,6 +161,10 @@ public class Variables {
 				IniItem checkUpdates = new IniItem("CheckUpdates");
 				checkUpdates.setValue(true);
 				preferences.addItem(checkUpdates);
+
+				IniItem checkBetaUpdates = new IniItem("CheckBetaUpdates");
+				checkBetaUpdates.setValue(true);
+				preferences.addItem(checkBetaUpdates);
 
 				IniSection variables = new BasicIniSection("Variables");
 				ini.addSection(variables);
@@ -227,6 +239,10 @@ public class Variables {
 			IniItem checkUpdates = new IniItem("CheckUpdates");
 			checkUpdates.setValue(Variables.checkUpdates);
 			preferences.addItem(checkUpdates);
+
+			IniItem checkBetaUpdates = new IniItem("CheckBetaUpdates");
+			checkBetaUpdates.setValue(Variables.checkBetaUpdates);
+			preferences.addItem(checkBetaUpdates);
 
 			IniSection variables = new BasicIniSection("Variables");
 			ini.addSection(variables);

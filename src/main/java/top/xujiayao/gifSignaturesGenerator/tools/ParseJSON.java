@@ -201,30 +201,46 @@ public class ParseJSON {
 	}
 
 	/*
-	0: version
-	1: data
-	2: link
+	0: releaseVersion
+	1: releaseDate
+	2: releaseData
+	3: releaseLink
+	4: betaVersion
+	5: betaDate
+	6: betaData
+	7: betaLink
 	 */
 	public static String[] parseUpdateJSON(String data) {
 		if (data == null) {
 			return null;
 		}
 
-		String[] datas = new String[3];
+		String[] datas = new String[8];
 
 		try {
-			data = data.substring(12);
+			data = data.substring(23);
 			datas[0] = data.substring(0, data.indexOf("\""));
-
-			if (datas[0].equals(Variables.version)) {
-				return null;
-			}
 
 			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[1] = data.substring(0, data.indexOf("\""));
 
 			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[2] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("\"")).substring(10);
+			datas[3] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(22);
+			datas[4] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("\"")).substring(10);
+			datas[5] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("\"")).substring(10);
+			datas[6] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("\"")).substring(10);
+			datas[7] = data.substring(0, data.indexOf("\""));
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
