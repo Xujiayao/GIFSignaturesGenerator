@@ -35,6 +35,7 @@ public class Update implements Runnable {
 							Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3]);
 						}
 					} else {
+						System.out.println("a");
 						if (parsedData[4].equals(Variables.version)) {
 							if (isManualRequest) {
 								Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
@@ -44,8 +45,12 @@ public class Update implements Runnable {
 						}
 					}
 				} else {
-					if (parsedData[0].equals(Variables.version) && isManualRequest) {
-						Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
+					if (parsedData[0].equals(Variables.version)) {
+						if (isManualRequest) {
+							Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
+						}
+					} else {
+						Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3]);
 					}
 				}
 			});

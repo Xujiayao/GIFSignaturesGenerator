@@ -205,6 +205,7 @@ public class Dialogs {
 
 		button2.setOnAction(e -> {
 			Main.update.isManualRequest = true;
+			Variables.checkBetaUpdates = !comboBox2.getValue().equals("不检查");
 			new Thread(Main.update).start();
 		});
 

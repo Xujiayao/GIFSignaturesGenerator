@@ -230,7 +230,7 @@ public class ParseJSON {
 			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[3] = data.substring(0, data.indexOf("\""));
 
-			data = data.substring(22);
+			data = data.substring(data.indexOf("\"")).substring(22);
 			datas[4] = data.substring(0, data.indexOf("\""));
 
 			data = data.substring(data.indexOf("\"")).substring(10);
