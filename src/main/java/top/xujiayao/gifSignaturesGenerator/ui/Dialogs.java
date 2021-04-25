@@ -215,7 +215,7 @@ public class Dialogs {
 				comboBox2.setDisable(true);
 			} else {
 				comboBox2.setDisable(false);
-				if (Variables.checkBetaUpdates == true) {
+				if (Variables.checkBetaUpdates) {
 					comboBox2.setValue("检查");
 				} else {
 					comboBox2.setValue("不检查");
