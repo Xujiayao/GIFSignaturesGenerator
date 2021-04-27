@@ -1,5 +1,6 @@
 package top.xujiayao.gifSignaturesGenerator.ui;
 
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
@@ -10,6 +11,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -26,6 +29,8 @@ import top.xujiayao.gifSignaturesGenerator.Main;
 import top.xujiayao.gifSignaturesGenerator.tools.Variables;
 
 import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -37,6 +42,39 @@ import java.util.Optional;
  * @author Xujiayao
  */
 public class Dialogs {
+
+	private static Dialog<ButtonType> dialog;
+
+	public static Text text;
+	public static ProgressBar bar;
+
+	public static void showDownloadingDialog() {
+		dialog = new Dialog<>();
+		dialog.setTitle("下载更新");
+
+		Pane pane = new Pane();
+		pane.setPrefWidth(400);
+		pane.setPrefHeight(55);
+
+		text = new Text("连接中 (0%)");
+		text.setFont(new Font("Microsoft YaHei", 14));
+		text.setFill(Color.web("#323232"));
+		text.setLayoutX(10);
+		text.setLayoutY(22);
+
+		bar = new ProgressBar(0);
+		bar.setPrefWidth(380);
+		bar.setPrefHeight(25);
+		bar.setLayoutX(10);
+		bar.setLayoutY(40);
+		bar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+
+		pane.getChildren().addAll(text, bar);
+
+		dialog.getDialogPane().setContent(pane);
+
+		dialog.show();
+	}
 
 	public static void showUpdateDialog(String version, String data, String link) {
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -55,7 +93,7 @@ public class Dialogs {
 		text1.setLayoutX(10);
 		text1.setLayoutY(22);
 
-		Button button1 = new Button("点此下载");
+		Button button1 = new Button("立即更新");
 		button1.setFont(new Font("Microsoft YaHei", 12));
 		button1.setPrefSize(110, 25);
 		button1.setLayoutX(10);
@@ -77,11 +115,43 @@ public class Dialogs {
 		pane.getChildren().addAll(text1, button1, text2, textArea);
 
 		button1.setOnAction(e -> {
-			try {
-				Desktop.getDesktop().browse(new URI(link));
-			} catch (Exception e1) {
-				showExceptionDialog(e1);
-			}
+			showDownloadingDialog();
+
+			new Thread(() -> {
+				try {
+					byte[] datas = Main.update.downloadUpdate(link);
+
+					File file = new File(Variables.dataFolder + "/setup-" + version + ".exe");
+
+					Platform.runLater(() -> {
+						try {
+							FileOutputStream fos = new FileOutputStream(file);
+							fos.write(datas);
+							fos.close();
+						} catch (Exception e1) {
+							Dialogs.showExceptionDialog(e1);
+						}
+
+						dialog.getDialogPane().getButtonTypes().setAll(ButtonType.CANCEL);
+						dialog.close();
+
+						if (file.exists()) {
+							try {
+								Desktop.getDesktop().open(file);
+
+								System.exit(0);
+							} catch (Exception e1) {
+								Dialogs.showExceptionDialog(e1);
+								Dialogs.showErrorDialog("发生错误", "无法启动更新程序。");
+							}
+						} else {
+							Dialogs.showErrorDialog("发生错误", "无法启动更新程序。\n\n-> 找不到更新程序文件。");
+						}
+					});
+				} catch (Exception e1) {
+					Platform.runLater(() -> Dialogs.showExceptionDialog(e1));
+				}
+			}).start();
 		});
 
 		alert.getDialogPane().setContent(pane);

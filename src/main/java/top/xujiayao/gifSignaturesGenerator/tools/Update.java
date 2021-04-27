@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -35,7 +37,6 @@ public class Update implements Runnable {
 							Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3]);
 						}
 					} else {
-						System.out.println("a");
 						if (parsedData[4].equals(Variables.version)) {
 							if (isManualRequest) {
 								Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
@@ -80,5 +81,71 @@ public class Update implements Runnable {
 		}
 
 		return data;
+	}
+
+	public byte[] downloadUpdate(String link) throws Exception {
+		byte[] data;
+		InputStream is = null;
+
+		try {
+			URLConnection conn = new URL(link).openConnection();
+
+			is = conn.getInputStream();
+
+			data = readInputStream(is, conn.getContentLength());
+
+			Platform.runLater(() -> {
+				Dialogs.bar.setProgress(1);
+				Dialogs.text.setText("完成 (100%)");
+			});
+
+			return data;
+		} catch (Exception e) {
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+		} finally {
+			if (is != null) {
+				is.close();
+			}
+		}
+
+		return null;
+	}
+
+	private double progress = 0;
+
+	private byte[] readInputStream(InputStream inputStream, int length) {
+		try {
+			byte[] buffer = new byte[1];
+			int len;
+			progress = 0;
+
+			double temp1 = 0;
+
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+			while ((len = inputStream.read(buffer)) != -1) {
+				bos.write(buffer, 0, len);
+
+				progress = progress + (100.0 / length);
+
+				double temp2 = Double.parseDouble(String.format("%.1f", progress));
+
+				if (temp1 != temp2) {
+					Platform.runLater(() -> {
+						Dialogs.bar.setProgress(progress / 100);
+						Dialogs.text.setText("下载中 (" + temp2 + "%)");
+					});
+				}
+
+				temp1 = temp2;
+			}
+
+			bos.close();
+			return bos.toByteArray();
+		} catch (Exception e) {
+			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
+		}
+
+		return null;
 	}
 }
