@@ -46,7 +46,7 @@ public class Update implements Runnable {
 						}
 					}
 				} else {
-					if (parsedData[0].equals(Variables.version)) {
+					if (parsedData[0].equals(Variables.latestReleaseVersion)) {
 						if (isManualRequest) {
 							Dialogs.showMessageDialog("检查更新", "您正在使用最新版本的GIF签名图生成工具。");
 						}

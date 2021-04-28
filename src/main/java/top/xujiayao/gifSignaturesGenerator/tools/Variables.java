@@ -26,7 +26,10 @@ import java.util.Objects;
 public class Variables {
 
 	// 软件版本
-	public static final String version = "21w17a";
+	public static final String version = "21w17b";
+
+	// 最新的正式版版本
+	public static final String latestReleaseVersion = "1.0.0";
 
 	// 软件使用到的字体
 	public static final String[] fonts = {"Microsoft YaHei"};
