@@ -1,9 +1,9 @@
-package top.xujiayao.gifSignaturesGenerator.tools;
+package top.xujiayao.gif_signatures_generator.tools;
 
 import javafx.application.Platform;
 import org.apache.commons.io.FileUtils;
-import top.xujiayao.gifSignaturesGenerator.Main;
-import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
+import top.xujiayao.gif_signatures_generator.Main;
+import top.xujiayao.gif_signatures_generator.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.Color;
@@ -18,14 +18,16 @@ import java.util.Objects;
  */
 public class GeneratePNG {
 
+	private GeneratePNG() {
+		throw new IllegalStateException("工具类");
+	}
+
 	public static boolean generateProjectFly1() {
 		try {
 			File tempFolder = new File(Variables.dataFolder.toString() + "/temp");
 
 			if (!tempFolder.exists() || !tempFolder.isDirectory()) {
-				if (!tempFolder.mkdir()) {
-					throw new Exception("自定义：无法创建文件夹");
-				}
+				tempFolder.mkdir();
 			}
 
 			FileUtils.cleanDirectory(Variables.dataFolder + "/temp");
@@ -44,11 +46,11 @@ public class GeneratePNG {
 				g.drawImage(logo, 50, 50, 177, 100, null);
 
 				g.setColor(new Color(73, 73, 73));
-				g.setFont(new Font("Microsoft YaHei", Font.BOLD, 86));
-				g.drawString(Main.projectFlyData.loginData[1], 277, 132);
+				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 86));
+				g.drawString(Main.getProjectFlyData().getLoginData()[1], 277, 132);
 
 				g.setColor(new Color(126, 126, 126));
-				g.setFont(new Font("Microsoft YaHei", Font.PLAIN, 58));
+				g.setFont(new Font(Variables.FONTS[0], Font.PLAIN, 58));
 
 				switch (i) {
 					case 1 -> g.drawString("Total Hours:", 1034, 121);
@@ -58,18 +60,18 @@ public class GeneratePNG {
 				}
 
 				g.setColor(new Color(246, 170, 50));
-				g.setFont(new Font("Microsoft YaHei", Font.BOLD, 64));
+				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 64));
 
 				switch (i) {
-					case 1 -> g.drawString(Main.projectFlyData.profileData[3], 1412, 124);
-					case 2 -> g.drawString(Main.projectFlyData.profileData[0], 981, 124);
-					case 3 -> g.drawString(Main.projectFlyData.profileData[5] + " / " + Main.projectFlyData.profileData[4], 1412, 124);
-					case 4 -> g.drawString(Main.projectFlyData.logbookData[1], 1412, 124);
-					case 5 -> g.drawString(Main.projectFlyData.profileData[6], 1412, 124);
+					case 1 -> g.drawString(Main.getProjectFlyData().getProfileData()[3], 1412, 124);
+					case 2 -> g.drawString(Main.getProjectFlyData().getProfileData()[0], 981, 124);
+					case 3 -> g.drawString(Main.getProjectFlyData().getProfileData()[5] + " / " + Main.getProjectFlyData().getProfileData()[4], 1412, 124);
+					case 4 -> g.drawString(Main.getProjectFlyData().getLogbookData()[1], 1412, 124);
+					case 5 -> g.drawString(Main.getProjectFlyData().getProfileData()[6], 1412, 124);
 				}
 
 				g.setColor(new Color(126, 126, 126));
-				g.setFont(new Font("Microsoft YaHei", Font.PLAIN, 58));
+				g.setFont(new Font(Variables.FONTS[0], Font.PLAIN, 58));
 
 				switch (i) {
 					case 1 -> g.drawString("Total Flights:", 2266, 121);
@@ -79,19 +81,17 @@ public class GeneratePNG {
 				}
 
 				g.setColor(new Color(246, 170, 50));
-				g.setFont(new Font("Microsoft YaHei", Font.BOLD, 64));
+				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 64));
 
 				switch (i) {
-					case 1 -> g.drawString(Main.projectFlyData.profileData[2], 2659, 124);
-					case 3 -> g.drawString(Main.projectFlyData.logbookData[0], 2659, 124);
-					case 4 -> g.drawString(Main.projectFlyData.passportData, 2659, 124);
-					case 5 -> g.drawString(Main.projectFlyData.profileData[1], 2659, 124);
+					case 1 -> g.drawString(Main.getProjectFlyData().getProfileData()[2], 2659, 124);
+					case 3 -> g.drawString(Main.getProjectFlyData().getLogbookData()[0], 2659, 124);
+					case 4 -> g.drawString(Main.getProjectFlyData().getPassportData(), 2659, 124);
+					case 5 -> g.drawString(Main.getProjectFlyData().getProfileData()[1], 2659, 124);
 				}
 
 				g.dispose();
 				ImageIO.write(image, "png", new File(Variables.dataFolder + "/temp/temp" + i + ".png"));
-
-				System.gc();
 			}
 
 			return true;

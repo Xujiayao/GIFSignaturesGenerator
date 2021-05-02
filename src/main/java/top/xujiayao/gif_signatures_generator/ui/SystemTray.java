@@ -1,8 +1,8 @@
-package top.xujiayao.gifSignaturesGenerator.ui;
+package top.xujiayao.gif_signatures_generator.ui;
 
 import javafx.application.Platform;
-import top.xujiayao.gifSignaturesGenerator.Main;
-import top.xujiayao.gifSignaturesGenerator.tools.Variables;
+import top.xujiayao.gif_signatures_generator.Main;
+import top.xujiayao.gif_signatures_generator.tools.Variables;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
  */
 public class SystemTray implements Runnable {
 
-	public TrayIcon trayIcon;
+	private TrayIcon trayIcon;
 
 	@Override
 	public void run() {
@@ -59,14 +59,14 @@ public class SystemTray implements Runnable {
 			item1.addActionListener(e -> Platform.runLater(Dialogs::showPreferencesDialog));
 
 			item2.addActionListener(e -> {
-				Main.update.isManualRequest = true;
+				Main.update.setManualRequest(true);
 				new Thread(Main.update).start();
 			});
 
 			item3.addActionListener(e -> Platform.runLater(Dialogs::showAboutDialog));
 
 			item4.addActionListener(e -> {
-				Platform.runLater(() -> Main.stage.close());
+				Platform.runLater(() -> Main.getStage().close());
 				Platform.exit();
 				System.exit(0);
 			});
@@ -75,5 +75,9 @@ public class SystemTray implements Runnable {
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
+	}
+
+	public TrayIcon getTrayIcon() {
+		return trayIcon;
 	}
 }

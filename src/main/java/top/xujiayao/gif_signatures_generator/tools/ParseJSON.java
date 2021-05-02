@@ -1,7 +1,7 @@
-package top.xujiayao.gifSignaturesGenerator.tools;
+package top.xujiayao.gif_signatures_generator.tools;
 
 import javafx.application.Platform;
-import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
+import top.xujiayao.gif_signatures_generator.ui.Dialogs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,13 +13,17 @@ import java.util.Map;
  */
 public class ParseJSON {
 
+	private ParseJSON() {
+		throw new IllegalStateException("工具类");
+	}
+
 	/*
 	0: favAirport
 	1: favRoute
 	 */
 	public static String[] parseLogbookJSON(String data) {
 		if (data == null) {
-			return null;
+			return new String[0];
 		}
 
 		String[] datas = new String[2];
@@ -60,10 +64,7 @@ public class ParseJSON {
 
 			list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
-			for (Map.Entry<String, Integer> mapping : list) {
-				datas[0] = mapping.getKey().replace("\\/", "/");
-				break;
-			}
+			list.stream().findFirst().ifPresent(mapping -> datas[0] = mapping.getKey().replace("\\/", "/"));
 
 			list.clear();
 
@@ -82,10 +83,7 @@ public class ParseJSON {
 
 			list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
-			for (Map.Entry<String, Integer> mapping : list) {
-				datas[1] = mapping.getKey().replace("\\/", "/");
-				break;
-			}
+			list.stream().findFirst().ifPresent(mapping -> datas[1] = mapping.getKey().replace("\\/", "/"));
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
@@ -124,7 +122,7 @@ public class ParseJSON {
 	 */
 	public static String[] parseProfileJSON(String data) {
 		if (data == null) {
-			return null;
+			return new String[0];
 		}
 
 		String[] datas = new String[7];
@@ -167,7 +165,7 @@ public class ParseJSON {
 	 */
 	public static String[] parseLoginJSON(String data) {
 		if (data == null) {
-			return null;
+			return new String[0];
 		}
 
 		String[] datas = new String[7];
@@ -212,7 +210,7 @@ public class ParseJSON {
 	 */
 	public static String[] parseUpdateJSON(String data) {
 		if (data == null) {
-			return null;
+			return new String[0];
 		}
 
 		String[] datas = new String[8];
@@ -255,7 +253,7 @@ public class ParseJSON {
 	*/
 	public static String[] parseUploadJSON(String data) {
 		if (data == null) {
-			return null;
+			return new String[0];
 		}
 
 		String[] datas = new String[7];
@@ -312,7 +310,7 @@ public class ParseJSON {
 	*/
 	public static String[] parseHitokotoJSON(String data) {
 		if (data == null) {
-			return null;
+			return new String[0];
 		}
 
 		String[] datas = new String[2];

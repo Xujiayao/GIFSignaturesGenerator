@@ -1,4 +1,4 @@
-package top.xujiayao.gifSignaturesGenerator.ui;
+package top.xujiayao.gif_signatures_generator.ui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -21,11 +21,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import top.xujiayao.gifSignaturesGenerator.Main;
-import top.xujiayao.gifSignaturesGenerator.tools.Avatar;
-import top.xujiayao.gifSignaturesGenerator.tools.ParseJSON;
-import top.xujiayao.gifSignaturesGenerator.tools.ProjectFlyAPI;
-import top.xujiayao.gifSignaturesGenerator.tools.Variables;
+import top.xujiayao.gif_signatures_generator.Main;
+import top.xujiayao.gif_signatures_generator.tools.Avatar;
+import top.xujiayao.gif_signatures_generator.tools.ParseJSON;
+import top.xujiayao.gif_signatures_generator.tools.ProjectFlyAPI;
+import top.xujiayao.gif_signatures_generator.tools.Variables;
 
 import java.awt.TrayIcon;
 import java.awt.image.BufferedImage;
@@ -68,14 +68,14 @@ public class LoginUI {
 		iconView1.setLayoutY(256);
 
 		Text text1 = new Text(72, 301, "GIF签名图生成工具");
-		text1.setFont(new Font("Microsoft YaHei", 24));
+		text1.setFont(new Font(Variables.FONTS[0], 24));
 		text1.setFill(Color.web("#FFF"));
 
 		text2 = new Text(20, 457, Variables.displayHitokotoData);
 		if ((Variables.hitokotoData != null) && (Variables.hitokotoData[0].length() > 21)) {
 			text2.setY(438);
 		}
-		text2.setFont(new Font("Microsoft YaHei", 14));
+		text2.setFont(new Font(Variables.FONTS[0], 14));
 		text2.setWrappingWidth(310);
 		text2.setTextAlignment(TextAlignment.CENTER);
 		text2.setFill(Color.web("#FFF"));
@@ -123,7 +123,7 @@ public class LoginUI {
 		iconView5.setLayoutY(130);
 
 		Text text3 = new Text(153, 165, "欢迎");
-		text3.setFont(new Font("Microsoft YaHei", 22));
+		text3.setFont(new Font(Variables.FONTS[0], 22));
 		text3.setFill(Color.web("#24292E"));
 
 		FontAwesomeIconView iconView6 = new FontAwesomeIconView(FontAwesomeIcon.CODE, "20");
@@ -147,7 +147,7 @@ public class LoginUI {
 		usernameField = new TextField(Variables.username);
 		usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		usernameField.setPrefSize(200, 25);
-		usernameField.setFont(new Font("Microsoft YaHei", 12));
+		usernameField.setFont(new Font(Variables.FONTS[0], 12));
 		usernameField.setPromptText("用户名 / 邮箱地址");
 		usernameField.setLayoutX(91);
 		usernameField.setLayoutY(238);
@@ -161,13 +161,13 @@ public class LoginUI {
 		passwordField.setText(Variables.password);
 		passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		passwordField.setPrefSize(200, 25);
-		passwordField.setFont(new Font("Microsoft YaHei", 12));
+		passwordField.setFont(new Font(Variables.FONTS[0], 12));
 		passwordField.setPromptText("密码");
 		passwordField.setLayoutX(91);
 		passwordField.setLayoutY(273);
 
 		button = new Button("登录");
-		button.setFont(new Font("Microsoft YaHei", 14));
+		button.setFont(new Font(Variables.FONTS[0], 14));
 		button.setStyle("-fx-background-color: #24292E");
 		button.setTextFill(Color.web("#FFF"));
 		button.setPrefSize(90, 30);
@@ -175,7 +175,7 @@ public class LoginUI {
 		button.setLayoutY(365);
 
 		Text authorText = new Text(142, 481, "By Xujiayao");
-		authorText.setFont(new Font("Microsoft YaHei", 12));
+		authorText.setFont(new Font(Variables.FONTS[0], 12));
 		authorText.setFill(Color.web("#24292E"));
 
 		rightPane.getChildren().addAll(barsButton, minimizeButton, closeButton, iconView5, text3, iconView6, comboBox, iconView7, usernameField, iconView8, passwordField, button, authorText);
@@ -206,7 +206,7 @@ public class LoginUI {
 		menuItem1.setOnAction(e -> Dialogs.showPreferencesDialog());
 
 		menuItem2.setOnAction(e -> {
-			Main.update.isManualRequest = true;
+			Main.update.setManualRequest(true);
 			new Thread(Main.update).start();
 		});
 
@@ -303,59 +303,65 @@ public class LoginUI {
 			try {
 				switch (comboBox.getValue()) {
 					case "projectFLY" -> {
-						Main.projectFlyData = new Variables.ProjectFly();
+						Main.setProjectFlyData(new Variables.ProjectFly());
 
-						Main.projectFlyData.loginData = ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText()));
+						Main.getProjectFlyData().setLoginData(ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText())));
 
 						getProfileSuccessCount[0] = 0;
 
-						if (Main.projectFlyData.loginData != null) {
+						if (Main.getProjectFlyData().getLoginData().length != 0) {
 							new Thread(() -> {
 								try {
-									Main.projectFlyData.profileData = ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0));
+									Main.getProjectFlyData().setProfileData(ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0)));
 
-									getProfileSuccessCount[0]++;
-									finishLogin();
+									if (Main.getProjectFlyData().getProfileData().length != 0) {
+										getProfileSuccessCount[0]++;
+										finishLogin();
+									} else {
+										errorLogin();
+									}
 								} catch (Exception e) {
 									Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 								}
+							}).start();
 
+							new Thread(() -> {
 								try {
-									Main.projectFlyData.logbookData = ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1));
+									Main.getProjectFlyData().setLogbookData(ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1)));
 
-									getProfileSuccessCount[0]++;
-									finishLogin();
+									if (Main.getProjectFlyData().getLogbookData().length != 0) {
+										getProfileSuccessCount[0]++;
+										finishLogin();
+									} else {
+										errorLogin();
+									}
 								} catch (Exception e) {
 									Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 								}
+							}).start();
 
+							new Thread(() -> {
 								try {
-									Main.projectFlyData.passportData = ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2));
+									Main.getProjectFlyData().setPassportData(ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2)));
 
-									getProfileSuccessCount[0]++;
-									finishLogin();
+									if (Main.getProjectFlyData().getPassportData() != null) {
+										getProfileSuccessCount[0]++;
+										finishLogin();
+									} else {
+										errorLogin();
+									}
 								} catch (Exception e) {
 									Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 								}
 							}).start();
 						} else {
-							Platform.runLater(() -> {
-								button.setText("登录");
-								button.setDisable(false);
-
-								root.setCursor(Cursor.DEFAULT);
-							});
+							errorLogin();
 						}
 					}
 					case "哔哩哔哩" -> {
-						Platform.runLater(() -> {
-							button.setText("登录");
-							button.setDisable(false);
+						errorLogin();
 
-							root.setCursor(Cursor.DEFAULT);
-						});
-
-						Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "哔哩哔哩的还没做喔~", TrayIcon.MessageType.NONE);
+						Main.systemTray.getTrayIcon().displayMessage("GIF签名图生成工具", "哔哩哔哩的还没做喔~", TrayIcon.MessageType.NONE);
 					}
 				}
 			} catch (Exception e) {
@@ -370,9 +376,9 @@ public class LoginUI {
 		}
 
 		try {
-			if (Main.projectFlyData.profileData != null &&
-				  Main.projectFlyData.logbookData != null &&
-				  Main.projectFlyData.passportData != null) {
+			if (Main.getProjectFlyData().getProfileData() != null &&
+				  Main.getProjectFlyData().getLogbookData() != null &&
+				  Main.getProjectFlyData().getPassportData() != null) {
 				Platform.runLater(() -> {
 					button.setText("登录");
 					button.setDisable(false);
@@ -386,17 +392,18 @@ public class LoginUI {
 
 				Variables.saveConfig();
 
-				Main.systemTray.trayIcon.displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
+				Main.systemTray.getTrayIcon().displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
 
 				Platform.runLater(() -> {
-					Main.panes = new Panes();
+					Main.setPanes(new Panes());
 
-					Main.stage.close();
+					Main.getStage().close();
 
-					if (Main.mainUI == null) {
-						Main.mainUI = new MainUI();
+					if (Main.getMainUI() == null) {
+						Main.setMainUI(new MainUI());
 					}
-					Main.mainUI.start(Main.stage);
+
+					Main.getMainUI().start(Main.getStage());
 				});
 
 				BufferedImage avatar = Avatar.processAvatar(Avatar.downloadAvatar());
@@ -405,11 +412,20 @@ public class LoginUI {
 					Variables.avatar = avatar;
 
 					MainUI.imageView.setImage(SwingFXUtils.toFXImage(Variables.avatar, null));
-					Avatar.success = true;
+					Avatar.setSuccess(true);
 				}
 			}
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
+	}
+
+	private void errorLogin() {
+		Platform.runLater(() -> {
+			button.setText("登录");
+			button.setDisable(false);
+
+			root.setCursor(Cursor.DEFAULT);
+		});
 	}
 }

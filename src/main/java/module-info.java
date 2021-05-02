@@ -10,7 +10,7 @@ module GIFSignaturesGenerator {
 	requires jdk.crypto.ec;
 	requires animated.gif.lib;
 
-	exports top.xujiayao.gifSignaturesGenerator;
-	exports top.xujiayao.gifSignaturesGenerator.ui;
-	exports top.xujiayao.gifSignaturesGenerator.tools;
+	exports top.xujiayao.gif_signatures_generator;
+	exports top.xujiayao.gif_signatures_generator.ui;
+	exports top.xujiayao.gif_signatures_generator.tools;
 }

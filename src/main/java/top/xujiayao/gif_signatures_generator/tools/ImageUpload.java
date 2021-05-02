@@ -1,12 +1,13 @@
-package top.xujiayao.gifSignaturesGenerator.tools;
+package top.xujiayao.gif_signatures_generator.tools;
 
 import javafx.application.Platform;
-import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
+import top.xujiayao.gif_signatures_generator.ui.Dialogs;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
@@ -17,18 +18,19 @@ import java.net.URLConnection;
  */
 public class ImageUpload {
 
-	public static String upload() throws Exception {
+	private ImageUpload() {
+		throw new IllegalStateException("工具类");
+	}
+
+	public static String upload() throws IOException {
 		OutputStream out = null;
-		DataInputStream in = null;
 		BufferedReader reader = null;
 
 		String message = null;
 
-		try {
+		try (DataInputStream in = new DataInputStream(new FileInputStream(Variables.dataFolder + "/signature.gif"))) {
 			URLConnection conn = new URL("https://sm.ms/api/v2/upload").openConnection();
-
 			conn.setDoOutput(true);
-
 			conn.addRequestProperty("User-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36");
 			conn.addRequestProperty("Content-Type", "multipart/form-data; boundary=========7d4a6d158c9");
 
@@ -36,7 +38,6 @@ public class ImageUpload {
 
 			out.write(("--========7d4a6d158c9\nContent-Disposition: form-data; name=\"smfile\"; filename=\"signature.gif\"\nContent-Type: image/gif\n\n").getBytes());
 
-			in = new DataInputStream(new FileInputStream(Variables.dataFolder + "/signature.gif"));
 			byte[] bufferOut = new byte[1024];
 			int bytes;
 
@@ -45,8 +46,6 @@ public class ImageUpload {
 			}
 
 			out.write("\n\n--========7d4a6d158c9--\n".getBytes());
-
-			in.close();
 
 			out.flush();
 			out.close();
@@ -61,10 +60,6 @@ public class ImageUpload {
 		} finally {
 			if (out != null) {
 				out.close();
-			}
-
-			if (in != null) {
-				in.close();
 			}
 
 			if (reader != null) {

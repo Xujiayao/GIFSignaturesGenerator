@@ -1,4 +1,4 @@
-package top.xujiayao.gifSignaturesGenerator.ui;
+package top.xujiayao.gif_signatures_generator.ui;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -25,8 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.apache.commons.io.FileUtils;
-import top.xujiayao.gifSignaturesGenerator.Main;
-import top.xujiayao.gifSignaturesGenerator.tools.Variables;
+import top.xujiayao.gif_signatures_generator.Main;
+import top.xujiayao.gif_signatures_generator.tools.Variables;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -43,10 +43,9 @@ import java.util.Optional;
  */
 public class Dialogs {
 
-	private static Dialog<ButtonType> dialog;
-
 	public static Text text;
 	public static ProgressBar bar;
+	private static Dialog<ButtonType> dialog;
 
 	public static void showDownloadingDialog() {
 		dialog = new Dialog<>();
@@ -57,7 +56,7 @@ public class Dialogs {
 		pane.setPrefHeight(55);
 
 		text = new Text("连接中 (0%)");
-		text.setFont(new Font("Microsoft YaHei", 14));
+		text.setFont(new Font(Variables.FONTS[0], 14));
 		text.setFill(Color.web("#323232"));
 		text.setLayoutX(10);
 		text.setLayoutY(22);
@@ -86,21 +85,21 @@ public class Dialogs {
 		Pane pane = new Pane();
 		pane.setPrefSize(415, 260);
 
-		Text text1 = new Text("GIF签名图生成工具 " + version + " 现在可用（您是 " + Variables.version + "）。");
-		text1.setFont(new Font("Microsoft YaHei", 14));
+		Text text1 = new Text("GIF签名图生成工具 " + version + " 现在可用（您是 " + Variables.VERSION + "）。");
+		text1.setFont(new Font(Variables.FONTS[0], 14));
 		text1.setFill(Color.web("#323232"));
 		text1.setWrappingWidth(395);
 		text1.setLayoutX(10);
 		text1.setLayoutY(22);
 
 		Button button1 = new Button("立即更新");
-		button1.setFont(new Font("Microsoft YaHei", 12));
+		button1.setFont(new Font(Variables.FONTS[0], 12));
 		button1.setPrefSize(110, 25);
 		button1.setLayoutX(10);
 		button1.setLayoutY(42);
 
 		Text text2 = new Text("更新说明：");
-		text2.setFont(new Font("Microsoft YaHei", 14));
+		text2.setFont(new Font(Variables.FONTS[0], 14));
 		text2.setFill(Color.web("#323232"));
 		text2.setLayoutX(10);
 		text2.setLayoutY(100);
@@ -187,26 +186,26 @@ public class Dialogs {
 			}
 			text2[0] = new Text("已用空间：\n\n0.00 KB");
 		}
-		text2[0].setFont(new Font("Microsoft YaHei", 14));
+		text2[0].setFont(new Font(Variables.FONTS[0], 14));
 		text2[0].setFill(Color.web("#323232"));
 		text2[0].setLayoutX(0);
 		text2[0].setLayoutY(22);
 
 		Button button1 = new Button("清理缓存");
-		button1.setFont(new Font("Microsoft YaHei", 12));
+		button1.setFont(new Font(Variables.FONTS[0], 12));
 		button1.setPrefSize(110, 25);
 		button1.setLayoutX(0);
 		button1.setLayoutY(150);
 
 		Text text3 = new Text("GIF签名图生成工具可以自动检查其更新版本。检查将在后台执行，并且只有在有新版本可用时才会通知您。");
-		text3.setFont(new Font("Microsoft YaHei", 14));
+		text3.setFont(new Font(Variables.FONTS[0], 14));
 		text3.setFill(Color.web("#323232"));
 		text3.setWrappingWidth(360);
 		text3.setLayoutX(0);
 		text3.setLayoutY(22);
 
 		Text text4 = new Text("检查频率：");
-		text4.setFont(new Font("Microsoft YaHei", 14));
+		text4.setFont(new Font(Variables.FONTS[0], 14));
 		text4.setFill(Color.web("#323232"));
 		text4.setLayoutX(0);
 		text4.setLayoutY(82);
@@ -223,7 +222,7 @@ public class Dialogs {
 		comboBox1.setLayoutY(67);
 
 		Text text5 = new Text("检查测试版更新：");
-		text5.setFont(new Font("Microsoft YaHei", 14));
+		text5.setFont(new Font(Variables.FONTS[0], 14));
 		text5.setFill(Color.web("#323232"));
 		text5.setLayoutX(0);
 		text5.setLayoutY(112);
@@ -244,7 +243,7 @@ public class Dialogs {
 		}
 
 		Button button2 = new Button("现在检查");
-		button2.setFont(new Font("Microsoft YaHei", 12));
+		button2.setFont(new Font(Variables.FONTS[0], 12));
 		button2.setPrefSize(110, 25);
 		button2.setLayoutX(0);
 		button2.setLayoutY(150);
@@ -274,7 +273,7 @@ public class Dialogs {
 		});
 
 		button2.setOnAction(e -> {
-			Main.update.isManualRequest = true;
+			Main.update.setManualRequest(true);
 			Variables.checkBetaUpdates = !comboBox2.getValue().equals("不检查");
 			new Thread(Main.update).start();
 		});
@@ -320,14 +319,14 @@ public class Dialogs {
 		imageView.setLayoutX(10);
 		imageView.setLayoutY(10);
 
-		Text text1 = new Text("GIF签名图生成工具 " + Variables.version);
-		text1.setFont(new Font("Microsoft YaHei", 18));
+		Text text1 = new Text("GIF签名图生成工具 " + Variables.VERSION);
+		text1.setFont(new Font(Variables.FONTS[0], 18));
 		text1.setFill(Color.web("#323232"));
 		text1.setLayoutX(68);
 		text1.setLayoutY(30);
 
 		Hyperlink link1 = new Hyperlink("By Xujiayao");
-		link1.setFont(new Font("Microsoft YaHei", 14));
+		link1.setFont(new Font(Variables.FONTS[0], 14));
 		link1.setLayoutX(64);
 		link1.setLayoutY(32);
 
@@ -337,7 +336,7 @@ public class Dialogs {
 		separator1.setLayoutY(68);
 
 		Text text2 = new Text("本软件仅兼容 Windows 7 以上 64 位系统。");
-		text2.setFont(new Font("Microsoft YaHei", 14));
+		text2.setFont(new Font(Variables.FONTS[0], 14));
 		text2.setFill(Color.web("#323232"));
 		text2.setLayoutX(10);
 		text2.setLayoutY(88);
@@ -351,7 +350,7 @@ public class Dialogs {
 			  所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
 			  			
 			  再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
-		text3.setFont(new Font("Microsoft YaHei", 14));
+		text3.setFont(new Font(Variables.FONTS[0], 14));
 		text3.setFill(Color.web("#323232"));
 		text3.setWrappingWidth(395);
 		text3.setLayoutX(10);
@@ -363,24 +362,24 @@ public class Dialogs {
 		separator3.setLayoutY(202);
 
 		Text text4 = new Text("这是一个开源项目。");
-		text4.setFont(new Font("Microsoft YaHei", 14));
+		text4.setFont(new Font(Variables.FONTS[0], 14));
 		text4.setFill(Color.web("#323232"));
 		text4.setLayoutX(10);
 		text4.setLayoutY(222);
 
 		Hyperlink link2 = new Hyperlink("GitHub (GIFSignaturesGenerator)");
-		link2.setFont(new Font("Microsoft YaHei", 14));
+		link2.setFont(new Font(Variables.FONTS[0], 14));
 		link2.setLayoutX(170);
 		link2.setLayoutY(203);
 
 		Text text5 = new Text("欢迎访问我的博客！");
-		text5.setFont(new Font("Microsoft YaHei", 14));
+		text5.setFont(new Font(Variables.FONTS[0], 14));
 		text5.setFill(Color.web("#323232"));
 		text5.setLayoutX(10);
 		text5.setLayoutY(242);
 
 		Hyperlink link3 = new Hyperlink("Xujiayao's Blog");
-		link3.setFont(new Font("Microsoft YaHei", 14));
+		link3.setFont(new Font(Variables.FONTS[0], 14));
 		link3.setLayoutX(170);
 		link3.setLayoutY(223);
 
@@ -392,7 +391,7 @@ public class Dialogs {
 		Text text6 = new Text("Java version:\t\t" + System.getProperty("java.version") + " (" + Runtime.version() + ")\n"
 			  + "JavaFX version:\t" + System.getProperty("javafx.version") + "\n"
 			  + "OS version:\t\t" + System.getProperty("os.name") + " " + System.getProperty("os.arch"));
-		text6.setFont(new Font("Microsoft YaHei", 14));
+		text6.setFont(new Font(Variables.FONTS[0], 14));
 		text6.setFill(Color.web("#778899"));
 		text6.setLayoutX(10);
 		text6.setLayoutY(272);

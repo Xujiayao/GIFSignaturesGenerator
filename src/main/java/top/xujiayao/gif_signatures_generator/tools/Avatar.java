@@ -1,8 +1,8 @@
-package top.xujiayao.gifSignaturesGenerator.tools;
+package top.xujiayao.gif_signatures_generator.tools;
 
 import javafx.application.Platform;
-import top.xujiayao.gifSignaturesGenerator.Main;
-import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
+import top.xujiayao.gif_signatures_generator.Main;
+import top.xujiayao.gif_signatures_generator.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.AlphaComposite;
@@ -22,7 +22,11 @@ import java.net.URLConnection;
  */
 public class Avatar {
 
-	public static boolean success;
+	private static boolean success;
+
+	private Avatar() {
+		throw new IllegalStateException("工具类");
+	}
 
 	public static BufferedImage processAvatar(BufferedImage avatar) {
 		try {
@@ -58,20 +62,16 @@ public class Avatar {
 
 	public static BufferedImage downloadAvatar() {
 		InputStream is = null;
-		ByteArrayOutputStream output = null;
 
-		try {
+		try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 			byte[] buff = new byte[8192];
 
-			URL url = new URL(Main.projectFlyData.loginData[2].replace("\\/", "/"));
+			URL url = new URL(Main.getProjectFlyData().getLoginData()[2].replace("\\/", "/"));
 
 			URLConnection conn = url.openConnection();
-
 			conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
 
 			is = conn.getInputStream();
-
-			output = new ByteArrayOutputStream();
 
 			int count;
 
@@ -80,7 +80,6 @@ public class Avatar {
 			}
 
 			is.close();
-			output.close();
 
 			return ImageIO.read(new ByteArrayInputStream(output.toByteArray()));
 		} catch (Exception e) {
@@ -96,15 +95,19 @@ public class Avatar {
 				if (is != null) {
 					is.close();
 				}
-
-				if (output != null) {
-					output.close();
-				}
 			} catch (Exception e) {
 				Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 			}
 		}
 
 		return null;
+	}
+
+	public static boolean isSuccess() {
+		return success;
+	}
+
+	public static void setSuccess(boolean success) {
+		Avatar.success = success;
 	}
 }

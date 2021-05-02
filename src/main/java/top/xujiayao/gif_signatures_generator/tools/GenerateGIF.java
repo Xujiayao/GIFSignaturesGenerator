@@ -1,19 +1,25 @@
-package top.xujiayao.gifSignaturesGenerator.tools;
+package top.xujiayao.gif_signatures_generator.tools;
 
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import javafx.application.Platform;
-import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
+import top.xujiayao.gif_signatures_generator.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Objects;
 
 /**
  * @author Xujiayao
  */
 public class GenerateGIF {
+
+	private GenerateGIF() {
+		throw new IllegalStateException("工具类");
+	}
 
 	public static boolean generate() {
 		try {
@@ -36,12 +42,8 @@ public class GenerateGIF {
 
 				encoder.finish();
 
-				if (!temp.delete()) {
-					throw new Exception("自定义：无法删除文件");
-				}
+				Files.delete(temp.toPath());
 			}
-
-			System.gc();
 
 			return true;
 		} catch (Exception e) {
@@ -51,7 +53,7 @@ public class GenerateGIF {
 		return false;
 	}
 
-	private static BufferedImage[] parse(File[] files) throws Exception {
+	private static BufferedImage[] parse(File[] files) throws IOException {
 		BufferedImage[] bi = new BufferedImage[5];
 
 		for (int i = 0; i < 5; i++) {

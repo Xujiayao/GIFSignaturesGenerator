@@ -1,4 +1,4 @@
-package top.xujiayao.gifSignaturesGenerator.tools;
+package top.xujiayao.gif_signatures_generator.tools;
 
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
@@ -10,7 +10,7 @@ import org.dtools.ini.IniFileReader;
 import org.dtools.ini.IniFileWriter;
 import org.dtools.ini.IniItem;
 import org.dtools.ini.IniSection;
-import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
+import top.xujiayao.gif_signatures_generator.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.Toolkit;
@@ -26,16 +26,16 @@ import java.util.Objects;
 public class Variables {
 
 	// 软件版本
-	public static final String version = "21w17b";
+	public static final String VERSION = "21w17b";
 
 	// 最新的正式版版本
-	public static final String latestReleaseVersion = "1.0.0";
+	public static final String LATEST_RELEASE_VERSION = "1.0.0";
 
 	// 软件使用到的字体
-	public static final String[] fonts = {"Microsoft YaHei"};
+	public static final String[] FONTS = {"Microsoft YaHei"};
 
 	// 更新功能使用的文件 version.json 的下载路径
-	public static final String checkUpdateLink = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator@master/update/version.json";
+	public static final String CHECK_UPDATE_LINK = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator@master/update/version.json";
 
 	// 是否每次启动时检查更新
 	public static boolean checkUpdates = true;
@@ -279,15 +279,47 @@ public class Variables {
 	// projectFLY 需要使用的变量
 	public static class ProjectFly {
 		// 解析过的 LoginAPI 返回的数据
-		public String[] loginData;
+		private String[] loginData;
 
 		// 解析过的 ProfileAPI 返回的数据
-		public String[] profileData;
+		private String[] profileData;
 
 		// 解析过的 LogbookAPI 返回的数据
-		public String[] logbookData;
+		private String[] logbookData;
 
 		// 解析过的 PassportAPI 返回的数据
-		public String passportData;
+		private String passportData;
+
+		public String[] getLoginData() {
+			return loginData;
+		}
+
+		public void setLoginData(String[] loginData) {
+			this.loginData = loginData;
+		}
+
+		public String[] getProfileData() {
+			return profileData;
+		}
+
+		public void setProfileData(String[] profileData) {
+			this.profileData = profileData;
+		}
+
+		public String[] getLogbookData() {
+			return logbookData;
+		}
+
+		public void setLogbookData(String[] logbookData) {
+			this.logbookData = logbookData;
+		}
+
+		public String getPassportData() {
+			return passportData;
+		}
+
+		public void setPassportData(String passportData) {
+			this.passportData = passportData;
+		}
 	}
 }

@@ -1,42 +1,41 @@
-package top.xujiayao.gifSignaturesGenerator;
+package top.xujiayao.gif_signatures_generator;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import top.xujiayao.gifSignaturesGenerator.tools.HitokotoAPI;
-import top.xujiayao.gifSignaturesGenerator.tools.Update;
-import top.xujiayao.gifSignaturesGenerator.tools.Variables;
-import top.xujiayao.gifSignaturesGenerator.ui.Dialogs;
-import top.xujiayao.gifSignaturesGenerator.ui.LoginUI;
-import top.xujiayao.gifSignaturesGenerator.ui.MainUI;
-import top.xujiayao.gifSignaturesGenerator.ui.Panes;
-import top.xujiayao.gifSignaturesGenerator.ui.SystemTray;
+import top.xujiayao.gif_signatures_generator.tools.HitokotoAPI;
+import top.xujiayao.gif_signatures_generator.tools.Update;
+import top.xujiayao.gif_signatures_generator.tools.Variables;
+import top.xujiayao.gif_signatures_generator.ui.Dialogs;
+import top.xujiayao.gif_signatures_generator.ui.LoginUI;
+import top.xujiayao.gif_signatures_generator.ui.MainUI;
+import top.xujiayao.gif_signatures_generator.ui.Panes;
+import top.xujiayao.gif_signatures_generator.ui.SystemTray;
 
 /**
  * @author Xujiayao
  */
 public class Main extends Application {
 
-	public static HitokotoAPI hitokotoAPI;
-	public static SystemTray systemTray;
-	public static Update update;
-	public static Panes panes;
+	public static final HitokotoAPI hitokotoAPI = new HitokotoAPI();
+	public static final SystemTray systemTray = new SystemTray();
+	public static final Update update = new Update();
+	public static final LoginUI loginUI = new LoginUI();
 
-	public static LoginUI loginUI;
-	public static MainUI mainUI;
+	private static Stage stage;
+	private static MainUI mainUI;
+	private static Panes panes;
 
-	public static Variables.ProjectFly projectFlyData;
-
-	public static Stage stage;
+	private static Variables.ProjectFly projectFlyData;
 
 	private static void checkError() {
 		StringBuilder error = new StringBuilder("发生致命错误，程序将立即退出。\n\n");
 
 		try {
 			// 检查字体是否已安装
-			for (String font : Variables.fonts) {
+			for (String font : Variables.FONTS) {
 				if (!Font.getFamilies().contains(font)) {
 					error.append("-> 找不到 ").append(font).append(" 字体\n");
 				}
@@ -70,12 +69,40 @@ public class Main extends Application {
 		}
 	}
 
+	public static Panes getPanes() {
+		return panes;
+	}
+
+	public static void setPanes(Panes panes) {
+		Main.panes = panes;
+	}
+
+	public static MainUI getMainUI() {
+		return mainUI;
+	}
+
+	public static void setMainUI(MainUI mainUI) {
+		Main.mainUI = mainUI;
+	}
+
+	public static Variables.ProjectFly getProjectFlyData() {
+		return projectFlyData;
+	}
+
+	public static void setProjectFlyData(Variables.ProjectFly projectFlyData) {
+		Main.projectFlyData = projectFlyData;
+	}
+
+	public static Stage getStage() {
+		return stage;
+	}
+
+	public static void setStage(Stage stage) {
+		Main.stage = stage;
+	}
+
 	@Override
 	public void start(Stage stage) {
-		hitokotoAPI = new HitokotoAPI();
-		update = new Update();
-		systemTray = new SystemTray();
-
 		stage.initStyle(StageStyle.UNDECORATED);
 
 		stage.setOnCloseRequest(e -> {
@@ -85,14 +112,13 @@ public class Main extends Application {
 		});
 
 		try {
-			Main.stage = stage;
+			Main.setStage(stage);
 
 			checkError();
 
 			Variables.init();
 
-			loginUI = new LoginUI();
-			loginUI.start(Main.stage);
+			loginUI.start(Main.getStage());
 
 			new Thread(hitokotoAPI).start();
 
