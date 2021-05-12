@@ -27,6 +27,8 @@ public class Update implements Runnable {
 		try {
 			String data = downloadJSON();
 
+			data = "{\"release\":{\"version\":\"1.0.0\",\"date\":\"202006051\",\"data\":\"GIF签名图生成工具 1.0.0\\n\\n首个完成的版本。\",\"size\":\"0\",\"split\":\"0\",\"link\":\"https://github.com/Xujiayao147/GIFSignaturesGenerator/releases/tag/1.0.0\"},\"beta\":{\"version\":\"21w19a\",\"date\":\"202105121\",\"data\":\"GIF签名图生成工具 21w19a - 2021/5/12\\n\\n更新日志：\\n1. 修改更新模块，下载链接换成 jsDelivr\\n\\n下载地址：\\n蓝奏云：https://wws.lanzoui.com/iDy3Qp206le 密码：4q4s\",\"size\":\"33772136\",\"split\":\"2\",\"link\":\"https://cdn.jsdelivr.net/gh/Xujiayao147/Untitled@ffd57b7d35042d1ee27392bc8193f5cd796c8ab0/\"}}";
+
 			parsedData = ParseJSON.parseUpdateJSON(data);
 
 			if (parsedData.length == 0) {
@@ -40,7 +42,7 @@ public class Update implements Runnable {
 					if (parsedData[0].equals(Variables.LATEST_RELEASE_VERSION)) {
 						isLatest();
 					} else {
-						Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4]);
+						Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4], parsedData[5]);
 					}
 				}
 			});
@@ -50,17 +52,17 @@ public class Update implements Runnable {
 	}
 
 	private void checkBetaUpdates() {
-		if (Integer.parseInt(parsedData[1]) > Integer.parseInt(parsedData[6])) {
+		if (Integer.parseInt(parsedData[1]) > Integer.parseInt(parsedData[7])) {
 			if (parsedData[0].equals(Variables.VERSION)) {
 				isLatest();
 			} else {
-				Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4]);
+				Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4], parsedData[5]);
 			}
 		} else {
-			if (parsedData[5].equals(Variables.VERSION)) {
+			if (parsedData[6].equals(Variables.VERSION)) {
 				isLatest();
 			} else {
-				Dialogs.showUpdateDialog(parsedData[5], parsedData[7], parsedData[8], parsedData[9]);
+				Dialogs.showUpdateDialog(parsedData[6], parsedData[8], parsedData[9], parsedData[10], parsedData[11]);
 			}
 		}
 	}
@@ -87,30 +89,38 @@ public class Update implements Runnable {
 		return data;
 	}
 
-	public byte[] downloadUpdate(String link, String size) throws IOException {
-		byte[] data;
+	public byte[] downloadUpdate(String link, String size, String split) throws IOException {
 		InputStream is = null;
+		ByteArrayOutputStream os = null;
 
 		progress = 0;
 
 		try {
-			URLConnection conn = new URL(link).openConnection();
+			os = new ByteArrayOutputStream();
 
-			is = conn.getInputStream();
+			for (int i = 1; i <= Integer.parseInt(split); i++) {
+				URLConnection conn = new URL(link + i).openConnection();
 
-			data = readInputStream(is, Integer.parseInt(size));
+				is = conn.getInputStream();
+
+				os.write(readInputStream(is, Integer.parseInt(size)));
+			}
 
 			Platform.runLater(() -> {
 				Dialogs.bar.setProgress(1);
 				Dialogs.text.setText("完成 (100%)");
 			});
 
-			return data;
+			return os.toByteArray();
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		} finally {
 			if (is != null) {
 				is.close();
+			}
+
+			if (os != null) {
+				os.close();
 			}
 		}
 

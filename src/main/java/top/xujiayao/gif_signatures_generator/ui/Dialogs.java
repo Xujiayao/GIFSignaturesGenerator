@@ -75,7 +75,7 @@ public class Dialogs {
 		dialog.show();
 	}
 
-	public static void showUpdateDialog(String version, String data, String size, String link) {
+	public static void showUpdateDialog(String version, String data, String size, String split, String link) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("检查更新");
 		alert.setHeaderText("有新版本可用！");
@@ -118,7 +118,7 @@ public class Dialogs {
 
 			new Thread(() -> {
 				try {
-					byte[] datas = Main.update.downloadUpdate(link, size);
+					byte[] datas = Main.update.downloadUpdate(link, size, split);
 
 					File file = new File(Variables.dataFolder + "/setup-" + version + ".exe");
 
