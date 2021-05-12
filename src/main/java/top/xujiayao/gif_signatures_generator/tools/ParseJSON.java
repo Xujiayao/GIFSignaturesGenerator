@@ -202,18 +202,20 @@ public class ParseJSON {
 	0: releaseVersion
 	1: releaseDate
 	2: releaseData
-	3: releaseLink
-	4: betaVersion
-	5: betaDate
-	6: betaData
-	7: betaLink
+	3: releaseSize
+	4: releaseLink
+	5: betaVersion
+	6: betaDate
+	7: betaData
+	8: betaSize
+	9: betaLink
 	 */
 	public static String[] parseUpdateJSON(String data) {
 		if (data == null) {
 			return new String[0];
 		}
 
-		String[] datas = new String[8];
+		String[] datas = new String[10];
 
 		try {
 			data = data.substring(23);
@@ -228,10 +230,10 @@ public class ParseJSON {
 			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[3] = data.substring(0, data.indexOf("\""));
 
-			data = data.substring(data.indexOf("\"")).substring(22);
+			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[4] = data.substring(0, data.indexOf("\""));
 
-			data = data.substring(data.indexOf("\"")).substring(10);
+			data = data.substring(data.indexOf("\"")).substring(22);
 			datas[5] = data.substring(0, data.indexOf("\""));
 
 			data = data.substring(data.indexOf("\"")).substring(10);
@@ -239,6 +241,12 @@ public class ParseJSON {
 
 			data = data.substring(data.indexOf("\"")).substring(10);
 			datas[7] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("\"")).substring(10);
+			datas[8] = data.substring(0, data.indexOf("\""));
+
+			data = data.substring(data.indexOf("\"")).substring(10);
+			datas[9] = data.substring(0, data.indexOf("\""));
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}

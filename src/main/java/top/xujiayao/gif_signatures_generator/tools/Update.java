@@ -20,12 +20,13 @@ public class Update implements Runnable {
 	private boolean isManualRequest = false;
 	private String[] parsedData;
 
-	private double progress = 0;
+	private double progress;
 
 	@Override
 	public void run() {
 		try {
 			String data = downloadJSON();
+
 			parsedData = ParseJSON.parseUpdateJSON(data);
 
 			if (parsedData.length == 0) {
@@ -39,7 +40,7 @@ public class Update implements Runnable {
 					if (parsedData[0].equals(Variables.LATEST_RELEASE_VERSION)) {
 						isLatest();
 					} else {
-						Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3]);
+						Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4]);
 					}
 				}
 			});
@@ -49,17 +50,17 @@ public class Update implements Runnable {
 	}
 
 	private void checkBetaUpdates() {
-		if (Integer.parseInt(parsedData[1]) > Integer.parseInt(parsedData[5])) {
+		if (Integer.parseInt(parsedData[1]) > Integer.parseInt(parsedData[6])) {
 			if (parsedData[0].equals(Variables.VERSION)) {
 				isLatest();
 			} else {
-				Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3]);
+				Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4]);
 			}
 		} else {
-			if (parsedData[4].equals(Variables.VERSION)) {
+			if (parsedData[5].equals(Variables.VERSION)) {
 				isLatest();
 			} else {
-				Dialogs.showUpdateDialog(parsedData[4], parsedData[6], parsedData[7]);
+				Dialogs.showUpdateDialog(parsedData[5], parsedData[7], parsedData[8], parsedData[9]);
 			}
 		}
 	}
@@ -86,16 +87,18 @@ public class Update implements Runnable {
 		return data;
 	}
 
-	public byte[] downloadUpdate(String link) throws IOException {
+	public byte[] downloadUpdate(String link, String size) throws IOException {
 		byte[] data;
 		InputStream is = null;
+
+		progress = 0;
 
 		try {
 			URLConnection conn = new URL(link).openConnection();
 
 			is = conn.getInputStream();
 
-			data = readInputStream(is, conn.getContentLength());
+			data = readInputStream(is, Integer.parseInt(size));
 
 			Platform.runLater(() -> {
 				Dialogs.bar.setProgress(1);
@@ -118,7 +121,6 @@ public class Update implements Runnable {
 		try {
 			byte[] buffer = new byte[1];
 			int len;
-
 
 			double temp1 = 0;
 

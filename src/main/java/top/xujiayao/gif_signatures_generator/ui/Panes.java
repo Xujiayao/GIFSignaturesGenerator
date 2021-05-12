@@ -276,20 +276,20 @@ public class Panes {
 			case 2 -> rb2.setSelected(true);
 		}
 
-		ImageView imageView2 = null;
-		try {
-			imageView2 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("pf-signature-1.png"))), null));
-		} catch (Exception e) {
-			Dialogs.showExceptionDialog(e);
-		}
-		Objects.requireNonNull(imageView2).setPreserveRatio(true);
-		imageView2.setSmooth(true);
-		imageView2.setFitWidth(600);
-		imageView2.setFitHeight(40);
-		imageView2.setLayoutX(10);
-		imageView2.setLayoutY(250);
+//		ImageView imageView2 = null;
+//		try {
+//			imageView2 = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("pf-signature-1.png"))), null));
+//		} catch (Exception e) {
+//			Dialogs.showExceptionDialog(e);
+//		}
+//		Objects.requireNonNull(imageView2).setPreserveRatio(true);
+//		imageView2.setSmooth(true);
+//		imageView2.setFitWidth(600);
+//		imageView2.setFitHeight(40);
+//		imageView2.setLayoutX(10);
+//		imageView2.setLayoutY(250);
 
-		pane.getChildren().addAll(title, text0, text00, rb1, imageView1, rb2, imageView2);
+		pane.getChildren().addAll(title, text0, text00, rb1, imageView1, rb2);
 
 		group.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
 			if (group.getSelectedToggle() != null) {

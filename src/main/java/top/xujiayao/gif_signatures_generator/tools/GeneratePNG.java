@@ -37,6 +37,7 @@ public class GeneratePNG {
 
 				BufferedImage logo = new BufferedImage(177, 100, BufferedImage.TYPE_INT_RGB);
 				logo.getGraphics().drawImage(ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResourceAsStream("pf-v2-logo.png"))), 0, 0, null);
+
 				Graphics g = image.getGraphics();
 
 				g.setClip(0, 0, 3200, 200);
@@ -59,7 +60,7 @@ public class GeneratePNG {
 					case 5 -> g.drawString("Avg Ldg Rate:", 986, 121);
 				}
 
-				g.setColor(new Color(246, 170, 50));
+				g.setColor(new Color(252, 163, 17));
 				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 64));
 
 				switch (i) {
@@ -80,7 +81,7 @@ public class GeneratePNG {
 					case 5 -> g.drawString("Achvs Completed:", 2118, 121);
 				}
 
-				g.setColor(new Color(246, 170, 50));
+				g.setColor(new Color(252, 163, 17));
 				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 64));
 
 				switch (i) {

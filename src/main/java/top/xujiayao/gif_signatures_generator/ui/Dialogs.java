@@ -75,7 +75,7 @@ public class Dialogs {
 		dialog.show();
 	}
 
-	public static void showUpdateDialog(String version, String data, String link) {
+	public static void showUpdateDialog(String version, String data, String size, String link) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("检查更新");
 		alert.setHeaderText("有新版本可用！");
@@ -92,9 +92,9 @@ public class Dialogs {
 		text1.setLayoutX(10);
 		text1.setLayoutY(22);
 
-		Button button1 = new Button("立即更新");
+		Button button1 = new Button("立即更新 (" + BigDecimal.valueOf(Integer.parseInt(size) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " MB)");
 		button1.setFont(new Font(Variables.FONTS[0], 12));
-		button1.setPrefSize(110, 25);
+		button1.setPrefSize(150, 25);
 		button1.setLayoutX(10);
 		button1.setLayoutY(42);
 
@@ -118,7 +118,7 @@ public class Dialogs {
 
 			new Thread(() -> {
 				try {
-					byte[] datas = Main.update.downloadUpdate(link);
+					byte[] datas = Main.update.downloadUpdate(link, size);
 
 					File file = new File(Variables.dataFolder + "/setup-" + version + ".exe");
 
