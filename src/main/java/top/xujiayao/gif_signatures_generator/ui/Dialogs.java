@@ -402,7 +402,7 @@ public class Dialogs {
 
 		link1.setOnAction(e -> {
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/Xujiayao147"));
+				Desktop.getDesktop().browse(new URI("https://github.com/Xujiayao"));
 			} catch (Exception e1) {
 				showExceptionDialog(e1);
 			}
@@ -410,7 +410,7 @@ public class Dialogs {
 
 		link2.setOnAction(e -> {
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/Xujiayao147/GIFSignaturesGenerator"));
+				Desktop.getDesktop().browse(new URI("https://github.com/Xujiayao/GIFSignaturesGenerator"));
 			} catch (Exception e1) {
 				showExceptionDialog(e1);
 			}

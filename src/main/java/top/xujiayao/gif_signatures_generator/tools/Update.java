@@ -27,7 +27,7 @@ public class Update implements Runnable {
 		try {
 			String data = downloadJSON();
 
-			data = "{\"release\":{\"version\":\"1.0.0\",\"date\":\"202006051\",\"data\":\"GIF签名图生成工具 1.0.0\\n\\n首个完成的版本。\",\"size\":\"0\",\"split\":\"0\",\"link\":\"https://github.com/Xujiayao147/GIFSignaturesGenerator/releases/tag/1.0.0\"},\"beta\":{\"version\":\"21w19a\",\"date\":\"202105121\",\"data\":\"GIF签名图生成工具 21w19a - 2021/5/12\\n\\n更新日志：\\n1. 修改更新模块，下载链接换成 jsDelivr\\n\\n下载地址：\\n蓝奏云：https://wws.lanzoui.com/iDy3Qp206le 密码：4q4s\",\"size\":\"33772136\",\"split\":\"2\",\"link\":\"https://cdn.jsdelivr.net/gh/Xujiayao147/Untitled@ffd57b7d35042d1ee27392bc8193f5cd796c8ab0/\"}}";
+			data = "{\"release\":{\"version\":\"1.0.0\",\"date\":\"202006051\",\"data\":\"GIF签名图生成工具 1.0.0\\n\\n首个完成的版本。\",\"size\":\"0\",\"split\":\"0\",\"link\":\"https://github.com/Xujiayao/GIFSignaturesGenerator/releases/tag/1.0.0\"},\"beta\":{\"version\":\"21w19a\",\"date\":\"202105121\",\"data\":\"GIF签名图生成工具 21w19a - 2021/5/12\\n\\n更新日志：\\n1. 修改更新模块，下载链接换成 jsDelivr\\n\\n下载地址：\\n蓝奏云：https://wws.lanzoui.com/iDy3Qp206le 密码：4q4s\",\"size\":\"33772136\",\"split\":\"2\",\"link\":\"https://cdn.jsdelivr.net/gh/Xujiayao/Untitled@ffd57b7d35042d1ee27392bc8193f5cd796c8ab0/\"}}";
 
 			parsedData = ParseJSON.parseUpdateJSON(data);
 

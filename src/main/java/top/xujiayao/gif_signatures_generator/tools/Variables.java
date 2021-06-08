@@ -35,7 +35,7 @@ public class Variables {
 	public static final String[] FONTS = {"Microsoft YaHei"};
 
 	// 更新功能使用的文件 version.json 的下载路径
-	public static final String CHECK_UPDATE_LINK = "https://cdn.jsdelivr.net/gh/Xujiayao147/GIFSignaturesGenerator@master/update/version.json";
+	public static final String CHECK_UPDATE_LINK = "https://cdn.jsdelivr.net/gh/Xujiayao/GIFSignaturesGenerator@master/update/version.json";
 
 	// 是否每次启动时检查更新
 	public static boolean checkUpdates = true;
