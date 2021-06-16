@@ -26,7 +26,7 @@ import java.util.Objects;
 public class Variables {
 
 	// 软件版本
-	public static final String VERSION = "21w19a";
+	public static final String VERSION = "21w24a";
 
 	// 最新的正式版版本
 	public static final String LATEST_RELEASE_VERSION = "1.0.0";
@@ -76,7 +76,7 @@ public class Variables {
 	public static String[] hitokotoData;
 
 	// 显示的一言语句
-	public static String displayHitokotoData = "";
+	public static String displayHitokotoData = "加载中...";
 
 	public static void init() {
 		StringBuilder error = new StringBuilder("发生致命错误，程序将立即退出。\n\n");
@@ -88,7 +88,7 @@ public class Variables {
 			screenHeight = screen.getHeight();
 
 			if ((screenWidth == 0) || (screenHeight == 0)) {
-				throw new Exception("Custom: bounds are equal to 0");
+				throw new CustomException("屏幕宽度或高度为 0");
 			}
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
@@ -101,7 +101,7 @@ public class Variables {
 
 			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
 				if (!dataFolder.mkdir()) {
-					throw new Exception("自定义：无法创建文件夹");
+					throw new CustomException("无法创建文件夹");
 				}
 			}
 
@@ -109,7 +109,7 @@ public class Variables {
 
 			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
 				if (!dataFolder.mkdir()) {
-					throw new Exception("自定义：无法创建文件夹");
+					throw new CustomException("无法创建文件夹");
 				}
 			}
 
@@ -117,7 +117,7 @@ public class Variables {
 
 			if (!tempFolder.exists() || !tempFolder.isDirectory()) {
 				if (!tempFolder.mkdir()) {
-					throw new Exception("自定义：无法创建文件夹");
+					throw new CustomException("无法创建文件夹");
 				}
 			}
 		} catch (Exception e) {

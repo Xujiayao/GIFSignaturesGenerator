@@ -96,7 +96,7 @@ public class ParseJSON {
 	 */
 	public static String parsePassportJSON(String data) {
 		if (data == null) {
-			return null;
+			return "";
 		}
 
 		String visitedPercentage = null;

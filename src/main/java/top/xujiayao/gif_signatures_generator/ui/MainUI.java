@@ -368,7 +368,7 @@ public class MainUI {
 				Variables.uploadData = ParseJSON.parseUploadJSON(message.replaceAll("\\\\", ""));
 			}
 
-			if (Variables.uploadData != null) {
+			if (Variables.uploadData.length != 0) {
 				Platform.runLater(() -> {
 					try {
 						root.getChildren().remove(4);

@@ -25,15 +25,17 @@ public class HitokotoAPI implements Runnable {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
 
-		if (Variables.hitokotoData != null) {
+		if (Variables.hitokotoData.length != 0) {
 			Variables.displayHitokotoData = Variables.hitokotoData[0] + "\n出自 " + Variables.hitokotoData[1];
 
 			if (Variables.hitokotoData[0].length() > 21) {
 				Platform.runLater(() -> Main.loginUI.text2.setY(438));
 			}
-
-			Platform.runLater(() -> Main.loginUI.text2.setText(Variables.displayHitokotoData));
+		} else {
+			Variables.displayHitokotoData = "没有个性，如何签名？\n出自 Xujiayao";
 		}
+
+		Platform.runLater(() -> Main.loginUI.text2.setText(Variables.displayHitokotoData));
 	}
 
 	private String getHitokoto() throws IOException {

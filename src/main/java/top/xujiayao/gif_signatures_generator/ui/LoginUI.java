@@ -274,7 +274,7 @@ public class LoginUI {
 	}
 
 	private void login() {
-		if (usernameField.getText().equals("")) {
+		if (usernameField.getText().isEmpty()) {
 			iconView7.setFill(Color.web("#FF0000"));
 			usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FF0000; -fx-text-inner-color: #24292E");
 		} else {
@@ -282,7 +282,7 @@ public class LoginUI {
 			usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		}
 
-		if (passwordField.getText().equals("")) {
+		if (passwordField.getText().isEmpty()) {
 			iconView8.setFill(Color.web("#FF0000"));
 			passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #ff0000; -fx-text-inner-color: #24292E");
 		} else {
@@ -290,7 +290,7 @@ public class LoginUI {
 			passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		}
 
-		if (usernameField.getText().equals("") || passwordField.getText().equals("")) {
+		if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
 			return;
 		}
 
@@ -344,7 +344,7 @@ public class LoginUI {
 								try {
 									Main.getProjectFlyData().setPassportData(ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2)));
 
-									if (Main.getProjectFlyData().getPassportData() != null) {
+									if (!Main.getProjectFlyData().getPassportData().isEmpty()) {
 										getProfileSuccessCount[0]++;
 										finishLogin();
 									} else {
