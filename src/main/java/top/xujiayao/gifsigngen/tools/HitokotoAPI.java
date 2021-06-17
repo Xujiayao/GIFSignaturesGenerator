@@ -1,8 +1,8 @@
-package top.xujiayao.gif_signatures_generator.tools;
+package top.xujiayao.gifsigngen.tools;
 
 import javafx.application.Platform;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.ui.Dialogs;
+import top.xujiayao.gifsigngen.Main;
+import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import java.io.BufferedReader;
 import java.io.IOException;

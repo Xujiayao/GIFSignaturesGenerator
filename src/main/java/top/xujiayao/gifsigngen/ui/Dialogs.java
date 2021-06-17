@@ -1,4 +1,4 @@
-package top.xujiayao.gif_signatures_generator.ui;
+package top.xujiayao.gifsigngen.ui;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -25,8 +25,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.apache.commons.io.FileUtils;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.tools.Variables;
+import top.xujiayao.gifsigngen.Main;
+import top.xujiayao.gifsigngen.tools.ConfigManager;
+import top.xujiayao.gifsigngen.tools.Variables;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -212,7 +213,7 @@ public class Dialogs {
 
 		ComboBox<String> comboBox1 = new ComboBox<>();
 		comboBox1.getItems().addAll("每次启动时", "从不");
-		if (Variables.checkUpdates) {
+		if (ConfigManager.config.preferences.checkUpdates) {
 			comboBox1.setValue("每次启动时");
 		} else {
 			comboBox1.setValue("从不");
@@ -229,7 +230,7 @@ public class Dialogs {
 
 		ComboBox<String> comboBox2 = new ComboBox<>();
 		comboBox2.getItems().addAll("检查", "不检查");
-		if (Variables.checkBetaUpdates) {
+		if (ConfigManager.config.preferences.checkBetaUpdates) {
 			comboBox2.setValue("检查");
 		} else {
 			comboBox2.setValue("不检查");
@@ -260,9 +261,9 @@ public class Dialogs {
 			try {
 				FileUtils.cleanDirectory(Variables.dataFolder);
 
-				Variables.loginType = "";
-				Variables.username = "";
-				Variables.password = "";
+				ConfigManager.config.userVariables.loginType = "";
+				ConfigManager.config.userVariables.username = "";
+				ConfigManager.config.userVariables.password = "";
 
 				showMessageDialog("清理缓存", "缓存清理完毕。");
 				text2[0].setText("已用空间：\n\n" + BigDecimal.valueOf(FileUtils.sizeOfDirectory(Variables.dataFolder) / 1024.0).setScale(2, RoundingMode.HALF_UP) + " KB");
@@ -274,7 +275,7 @@ public class Dialogs {
 
 		button2.setOnAction(e -> {
 			Main.update.setManualRequest(true);
-			Variables.checkBetaUpdates = !comboBox2.getValue().equals("不检查");
+			ConfigManager.config.preferences.checkBetaUpdates = !comboBox2.getValue().equals("不检查");
 			new Thread(Main.update).start();
 		});
 
@@ -284,7 +285,7 @@ public class Dialogs {
 				comboBox2.setDisable(true);
 			} else {
 				comboBox2.setDisable(false);
-				if (Variables.checkBetaUpdates) {
+				if (ConfigManager.config.preferences.checkBetaUpdates) {
 					comboBox2.setValue("检查");
 				} else {
 					comboBox2.setValue("不检查");
@@ -296,10 +297,10 @@ public class Dialogs {
 
 		result.ifPresent(e -> {
 			if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-				Variables.checkUpdates = !comboBox1.getValue().equals("从不");
-				Variables.checkBetaUpdates = !comboBox2.getValue().equals("不检查");
+				ConfigManager.config.preferences.checkUpdates = !comboBox1.getValue().equals("从不");
+				ConfigManager.config.preferences.checkBetaUpdates = !comboBox2.getValue().equals("不检查");
 
-				Variables.saveConfig();
+				ConfigManager.updateConfig();
 			}
 		});
 	}
@@ -390,7 +391,7 @@ public class Dialogs {
 
 		Text text6 = new Text("Java version:\t\t" + System.getProperty("java.version") + " (" + Runtime.version() + ")\n"
 			  + "JavaFX version:\t" + System.getProperty("javafx.version") + "\n"
-			  + "OS version:\t\t" + System.getProperty("os.name") + " " + System.getProperty("os.arch"));
+			  + "OS version:\t\t" + System.getProperty("os.name") + " (NT " + System.getProperty("os.version") + ") " + System.getProperty("os.arch"));
 		text6.setFont(new Font(Variables.FONTS[0], 14));
 		text6.setFill(Color.web("#778899"));
 		text6.setLayoutX(10);

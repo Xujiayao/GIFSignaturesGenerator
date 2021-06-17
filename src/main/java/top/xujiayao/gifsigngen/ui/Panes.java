@@ -1,4 +1,4 @@
-package top.xujiayao.gif_signatures_generator.ui;
+package top.xujiayao.gifsigngen.ui;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
@@ -11,8 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.tools.Variables;
+import top.xujiayao.gifsigngen.tools.ConfigManager;
+import top.xujiayao.gifsigngen.tools.Variables;
 
 import javax.imageio.ImageIO;
 import java.awt.Desktop;
@@ -62,7 +62,7 @@ public class Panes {
 		text1.setLayoutX(10);
 		text1.setLayoutY(138);
 
-		TextField field1 = new TextField(Main.getProjectFlyData().getLoginData()[1]);
+		TextField field1 = new TextField(Variables.projectFlyData.loginData[1]);
 		field1.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field1.setPrefSize(420, 25);
 		field1.setFont(new Font(Variables.FONTS[0], 12));
@@ -76,7 +76,7 @@ public class Panes {
 		text2.setLayoutX(10);
 		text2.setLayoutY(173);
 
-		TextField field2 = new TextField(Main.getProjectFlyData().getLoginData()[0]);
+		TextField field2 = new TextField(Variables.projectFlyData.loginData[0]);
 		field2.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field2.setPrefSize(420, 25);
 		field2.setFont(new Font(Variables.FONTS[0], 12));
@@ -90,7 +90,7 @@ public class Panes {
 		text3.setLayoutX(10);
 		text3.setLayoutY(208);
 
-		TextField field3 = new TextField(Main.getProjectFlyData().getProfileData()[3]);
+		TextField field3 = new TextField(Variables.projectFlyData.profileData[3]);
 		field3.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field3.setPrefSize(420, 25);
 		field3.setFont(new Font(Variables.FONTS[0], 12));
@@ -104,7 +104,7 @@ public class Panes {
 		text4.setLayoutX(10);
 		text4.setLayoutY(243);
 
-		TextField field4 = new TextField(Main.getProjectFlyData().getProfileData()[2]);
+		TextField field4 = new TextField(Variables.projectFlyData.profileData[2]);
 		field4.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field4.setPrefSize(420, 25);
 		field4.setFont(new Font(Variables.FONTS[0], 12));
@@ -118,7 +118,7 @@ public class Panes {
 		text5.setLayoutX(10);
 		text5.setLayoutY(278);
 
-		field5 = new TextField(Main.getProjectFlyData().getProfileData()[0]);
+		field5 = new TextField(Variables.projectFlyData.profileData[0]);
 		field5.setStyle("-fx-background-color: #F5F5F5; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field5.setPrefSize(420, 25);
 		field5.setFont(new Font(Variables.FONTS[0], 12));
@@ -131,7 +131,7 @@ public class Panes {
 		text6.setLayoutX(10);
 		text6.setLayoutY(313);
 
-		TextField field6 = new TextField(Main.getProjectFlyData().getProfileData()[5] + " / " + Main.getProjectFlyData().getProfileData()[4]);
+		TextField field6 = new TextField(Variables.projectFlyData.profileData[5] + " / " + Variables.projectFlyData.profileData[4]);
 		field6.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field6.setPrefSize(420, 25);
 		field6.setFont(new Font(Variables.FONTS[0], 12));
@@ -145,7 +145,7 @@ public class Panes {
 		text7.setLayoutX(10);
 		text7.setLayoutY(348);
 
-		TextField field7 = new TextField(Main.getProjectFlyData().getLogbookData()[0]);
+		TextField field7 = new TextField(Variables.projectFlyData.logbookData[0]);
 		field7.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field7.setPrefSize(420, 25);
 		field7.setFont(new Font(Variables.FONTS[0], 12));
@@ -159,7 +159,7 @@ public class Panes {
 		text8.setLayoutX(10);
 		text8.setLayoutY(383);
 
-		TextField field8 = new TextField(Main.getProjectFlyData().getLogbookData()[1]);
+		TextField field8 = new TextField(Variables.projectFlyData.logbookData[1]);
 		field8.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field8.setPrefSize(420, 25);
 		field8.setFont(new Font(Variables.FONTS[0], 12));
@@ -173,7 +173,7 @@ public class Panes {
 		text9.setLayoutX(10);
 		text9.setLayoutY(418);
 
-		TextField field9 = new TextField(Main.getProjectFlyData().getPassportData());
+		TextField field9 = new TextField(Variables.projectFlyData.passportData);
 		field9.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field9.setPrefSize(420, 25);
 		field9.setFont(new Font(Variables.FONTS[0], 12));
@@ -187,7 +187,7 @@ public class Panes {
 		text10.setLayoutX(10);
 		text10.setLayoutY(453);
 
-		TextField field10 = new TextField(Main.getProjectFlyData().getProfileData()[6]);
+		TextField field10 = new TextField(Variables.projectFlyData.profileData[6]);
 		field10.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field10.setPrefSize(420, 25);
 		field10.setFont(new Font(Variables.FONTS[0], 12));
@@ -201,7 +201,7 @@ public class Panes {
 		text11.setLayoutX(10);
 		text11.setLayoutY(488);
 
-		TextField field11 = new TextField(Main.getProjectFlyData().getProfileData()[1]);
+		TextField field11 = new TextField(Variables.projectFlyData.profileData[1]);
 		field11.setStyle("-fx-background-color: #D1D0CE; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		field11.setPrefSize(420, 25);
 		field11.setFont(new Font(Variables.FONTS[0], 12));
@@ -271,7 +271,7 @@ public class Panes {
 		rb2.setUserData(2);
 		rb2.setDisable(true);
 
-		switch (Variables.useStyleProjectFly) {
+		switch (ConfigManager.config.userVariables.useStyleProjectFly) {
 			case 1 -> rb1.setSelected(true);
 			case 2 -> rb2.setSelected(true);
 		}
@@ -293,7 +293,7 @@ public class Panes {
 
 		group.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
 			if (group.getSelectedToggle() != null) {
-				Variables.useStyleProjectFly = (int) group.getSelectedToggle().getUserData();
+				ConfigManager.config.userVariables.useStyleProjectFly = (int) group.getSelectedToggle().getUserData();
 			}
 		});
 

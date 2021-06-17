@@ -1,9 +1,8 @@
-package top.xujiayao.gif_signatures_generator.tools;
+package top.xujiayao.gifsigngen.tools;
 
 import javafx.application.Platform;
 import org.apache.commons.io.FileUtils;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.ui.Dialogs;
+import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.Color;
@@ -27,7 +26,9 @@ public class GeneratePNG {
 			File tempFolder = new File(Variables.dataFolder.toString() + "/temp");
 
 			if (!tempFolder.exists() || !tempFolder.isDirectory()) {
-				tempFolder.mkdir();
+				if (!tempFolder.mkdir()) {
+					throw new CustomException("无法创建文件夹");
+				}
 			}
 
 			FileUtils.cleanDirectory(Variables.dataFolder + "/temp");
@@ -48,7 +49,7 @@ public class GeneratePNG {
 
 				g.setColor(new Color(73, 73, 73));
 				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 86));
-				g.drawString(Main.getProjectFlyData().getLoginData()[1], 277, 132);
+				g.drawString(Variables.projectFlyData.loginData[1], 277, 132);
 
 				g.setColor(new Color(126, 126, 126));
 				g.setFont(new Font(Variables.FONTS[0], Font.PLAIN, 58));
@@ -64,11 +65,11 @@ public class GeneratePNG {
 				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 64));
 
 				switch (i) {
-					case 1 -> g.drawString(Main.getProjectFlyData().getProfileData()[3], 1412, 124);
-					case 2 -> g.drawString(Main.getProjectFlyData().getProfileData()[0], 981, 124);
-					case 3 -> g.drawString(Main.getProjectFlyData().getProfileData()[5] + " / " + Main.getProjectFlyData().getProfileData()[4], 1412, 124);
-					case 4 -> g.drawString(Main.getProjectFlyData().getLogbookData()[1], 1412, 124);
-					case 5 -> g.drawString(Main.getProjectFlyData().getProfileData()[6], 1412, 124);
+					case 1 -> g.drawString(Variables.projectFlyData.profileData[3], 1412, 124);
+					case 2 -> g.drawString(Variables.projectFlyData.profileData[0], 981, 124);
+					case 3 -> g.drawString(Variables.projectFlyData.profileData[5] + " / " + Variables.projectFlyData.profileData[4], 1412, 124);
+					case 4 -> g.drawString(Variables.projectFlyData.logbookData[1], 1412, 124);
+					case 5 -> g.drawString(Variables.projectFlyData.profileData[6], 1412, 124);
 				}
 
 				g.setColor(new Color(126, 126, 126));
@@ -85,10 +86,10 @@ public class GeneratePNG {
 				g.setFont(new Font(Variables.FONTS[0], Font.BOLD, 64));
 
 				switch (i) {
-					case 1 -> g.drawString(Main.getProjectFlyData().getProfileData()[2], 2659, 124);
-					case 3 -> g.drawString(Main.getProjectFlyData().getLogbookData()[0], 2659, 124);
-					case 4 -> g.drawString(Main.getProjectFlyData().getPassportData(), 2659, 124);
-					case 5 -> g.drawString(Main.getProjectFlyData().getProfileData()[1], 2659, 124);
+					case 1 -> g.drawString(Variables.projectFlyData.profileData[2], 2659, 124);
+					case 3 -> g.drawString(Variables.projectFlyData.logbookData[0], 2659, 124);
+					case 4 -> g.drawString(Variables.projectFlyData.passportData, 2659, 124);
+					case 5 -> g.drawString(Variables.projectFlyData.profileData[1], 2659, 124);
 				}
 
 				g.dispose();

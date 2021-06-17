@@ -1,8 +1,8 @@
-package top.xujiayao.gif_signatures_generator.tools;
+package top.xujiayao.gifsigngen.tools;
 
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import javafx.application.Platform;
-import top.xujiayao.gif_signatures_generator.ui.Dialogs;
+import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -1,8 +1,7 @@
-package top.xujiayao.gif_signatures_generator.tools;
+package top.xujiayao.gifsigngen.tools;
 
 import javafx.application.Platform;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.ui.Dialogs;
+import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,12 +24,12 @@ public class ProjectFlyAPI {
 	public static String getProfile(int useLinkNumber) throws IOException {
 		String data = null;
 
-		String[] links = {"https://api.projectfly.co.uk/api/v3/community/user/" + Main.getProjectFlyData().getLoginData()[0] + "/profile",
-			  "https://api.projectfly.co.uk/api/v3/bookings/logbook/" + Main.getProjectFlyData().getLoginData()[0] + "?page=0",
-			  "https://api.projectfly.co.uk/api/v3/community/user/" + Main.getProjectFlyData().getLoginData()[0] + "/passport"};
+		String[] links = {"https://api.projectfly.co.uk/api/v3/community/user/" + Variables.projectFlyData.loginData[0] + "/profile",
+			  "https://api.projectfly.co.uk/api/v3/bookings/logbook/" + Variables.projectFlyData.loginData[0] + "?page=0",
+			  "https://api.projectfly.co.uk/api/v3/community/user/" + Variables.projectFlyData.loginData[0] + "/passport"};
 
 		URLConnection conn = new URL(links[useLinkNumber]).openConnection();
-		conn.addRequestProperty("Authorization", "Bearer " + Main.getProjectFlyData().getLoginData()[6]);
+		conn.addRequestProperty("Authorization", "Bearer " + Variables.projectFlyData.loginData[6]);
 		conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
 
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {

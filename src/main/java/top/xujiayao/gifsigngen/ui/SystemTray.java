@@ -1,8 +1,8 @@
-package top.xujiayao.gif_signatures_generator.ui;
+package top.xujiayao.gifsigngen.ui;
 
 import javafx.application.Platform;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.tools.Variables;
+import top.xujiayao.gifsigngen.Main;
+import top.xujiayao.gifsigngen.tools.Variables;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -66,7 +66,7 @@ public class SystemTray implements Runnable {
 			item3.addActionListener(e -> Platform.runLater(Dialogs::showAboutDialog));
 
 			item4.addActionListener(e -> {
-				Platform.runLater(() -> Main.getStage().close());
+				Platform.runLater(() -> Main.stage.close());
 				Platform.exit();
 				System.exit(0);
 			});

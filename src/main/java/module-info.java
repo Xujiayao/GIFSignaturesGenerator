@@ -5,12 +5,12 @@ module GIFSignaturesGenerator {
 	requires java.desktop;
 	requires de.jensd.fx.fontawesomefx.fontawesome;
 	requires net.sf.image4j;
-	requires org.dtools.javaini;
 	requires commons.io;
 	requires jdk.crypto.ec;
 	requires animated.gif.lib;
+	requires com.google.gson;
 
-	exports top.xujiayao.gif_signatures_generator;
-	exports top.xujiayao.gif_signatures_generator.ui;
-	exports top.xujiayao.gif_signatures_generator.tools;
+	exports top.xujiayao.gifsigngen;
+	exports top.xujiayao.gifsigngen.ui;
+	exports top.xujiayao.gifsigngen.tools;
 }

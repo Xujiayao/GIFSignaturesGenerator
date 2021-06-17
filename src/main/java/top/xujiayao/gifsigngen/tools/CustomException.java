@@ -1,4 +1,4 @@
-package top.xujiayao.gif_signatures_generator.tools;
+package top.xujiayao.gifsigngen.tools;
 
 /**
  * @author Xujiayao

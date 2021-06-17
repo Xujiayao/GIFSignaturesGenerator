@@ -1,4 +1,4 @@
-package top.xujiayao.gif_signatures_generator.ui;
+package top.xujiayao.gifsigngen.ui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -21,11 +21,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.tools.Avatar;
-import top.xujiayao.gif_signatures_generator.tools.ParseJSON;
-import top.xujiayao.gif_signatures_generator.tools.ProjectFlyAPI;
-import top.xujiayao.gif_signatures_generator.tools.Variables;
+import top.xujiayao.gifsigngen.Main;
+import top.xujiayao.gifsigngen.tools.Avatar;
+import top.xujiayao.gifsigngen.tools.ConfigManager;
+import top.xujiayao.gifsigngen.tools.ParseJSON;
+import top.xujiayao.gifsigngen.tools.ProjectFlyAPI;
+import top.xujiayao.gifsigngen.tools.Variables;
 
 import java.awt.TrayIcon;
 import java.awt.image.BufferedImage;
@@ -133,7 +134,7 @@ public class LoginUI {
 
 		comboBox = new ComboBox<>();
 		comboBox.getItems().addAll("projectFLY", "哔哩哔哩");
-		comboBox.setValue(Variables.loginType);
+		comboBox.setValue(ConfigManager.config.userVariables.loginType);
 		comboBox.setStyle("-fx-background-color: #F3F3F3; -fx-border-color: #24292E; -fx-border-width: 0px 0px 2px 0px");
 		comboBox.setPrefSize(200, 25);
 		comboBox.setLayoutX(91);
@@ -144,7 +145,7 @@ public class LoginUI {
 		iconView7.setLayoutX(62);
 		iconView7.setLayoutY(257);
 
-		usernameField = new TextField(Variables.username);
+		usernameField = new TextField(ConfigManager.config.userVariables.username);
 		usernameField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		usernameField.setPrefSize(200, 25);
 		usernameField.setFont(new Font(Variables.FONTS[0], 12));
@@ -158,7 +159,7 @@ public class LoginUI {
 		iconView8.setLayoutY(292);
 
 		passwordField = new PasswordField();
-		passwordField.setText(Variables.password);
+		passwordField.setText(ConfigManager.config.userVariables.password);
 		passwordField.setStyle("-fx-background-color: #F3F3F3; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #24292E; -fx-text-inner-color: #24292E");
 		passwordField.setPrefSize(200, 25);
 		passwordField.setFont(new Font(Variables.FONTS[0], 12));
@@ -303,18 +304,19 @@ public class LoginUI {
 			try {
 				switch (comboBox.getValue()) {
 					case "projectFLY" -> {
-						Main.setProjectFlyData(new Variables.ProjectFly());
+						// TODO
+						Variables.projectFlyData = new Variables.ProjectFly();
 
-						Main.getProjectFlyData().setLoginData(ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText())));
+						Variables.projectFlyData.loginData = ParseJSON.parseLoginJSON(ProjectFlyAPI.login(usernameField.getText(), passwordField.getText()));
 
 						getProfileSuccessCount[0] = 0;
 
-						if (Main.getProjectFlyData().getLoginData().length != 0) {
+						if (Variables.projectFlyData.loginData.length != 0) {
 							new Thread(() -> {
 								try {
-									Main.getProjectFlyData().setProfileData(ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0)));
+									Variables.projectFlyData.profileData = ParseJSON.parseProfileJSON(ProjectFlyAPI.getProfile(0));
 
-									if (Main.getProjectFlyData().getProfileData().length != 0) {
+									if (Variables.projectFlyData.profileData.length != 0) {
 										getProfileSuccessCount[0]++;
 										finishLogin();
 									} else {
@@ -327,9 +329,9 @@ public class LoginUI {
 
 							new Thread(() -> {
 								try {
-									Main.getProjectFlyData().setLogbookData(ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1)));
+									Variables.projectFlyData.logbookData = ParseJSON.parseLogbookJSON(ProjectFlyAPI.getProfile(1));
 
-									if (Main.getProjectFlyData().getLogbookData().length != 0) {
+									if (Variables.projectFlyData.logbookData.length != 0) {
 										getProfileSuccessCount[0]++;
 										finishLogin();
 									} else {
@@ -342,9 +344,9 @@ public class LoginUI {
 
 							new Thread(() -> {
 								try {
-									Main.getProjectFlyData().setPassportData(ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2)));
+									Variables.projectFlyData.passportData = ParseJSON.parsePassportJSON(ProjectFlyAPI.getProfile(2));
 
-									if (!Main.getProjectFlyData().getPassportData().isEmpty()) {
+									if (!Variables.projectFlyData.passportData.isEmpty()) {
 										getProfileSuccessCount[0]++;
 										finishLogin();
 									} else {
@@ -376,9 +378,9 @@ public class LoginUI {
 		}
 
 		try {
-			if (Main.getProjectFlyData().getProfileData() != null &&
-				  Main.getProjectFlyData().getLogbookData() != null &&
-				  Main.getProjectFlyData().getPassportData() != null) {
+			if (Variables.projectFlyData.profileData != null &&
+				  Variables.projectFlyData.logbookData != null &&
+				  Variables.projectFlyData.passportData != null) {
 				Platform.runLater(() -> {
 					button.setText("登录");
 					button.setDisable(false);
@@ -386,24 +388,24 @@ public class LoginUI {
 					root.setCursor(Cursor.DEFAULT);
 				});
 
-				Variables.loginType = comboBox.getValue();
-				Variables.username = usernameField.getText();
-				Variables.password = passwordField.getText();
+				ConfigManager.config.userVariables.loginType = comboBox.getValue();
+				ConfigManager.config.userVariables.username = usernameField.getText();
+				ConfigManager.config.userVariables.password = passwordField.getText();
 
-				Variables.saveConfig();
+				ConfigManager.updateConfig();
 
 				Main.systemTray.getTrayIcon().displayMessage("GIF签名图生成工具", "登录成功", TrayIcon.MessageType.NONE);
 
 				Platform.runLater(() -> {
-					Main.setPanes(new Panes());
+					Main.panes = new Panes();
 
-					Main.getStage().close();
+					Main.stage.close();
 
-					if (Main.getMainUI() == null) {
-						Main.setMainUI(new MainUI());
+					if (Main.mainUI == null) {
+						Main.mainUI = new MainUI();
 					}
 
-					Main.getMainUI().start(Main.getStage());
+					Main.mainUI.start(Main.stage);
 				});
 
 				BufferedImage avatar = Avatar.processAvatar(Avatar.downloadAvatar());

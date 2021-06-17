@@ -1,4 +1,4 @@
-package top.xujiayao.gif_signatures_generator.ui;
+package top.xujiayao.gifsigngen.ui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -19,14 +19,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.tools.Avatar;
-import top.xujiayao.gif_signatures_generator.tools.GenerateGIF;
-import top.xujiayao.gif_signatures_generator.tools.GeneratePNG;
-import top.xujiayao.gif_signatures_generator.tools.ImageUpload;
-import top.xujiayao.gif_signatures_generator.tools.ParseJSON;
-import top.xujiayao.gif_signatures_generator.tools.Utils;
-import top.xujiayao.gif_signatures_generator.tools.Variables;
+import top.xujiayao.gifsigngen.Main;
+import top.xujiayao.gifsigngen.tools.Avatar;
+import top.xujiayao.gifsigngen.tools.ConfigManager;
+import top.xujiayao.gifsigngen.tools.GenerateGIF;
+import top.xujiayao.gifsigngen.tools.GeneratePNG;
+import top.xujiayao.gifsigngen.tools.ImageUpload;
+import top.xujiayao.gifsigngen.tools.ParseJSON;
+import top.xujiayao.gifsigngen.tools.Utils;
+import top.xujiayao.gifsigngen.tools.Variables;
 
 /**
  * @author Xujiayao
@@ -114,28 +115,28 @@ public class MainUI {
 		imageView.setLayoutX(20);
 		imageView.setLayoutY(20);
 
-		Text text2 = new Text(15, 188, Utils.unicodeToString(Main.getProjectFlyData().getLoginData()[1]));
+		Text text2 = new Text(15, 188, Utils.unicodeToString(Variables.projectFlyData.loginData[1]));
 		text2.setFont(new Font("Microsoft YaHei Bold", 18));
 		text2.setTextAlignment(TextAlignment.CENTER);
 		text2.setFill(Color.web("#FFF"));
 		text2.setWrappingWidth(150);
 
-		Text text3 = new Text(15, 217, "@" + Utils.unicodeToString(Main.getProjectFlyData().getLoginData()[0]));
+		Text text3 = new Text(15, 217, "@" + Utils.unicodeToString(Variables.projectFlyData.loginData[0]));
 		text3.setFont(new Font(Variables.FONTS[0], 14));
 		text3.setTextAlignment(TextAlignment.CENTER);
 		text3.setFill(Color.web("#5F5D5F"));
 		text3.setWrappingWidth(150);
 
-		Text text4 = new Text(15, 240, Utils.unicodeToString(Main.getProjectFlyData().getLoginData()[3]) + " MEMBER");
+		Text text4 = new Text(15, 240, Utils.unicodeToString(Variables.projectFlyData.loginData[3]) + " MEMBER");
 		text4.setFont(new Font(Variables.FONTS[0], 14));
 		text4.setTextAlignment(TextAlignment.CENTER);
 		text4.setFill(Color.web("#5F5D5F"));
 		text4.setWrappingWidth(150);
 
-		Label label = new Label(Main.getProjectFlyData().getLoginData()[4].toUpperCase());
+		Label label = new Label(Variables.projectFlyData.loginData[4].toUpperCase());
 		label.setFont(new Font("Microsoft YaHei Bold", 16));
 		label.setTextFill(Color.web("#FFF"));
-		label.setStyle("-fx-background-color: " + Main.getProjectFlyData().getLoginData()[5] + "; -fx-border-width: 2 2 2 2; -fx-border-color: #FFF");
+		label.setStyle("-fx-background-color: " + Variables.projectFlyData.loginData[5] + "; -fx-border-width: 2 2 2 2; -fx-border-color: #FFF");
 		label.setAlignment(Pos.CENTER);
 		label.setPrefSize(140, 26);
 		label.setLayoutX(20);
@@ -189,7 +190,7 @@ public class MainUI {
 
 		contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
 
-		root.getChildren().add(Main.getPanes().pane1());
+		root.getChildren().add(Main.panes.pane1());
 
 		menuItem1.setOnAction(e -> Dialogs.showPreferencesDialog());
 
@@ -236,7 +237,7 @@ public class MainUI {
 		minimizeButton.setOnAction(e -> stage.setIconified(true));
 
 		backButton.setOnAction(e -> {
-			switch (Main.getPanes().paneShowing) {
+			switch (Main.panes.paneShowing) {
 				case 1 -> {
 					stage.close();
 					Main.loginUI.start(stage);
@@ -244,7 +245,7 @@ public class MainUI {
 				case 2 -> {
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Main.getPanes().pane1());
+						root.getChildren().add(Main.panes.pane1());
 
 						System.gc();
 					} catch (Exception e1) {
@@ -254,7 +255,7 @@ public class MainUI {
 				case 3 -> {
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Main.getPanes().pane2());
+						root.getChildren().add(Main.panes.pane2());
 
 						nextButton.setText("下一步");
 
@@ -267,18 +268,18 @@ public class MainUI {
 		});
 
 		nextButton.setOnAction(e -> {
-			switch (Main.getPanes().paneShowing) {
+			switch (Main.panes.paneShowing) {
 				case 1 -> {
 					if (!Avatar.isSuccess()) {
 						Dialogs.showErrorDialog("发生错误", "头像必须先处理成功才能继续下一步。");
 						return;
 					}
 
-					Main.getProjectFlyData().getProfileData()[0] = Main.getPanes().field5.getText();
+					Variables.projectFlyData.profileData[0] = Main.panes.field5.getText();
 
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Main.getPanes().pane2());
+						root.getChildren().add(Main.panes.pane2());
 
 						System.gc();
 					} catch (Exception e1) {
@@ -330,7 +331,7 @@ public class MainUI {
 	}
 
 	private void generateSignature() {
-		Variables.saveConfig();
+		ConfigManager.updateConfig();
 
 		nextButton.setText("加载中...");
 		nextButton.setDisable(true);
@@ -342,7 +343,7 @@ public class MainUI {
 			String message = null;
 
 			try {
-				switch (Variables.useStyleProjectFly) {
+				switch (ConfigManager.config.userVariables.useStyleProjectFly) {
 					case 1 -> success = GeneratePNG.generateProjectFly1();
 				}
 
@@ -372,7 +373,7 @@ public class MainUI {
 				Platform.runLater(() -> {
 					try {
 						root.getChildren().remove(4);
-						root.getChildren().add(Main.getPanes().pane3());
+						root.getChildren().add(Main.panes.pane3());
 
 						nextButton.setText("退出");
 

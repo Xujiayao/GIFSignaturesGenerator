@@ -1,8 +1,7 @@
-package top.xujiayao.gif_signatures_generator.tools;
+package top.xujiayao.gifsigngen.tools;
 
 import javafx.application.Platform;
-import top.xujiayao.gif_signatures_generator.Main;
-import top.xujiayao.gif_signatures_generator.ui.Dialogs;
+import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import javax.imageio.ImageIO;
 import java.awt.AlphaComposite;
@@ -66,7 +65,7 @@ public class Avatar {
 		try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 			byte[] buff = new byte[8192];
 
-			URL url = new URL(Main.getProjectFlyData().getLoginData()[2].replace("\\/", "/"));
+			URL url = new URL(Variables.projectFlyData.loginData[2].replace("\\/", "/"));
 
 			URLConnection conn = url.openConnection();
 			conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
