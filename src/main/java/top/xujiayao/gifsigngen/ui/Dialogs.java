@@ -2,6 +2,7 @@ package top.xujiayao.gifsigngen.ui;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -48,15 +49,15 @@ public class Dialogs {
 	public static ProgressBar bar;
 	private static Dialog<ButtonType> dialog;
 
-	public static void showDownloadingDialog() {
+	public static void showDownloadingDialog(int size) {
 		dialog = new Dialog<>();
 		dialog.setTitle("下载更新");
 
 		Pane pane = new Pane();
 		pane.setPrefWidth(400);
-		pane.setPrefHeight(55);
+		pane.setPrefHeight(65);
 
-		text = new Text("连接中 (0%)");
+		text = new Text("连接中 (0.00 MB / " + BigDecimal.valueOf(size / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " MB)");
 		text.setFont(new Font(Variables.FONTS[0], 14));
 		text.setFill(Color.web("#323232"));
 		text.setLayoutX(10);
@@ -73,10 +74,19 @@ public class Dialogs {
 
 		dialog.getDialogPane().setContent(pane);
 
+		dialog.getDialogPane().getButtonTypes().setAll(ButtonType.CANCEL);
+
+		Button button = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+
+		button.addEventFilter(ActionEvent.ACTION, event -> {
+			Main.update.timerTask.cancel();
+			Main.update.updateThread.interrupt();
+		});
+
 		dialog.show();
 	}
 
-	public static void showUpdateDialog(String version, String data, String size, String split, String link) {
+	public static void showUpdateDialog(String version, String data, int size, String split, String link) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("检查更新");
 		alert.setHeaderText("有新版本可用！");
@@ -93,7 +103,7 @@ public class Dialogs {
 		text1.setLayoutX(10);
 		text1.setLayoutY(22);
 
-		Button button1 = new Button("立即更新 (" + BigDecimal.valueOf(Integer.parseInt(size) / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " MB)");
+		Button button1 = new Button("立即更新 (" + BigDecimal.valueOf(size / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP) + " MB)");
 		button1.setFont(new Font(Variables.FONTS[0], 12));
 		button1.setPrefSize(150, 25);
 		button1.setLayoutX(10);
@@ -115,11 +125,15 @@ public class Dialogs {
 		pane.getChildren().addAll(text1, button1, text2, textArea);
 
 		button1.setOnAction(e -> {
-			showDownloadingDialog();
+			showDownloadingDialog(size);
 
-			new Thread(() -> {
+			Main.update.updateThread = new Thread(() -> {
 				try {
 					byte[] datas = Main.update.downloadUpdate(link, size, split);
+
+					if (datas.length == 0) {
+						return;
+					}
 
 					File file = new File(Variables.dataFolder + "/setup-" + version + ".exe");
 
@@ -132,7 +146,6 @@ public class Dialogs {
 							Dialogs.showExceptionDialog(e1);
 						}
 
-						dialog.getDialogPane().getButtonTypes().setAll(ButtonType.CANCEL);
 						dialog.close();
 
 						if (file.exists()) {
@@ -151,7 +164,9 @@ public class Dialogs {
 				} catch (Exception e1) {
 					Platform.runLater(() -> Dialogs.showExceptionDialog(e1));
 				}
-			}).start();
+			});
+
+			Main.update.updateThread.start();
 		});
 
 		alert.getDialogPane().setContent(pane);
@@ -261,7 +276,7 @@ public class Dialogs {
 			try {
 				FileUtils.cleanDirectory(Variables.dataFolder);
 
-				ConfigManager.config.userVariables.loginType = "";
+				ConfigManager.config.userVariables.loginType = "projectFLY";
 				ConfigManager.config.userVariables.username = "";
 				ConfigManager.config.userVariables.password = "";
 
@@ -347,10 +362,9 @@ public class Dialogs {
 		separator2.setLayoutX(10);
 		separator2.setLayoutY(98);
 
-		Text text3 = new Text("""
-			  所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。
-			  			
-			  再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。""");
+		Text text3 = new Text("所有临时文件与用户输入的变量将被存储在 [%AppData%/Java Projects] 文件夹中。\n" +
+		                      "\n" +
+		                      "再次打开软件时，软件将自动填充用户上一次输入的变量。您可以随时在软件首选项中删除这些文件。");
 		text3.setFont(new Font(Variables.FONTS[0], 14));
 		text3.setFill(Color.web("#323232"));
 		text3.setWrappingWidth(395);

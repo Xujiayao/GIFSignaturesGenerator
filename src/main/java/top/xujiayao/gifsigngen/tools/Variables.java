@@ -3,6 +3,9 @@ package top.xujiayao.gifsigngen.tools;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import net.sf.image4j.codec.ico.ICODecoder;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import javax.imageio.ImageIO;
@@ -19,7 +22,7 @@ import java.util.Objects;
 public class Variables {
 
 	// 软件版本
-	public static final String VERSION = "21w24a";
+	public static final String VERSION = "21w25a";
 
 	// 最新的正式版版本
 	public static final String LATEST_RELEASE_VERSION = "1.0.0";
@@ -54,6 +57,10 @@ public class Variables {
 
 	// 显示的一言语句
 	public static String displayHitokotoData = "加载中...";
+
+	// HTTPClient 插件
+	public static CloseableHttpClient httpClient;
+	public static CloseableHttpResponse response;
 
 	// projectFLY 需要使用的变量
 	public static ProjectFly projectFlyData;
@@ -142,6 +149,14 @@ public class Variables {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			error.append("-> 无法加载系统剪贴板\n");
+		}
+
+		// 初始化 HTTPClient 插件
+		try {
+			httpClient = HttpClients.createDefault();
+		} catch (Exception e) {
+			Dialogs.showExceptionDialog(e);
+			error.append("-> 无法初始化 HTTPClient 插件\n");
 		}
 
 		if (error.indexOf("->") != -1) {

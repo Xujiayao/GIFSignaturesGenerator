@@ -9,6 +9,8 @@ module GIFSignaturesGenerator {
 	requires jdk.crypto.ec;
 	requires animated.gif.lib;
 	requires com.google.gson;
+	requires org.apache.httpcomponents.httpclient;
+	requires org.apache.httpcomponents.httpcore;
 
 	exports top.xujiayao.gifsigngen;
 	exports top.xujiayao.gifsigngen.ui;

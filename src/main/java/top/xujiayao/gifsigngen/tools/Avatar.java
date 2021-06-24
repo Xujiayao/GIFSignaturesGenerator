@@ -1,6 +1,10 @@
 package top.xujiayao.gifsigngen.tools;
 
 import javafx.application.Platform;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import javax.imageio.ImageIO;
@@ -11,10 +15,6 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * @author Xujiayao
@@ -60,27 +60,20 @@ public class Avatar {
 	}
 
 	public static BufferedImage downloadAvatar() {
-		InputStream is = null;
+		HttpGet request = new HttpGet(Variables.projectFlyData.loginData[2].replace("\\/", "/"));
+		request.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
 
-		try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
-			byte[] buff = new byte[8192];
+		try {
+			Variables.response = Variables.httpClient.execute(request);
 
-			URL url = new URL(Variables.projectFlyData.loginData[2].replace("\\/", "/"));
+			if (Variables.response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				HttpEntity httpEntity = Variables.response.getEntity();
 
-			URLConnection conn = url.openConnection();
-			conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
-
-			is = conn.getInputStream();
-
-			int count;
-
-			while ((count = is.read(buff)) != -1) {
-				output.write(buff, 0, count);
+				return ImageIO.read(new ByteArrayInputStream(EntityUtils.toByteArray(httpEntity)));
+			} else {
+				Platform.runLater(() -> Dialogs.showExceptionDialog(new CustomException("服务器返回状态码："
+					  + Variables.response.getStatusLine().getStatusCode())));
 			}
-
-			is.close();
-
-			return ImageIO.read(new ByteArrayInputStream(output.toByteArray()));
 		} catch (Exception e) {
 			Platform.runLater(() -> {
 				if (e.getMessage().contains("Connection timed out")) {
@@ -89,14 +82,6 @@ public class Avatar {
 					Dialogs.showExceptionDialog(e);
 				}
 			});
-		} finally {
-			try {
-				if (is != null) {
-					is.close();
-				}
-			} catch (Exception e) {
-				Platform.runLater(() -> Dialogs.showExceptionDialog(e));
-			}
 		}
 
 		return null;

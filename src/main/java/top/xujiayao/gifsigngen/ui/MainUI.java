@@ -365,9 +365,7 @@ public class MainUI {
 				root.setCursor(Cursor.DEFAULT);
 			});
 
-			if (message != null) {
-				Variables.uploadData = ParseJSON.parseUploadJSON(message.replaceAll("\\\\", ""));
-			}
+			Variables.uploadData = ParseJSON.parseUploadJSON(message);
 
 			if (Variables.uploadData.length != 0) {
 				Platform.runLater(() -> {

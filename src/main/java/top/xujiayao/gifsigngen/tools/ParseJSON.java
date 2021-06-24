@@ -272,6 +272,8 @@ public class ParseJSON {
 			return new String[0];
 		}
 
+		data = data.replaceAll("\\\\", "");
+
 		String[] datas = new String[7];
 
 		try {

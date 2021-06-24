@@ -1,16 +1,12 @@
 package top.xujiayao.gifsigngen.tools;
 
 import javafx.application.Platform;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 import top.xujiayao.gifsigngen.Main;
 import top.xujiayao.gifsigngen.ui.Dialogs;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 /**
  * @author Xujiayao
@@ -38,17 +34,24 @@ public class HitokotoAPI implements Runnable {
 		Platform.runLater(() -> Main.loginUI.text2.setText(Variables.displayHitokotoData));
 	}
 
-	private String getHitokoto() throws IOException {
-		String data = null;
+	private String getHitokoto() {
+		HttpGet request = new HttpGet("https://v1.hitokoto.cn/");
 
-		URLConnection conn = new URL("https://v1.hitokoto.cn/").openConnection();
+		try {
+			Variables.response = Variables.httpClient.execute(request);
 
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(conn).getInputStream(), StandardCharsets.UTF_8))) {
-			data = reader.readLine();
+			if (Variables.response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				HttpEntity httpEntity = Variables.response.getEntity();
+
+				return EntityUtils.toString(httpEntity, "utf-8");
+			} else {
+				Platform.runLater(() -> Dialogs.showExceptionDialog(new CustomException("服务器返回状态码："
+					  + Variables.response.getStatusLine().getStatusCode())));
+			}
 		} catch (Exception e) {
 			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
 		}
 
-		return data;
+		return null;
 	}
 }

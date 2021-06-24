@@ -51,6 +51,7 @@ dependencies {
     implementation "commons-io:commons-io:+"
     implementation "com.madgag:animated-gif-lib:+"
     implementation "com.google.code.gson:gson:+"
+    implementation "org.apache.httpcomponents:httpclient:+"
 
     implementation files('lib/net.sf.image4j-0.7.2.jar')
 }

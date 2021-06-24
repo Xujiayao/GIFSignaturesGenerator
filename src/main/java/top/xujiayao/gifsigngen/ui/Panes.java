@@ -315,7 +315,7 @@ public class Panes {
 		title.setLayoutX(10);
 		title.setLayoutY(28);
 
-		Text text0 = new Text("签名图已经成功生成，并存储在本地目录。签名图也已经上传至 SM.MS 图床。");
+		Text text0 = new Text("签名图已经成功生成，并存储在本地目录，同时也已经上传至 SM.MS 图床。");
 		text0.setFont(new Font(Variables.FONTS[0], 14));
 		text0.setWrappingWidth(600);
 		text0.setLayoutX(10);

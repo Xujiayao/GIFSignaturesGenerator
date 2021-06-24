@@ -1,16 +1,17 @@
 package top.xujiayao.gifsigngen.tools;
 
 import javafx.application.Platform;
+import org.apache.http.client.methods.HttpGet;
 import top.xujiayao.gifsigngen.ui.Dialogs;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Xujiayao
@@ -21,6 +22,10 @@ public class Update implements Runnable {
 	private String[] parsedData;
 
 	private double progress;
+
+	public TimerTask timerTask;
+
+	public Thread updateThread;
 
 	@Override
 	public void run() {
@@ -40,7 +45,7 @@ public class Update implements Runnable {
 					if (parsedData[0].equals(Variables.LATEST_RELEASE_VERSION)) {
 						isLatest();
 					} else {
-						Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4], parsedData[5]);
+						Dialogs.showUpdateDialog(parsedData[0], parsedData[2], Integer.parseInt(parsedData[3]), parsedData[4], parsedData[5]);
 					}
 				}
 			});
@@ -54,13 +59,13 @@ public class Update implements Runnable {
 			if (parsedData[0].equals(Variables.VERSION)) {
 				isLatest();
 			} else {
-				Dialogs.showUpdateDialog(parsedData[0], parsedData[2], parsedData[3], parsedData[4], parsedData[5]);
+				Dialogs.showUpdateDialog(parsedData[0], parsedData[2], Integer.parseInt(parsedData[3]), parsedData[4], parsedData[5]);
 			}
 		} else {
 			if (parsedData[6].equals(Variables.VERSION)) {
 				isLatest();
 			} else {
-				Dialogs.showUpdateDialog(parsedData[6], parsedData[8], parsedData[9], parsedData[10], parsedData[11]);
+				Dialogs.showUpdateDialog(parsedData[6], parsedData[8], Integer.parseInt(parsedData[9]), parsedData[10], parsedData[11]);
 			}
 		}
 	}
@@ -71,23 +76,14 @@ public class Update implements Runnable {
 		}
 	}
 
-	private String downloadJSON() throws IOException {
-		String data = null;
+	private String downloadJSON() {
+		HttpGet request = new HttpGet(Variables.CHECK_UPDATE_LINK);
+		request.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) projectfly/4.0.3 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36");
 
-		URLConnection conn = new URL(Variables.CHECK_UPDATE_LINK).openConnection();
-		conn.setUseCaches(false);
-		conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36");
-
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-			data = reader.readLine();
-		} catch (Exception e) {
-			Platform.runLater(() -> Dialogs.showExceptionDialog(e));
-		}
-
-		return data;
+		return Utils.getHttpResponse(null, request);
 	}
 
-	public byte[] downloadUpdate(String link, String size, String split) throws IOException {
+	public byte[] downloadUpdate(String link, int size, String split) throws Exception {
 		InputStream is = null;
 		ByteArrayOutputStream os = null;
 
@@ -96,12 +92,21 @@ public class Update implements Runnable {
 		try {
 			os = new ByteArrayOutputStream();
 
+			startTimer(size, BigDecimal.valueOf(size / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP));
+
+
 			for (int i = 1; i <= Integer.parseInt(split); i++) {
 				URLConnection conn = new URL(link + i).openConnection();
 
 				is = conn.getInputStream();
 
-				os.write(readInputStream(is, Integer.parseInt(size)));
+				byte[] data = readInputStream(is, size);
+
+				if (data.length == 0) {
+					return data;
+				}
+
+				os.write(data);
 			}
 
 			Platform.runLater(() -> {
@@ -125,7 +130,24 @@ public class Update implements Runnable {
 		return new byte[0];
 	}
 
-	private byte[] readInputStream(InputStream inputStream, int length) {
+	private void startTimer(double length, BigDecimal formattedLength) {
+		timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				Dialogs.text.setText("下载中 (" + BigDecimal.valueOf(length / 1024.0 / 1024.0 * (progress / 100.0)).setScale(2, RoundingMode.HALF_UP) + " MB / " + formattedLength + " MB)");
+
+				if (Dialogs.bar.getProgress() == 1) {
+					System.out.println("a");
+
+					this.cancel();
+				}
+			}
+		};
+
+		new Timer().schedule(timerTask, 0, 500);
+	}
+
+	private byte[] readInputStream(InputStream is, int length) {
 		try {
 			byte[] buffer = new byte[1];
 			int len;
@@ -134,7 +156,14 @@ public class Update implements Runnable {
 
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-			while ((len = inputStream.read(buffer)) != -1) {
+			while ((len = is.read(buffer)) != -1) {
+				if (updateThread.isInterrupted()) {
+					is.close();
+					bos.close();
+
+					return new byte[0];
+				}
+
 				bos.write(buffer, 0, len);
 
 				progress = progress + (100.0 / length);
@@ -142,10 +171,7 @@ public class Update implements Runnable {
 				double temp2 = Double.parseDouble(String.format("%.1f", progress));
 
 				if (temp1 != temp2) {
-					Platform.runLater(() -> {
-						Dialogs.bar.setProgress(progress / 100);
-						Dialogs.text.setText("下载中 (" + temp2 + "%)");
-					});
+					Platform.runLater(() -> Dialogs.bar.setProgress(progress / 100));
 				}
 
 				temp1 = temp2;
