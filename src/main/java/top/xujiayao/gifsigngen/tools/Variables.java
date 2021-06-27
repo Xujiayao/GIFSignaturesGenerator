@@ -22,7 +22,7 @@ import java.util.Objects;
 public class Variables {
 
 	// 软件版本
-	public static final String VERSION = "21w25a";
+	public static final String VERSION = "21w25b";
 
 	// 最新的正式版版本
 	public static final String LATEST_RELEASE_VERSION = "1.0.0";

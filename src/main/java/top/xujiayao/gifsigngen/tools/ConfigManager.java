@@ -16,6 +16,10 @@ import java.io.FileWriter;
  */
 public class ConfigManager {
 
+	private ConfigManager() {
+		throw new IllegalStateException("工具类");
+	}
+
 	public static Config config;
 
 	private static File file;
@@ -31,11 +35,7 @@ public class ConfigManager {
 	}
 
 	private static Config loadConfig() {
-		BufferedReader reader = null;
-
-		try {
-			reader = new BufferedReader(new FileReader(file));
-
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			String temp;
 			StringBuilder jsonString = new StringBuilder();
 
@@ -43,21 +43,11 @@ public class ConfigManager {
 				jsonString.append(temp);
 			}
 
-			reader.close();
-
 			return new Gson().fromJson(jsonString.toString(), new TypeToken<Config>() {
 			}.getType());
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			Dialogs.showErrorDialog("发生错误", "无法加载配置文件。");
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 
 		return new Config();
@@ -66,11 +56,7 @@ public class ConfigManager {
 	private static Config createConfig() {
 		Config config = new Config();
 
-		BufferedWriter writer = null;
-
-		try {
-			writer = new BufferedWriter(new FileWriter(file));
-
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 			String jsonString = new GsonBuilder()
 				  .setPrettyPrinting()
 				  .disableHtmlEscaping()
@@ -81,25 +67,13 @@ public class ConfigManager {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			Dialogs.showErrorDialog("发生错误", "无法创建配置文件。");
-		} finally {
-			try {
-				if (writer != null) {
-					writer.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 
 		return config;
 	}
 
 	public static void updateConfig() {
-		BufferedWriter writer = null;
-
-		try {
-			writer = new BufferedWriter(new FileWriter(file));
-
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 			String jsonString = new GsonBuilder()
 				  .setPrettyPrinting()
 				  .disableHtmlEscaping()
@@ -110,14 +84,6 @@ public class ConfigManager {
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
 			Dialogs.showErrorDialog("发生错误", "无法保存配置文件。");
-		} finally {
-			try {
-				if (writer != null) {
-					writer.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }

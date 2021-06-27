@@ -25,10 +25,8 @@ public class GeneratePNG {
 		try {
 			File tempFolder = new File(Variables.dataFolder.toString() + "/temp");
 
-			if (!tempFolder.exists() || !tempFolder.isDirectory()) {
-				if (!tempFolder.mkdir()) {
-					throw new CustomException("无法创建文件夹");
-				}
+			if ((!tempFolder.exists() || !tempFolder.isDirectory()) && !tempFolder.mkdir()) {
+				throw new CustomException("无法创建文件夹");
 			}
 
 			FileUtils.cleanDirectory(Variables.dataFolder + "/temp");

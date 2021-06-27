@@ -326,7 +326,7 @@ public class Dialogs {
 		alert.setHeaderText("关于GIF签名图生成工具");
 
 		Pane pane = new Pane();
-		pane.setPrefSize(415, 305);
+		pane.setPrefSize(415, 315);
 
 		ImageView imageView = new ImageView(SwingFXUtils.toFXImage(Variables.icons.get(8), null));
 		imageView.setPreserveRatio(true);

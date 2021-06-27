@@ -5,6 +5,7 @@ import org.apache.http.client.methods.HttpGet;
 import top.xujiayao.gifsigngen.ui.Dialogs;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -83,15 +84,12 @@ public class Update implements Runnable {
 		return Utils.getHttpResponse(null, request);
 	}
 
-	public byte[] downloadUpdate(String link, int size, String split) throws Exception {
+	public byte[] downloadUpdate(String link, int size, String split) throws IOException {
 		InputStream is = null;
-		ByteArrayOutputStream os = null;
 
 		progress = 0;
 
-		try {
-			os = new ByteArrayOutputStream();
-
+		try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 			startTimer(size, BigDecimal.valueOf(size / 1024.0 / 1024.0).setScale(2, RoundingMode.HALF_UP));
 
 
@@ -121,10 +119,6 @@ public class Update implements Runnable {
 			if (is != null) {
 				is.close();
 			}
-
-			if (os != null) {
-				os.close();
-			}
 		}
 
 		return new byte[0];
@@ -137,8 +131,6 @@ public class Update implements Runnable {
 				Dialogs.text.setText("下载中 (" + BigDecimal.valueOf(length / 1024.0 / 1024.0 * (progress / 100.0)).setScale(2, RoundingMode.HALF_UP) + " MB / " + formattedLength + " MB)");
 
 				if (Dialogs.bar.getProgress() == 1) {
-					System.out.println("a");
-
 					this.cancel();
 				}
 			}

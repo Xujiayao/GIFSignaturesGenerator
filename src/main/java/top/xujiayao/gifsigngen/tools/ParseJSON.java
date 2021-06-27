@@ -52,11 +52,11 @@ public class ParseJSON {
 				}
 
 				if (temp == null) {
-					temp = data.substring(0, data.indexOf("\\/"));
+					temp = data.substring(0, 4);
 					continue;
 				}
 
-				routes[(i + 1) / 2 - 1] = temp + " - " + data.substring(0, data.indexOf("\\/"));
+				routes[(i + 1) / 2 - 1] = temp + " - " + data.substring(0, 4);
 				temp = null;
 			}
 
@@ -272,7 +272,9 @@ public class ParseJSON {
 			return new String[0];
 		}
 
-		data = data.replaceAll("\\\\", "");
+		while (data.contains("\\")) {
+			data = data.replace("\\", "");
+		}
 
 		String[] datas = new String[7];
 
